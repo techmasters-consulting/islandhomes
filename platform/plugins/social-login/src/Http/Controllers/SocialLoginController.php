@@ -5,6 +5,7 @@ namespace Botble\SocialLogin\Http\Controllers;
 use Assets;
 use Botble\Vendor\Repositories\Interfaces\VendorInterface;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
@@ -14,6 +15,7 @@ use Exception;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Laravel\Socialite\AbstractUser;
+use RvMedia;
 use Socialite;
 
 class SocialLoginController extends BaseController
@@ -60,12 +62,29 @@ class SocialLoginController extends BaseController
         $user = app(VendorInterface::class)->getFirstBy(['email' => $oAuth->getEmail()]);
 
         if (!$user) {
+            $firstName = implode(' ', explode(' ', $oAuth->getName(), -1));
+
+            $avatarId = null;
+            $url = $oAuth->getAvatar();
+            if ($url) {
+                $info = pathinfo($url);
+                $contents = file_get_contents($url);
+                $file = '/tmp/' . $info['basename'];
+                file_put_contents($file, $contents);
+                $fileUpload = new UploadedFile($file, Str::slug($oAuth->getName()) . '.png', 'image/png', null, true);
+                $result = RvMedia::handleUpload($fileUpload, 0, 'accounts');
+                if (!$result['error']) {
+                    $avatarId = $result['data']->id;
+                }
+            }
+
             $user = app(VendorInterface::class)->createOrUpdate([
-                'first_name'  => $oAuth->getName(),
-                'last_name'   => $oAuth->getName(),
-                'email'       => $oAuth->getEmail(),
+                'first_name' => $firstName,
+                'last_name' => trim(str_replace($firstName, '', $oAuth->getName())),
+                'email' => $oAuth->getEmail(),
                 'verified_at' => now(),
-                'password'    => bcrypt(Str::random(36)),
+                'password' => bcrypt(Str::random(36)),
+                'avatar_id' => $avatarId,
             ]);
         }
 

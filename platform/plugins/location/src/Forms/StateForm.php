@@ -42,11 +42,19 @@ class StateForm extends FormAbstract
             ->setValidatorClass(StateRequest::class)
             ->withCustomFields()
             ->add('name', 'text', [
-                'label'      => trans('core/base::forms.name'),
+                'label' => trans('core/base::forms.name'),
                 'label_attr' => ['class' => 'control-label required'],
-                'attr'       => [
-                    'placeholder'  => trans('core/base::forms.name_placeholder'),
+                'attr' => [
+                    'placeholder' => trans('core/base::forms.name_placeholder'),
                     'data-counter' => 120,
+                ],
+            ])
+            ->add('abbreviation', 'text', [
+                'label' => __('Abbreviation'),
+                'label_attr' => ['class' => 'control-label'],
+                'attr' => [
+                    'placeholder' => __('E.g: CA'),
+                    'data-counter' => 2,
                 ],
             ])
             ->add('country_id', 'customSelect', [

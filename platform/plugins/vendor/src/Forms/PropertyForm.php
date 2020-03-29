@@ -37,6 +37,7 @@ class PropertyForm extends BaseForm
             ->setValidatorClass(PropertyRequest::class)
             ->setActionButtons(view('plugins/vendor::forms.actions')->render())
             ->remove('is_featured')
+            ->remove('moderation_status')
             ->remove('content')
             ->remove('author_id')
             ->removeMetaBox('image')

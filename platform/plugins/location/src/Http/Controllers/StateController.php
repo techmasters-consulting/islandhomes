@@ -18,6 +18,7 @@ use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Location\Forms\StateForm;
 use Botble\Base\Forms\FormBuilder;
 use Illuminate\View\View;
+use Location;
 use Throwable;
 
 class StateController extends BaseController
@@ -180,11 +181,20 @@ class StateController extends BaseController
             'condition' => [
                 ['states.name', 'LIKE', '%' . $keyword . '%'],
             ],
-            'select'    => ['states.id', 'states.name'],
-            'take'      => 10,
+            'select' => ['states.id', 'states.name'],
+            'take' => 10,
 
         ]);
 
         return $response->setData(StateResource::collection($data));
+    }
+
+    /**
+     * @param BaseHttpResponse $response
+     * @return \Illuminate\Config\Repository|mixed
+     */
+    public function getArrayStates(BaseHttpResponse $response)
+    {
+        return $response->setData(Location::getStates());
     }
 }

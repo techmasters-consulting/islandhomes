@@ -35,19 +35,19 @@ class StateTable extends TableAbstract
     /**
      * StateTable constructor.
      * @param DataTables $table
-     * @param UrlGenerator $urlDevTool
+     * @param UrlGenerator $urlGenerator
      * @param StateInterface $stateRepository
      */
     public function __construct(
         DataTables $table,
-        UrlGenerator $urlDevTool,
+        UrlGenerator $urlGenerator,
         StateInterface $stateRepository,
         CountryInterface $countryRepository
     ) {
         $this->repository = $stateRepository;
         $this->countryRepository = $countryRepository;
         $this->setOption('id', 'table-plugins-state');
-        parent::__construct($table, $urlDevTool);
+        parent::__construct($table, $urlGenerator);
 
         if (!Auth::user()->hasAnyPermission(['state.edit', 'state.destroy'])) {
             $this->hasOperations = false;
@@ -186,7 +186,6 @@ class StateTable extends TableAbstract
                 'title'    => trans('plugins/location::state.country'),
                 'type'     => 'select',
                 'validate' => 'required|max:120',
-                'callback' => 'getCountries',
             ],
             'states.status'     => [
                 'title'    => trans('core/base::tables.status'),
@@ -199,13 +198,5 @@ class StateTable extends TableAbstract
                 'type'  => 'date',
             ],
         ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getCountries()
-    {
-        return $this->countryRepository->pluck('countries.name', 'countries.id');
     }
 }

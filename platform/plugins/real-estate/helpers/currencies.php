@@ -3,18 +3,22 @@
 use Botble\RealEstate\Facades\CurrencyFacade;
 use Botble\RealEstate\Repositories\Interfaces\CurrencyInterface;
 use Botble\RealEstate\Models\Currency;
+use Botble\RealEstate\Supports\CurrencySupport;
+use Illuminate\Support\Collection;
 
 if (!function_exists('format_price')) {
     /**
-     * @param $price
+     * @param int $price
      * @param Currency|null $currency
      * @param bool $withoutCurrency
      * @param bool $useSymbol
      * @return string
      */
-    function format_price($price, $currency = null, $withoutCurrency = false, $useSymbol = false)
+    function format_price($price, $currency = null, $withoutCurrency = false, $useSymbol = true): string
     {
-        if ($currency != null && !($currency instanceof Currency)) {
+        if (!$currency) {
+            $currency = get_application_currency();
+        } elseif ($currency != null && !($currency instanceof Currency)) {
             $currency = app(CurrencyInterface::class)->getFirstBy(['currencies.id' => $currency]);
         }
 
@@ -22,12 +26,8 @@ if (!function_exists('format_price')) {
             return human_price_text($price, $currency);
         }
 
-        if ($useSymbol && !$currency->symbol) {
-            $currency->symbol = '$';
-        }
-
         if ($useSymbol && $currency->is_prefix_symbol) {
-            return human_price_text($currency->symbol . $price, $currency);
+            return $currency->symbol . human_price_text($price, $currency);
         }
 
         if ($withoutCurrency) {
@@ -40,25 +40,25 @@ if (!function_exists('format_price')) {
 
 if (!function_exists('human_price_text')) {
     /**
-     * @param $price
+     * @param int $price
      * @param $currency
      * @param string $priceUnit
      * @return string
      */
-    function human_price_text($price, $currency, $priceUnit = '')
+    function human_price_text($price, $currency, $priceUnit = ''): string
     {
         $numberAfterDot = ($currency instanceof Currency) ? $currency->decimals : 0;
 
         if ($price >= 1000000 && $price < 1000000000) {
             $price = round($price / 1000000, 2);
             $numberAfterDot = 2;
-            $priceUnit = __('million') . ' '. $priceUnit;
+            $priceUnit = __('million') . ' ' . $priceUnit;
         }
 
         if ($price >= 1000000000) {
             $price = round($price / 1000000000, 2);
             $numberAfterDot = 2;
-            $priceUnit =  __('billion') . ' '. $priceUnit;
+            $priceUnit = __('billion') . ' ' . $priceUnit;
         }
 
         if (is_numeric($price)) {
@@ -67,13 +67,13 @@ if (!function_exists('human_price_text')) {
 
         $price = number_format($price, $numberAfterDot, '.', ',');
 
-        return $price . ' ' . $priceUnit;
+        return $price . ($priceUnit ? ' ' . $priceUnit : '');
     }
 }
 
 if (!function_exists('cms_currency')) {
     /**
-     * @return \Botble\RealEstate\Supports\CurrencySupport
+     * @return CurrencySupport
      */
     function cms_currency()
     {
@@ -83,7 +83,7 @@ if (!function_exists('cms_currency')) {
 
 if (!function_exists('get_all_currencies')) {
     /**
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     function get_all_currencies()
     {
@@ -93,7 +93,7 @@ if (!function_exists('get_all_currencies')) {
 
 if (!function_exists('get_application_currency')) {
     /**
-     * @return \Botble\RealEstate\Models\Currency|null
+     * @return Currency|null
      */
     function get_application_currency()
     {

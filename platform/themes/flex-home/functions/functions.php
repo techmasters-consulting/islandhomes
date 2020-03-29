@@ -63,13 +63,33 @@ theme_option()
         'helper'     => __('Copyright on footer of site'),
     ])
     ->setField([
-        'id'         => 'primary_font',
+        'id' => 'primary_font',
         'section_id' => 'opt-text-subsection-general',
-        'type'       => 'googleFonts',
-        'label'      => __('Primary font'),
+        'type' => 'googleFonts',
+        'label' => __('Primary font'),
         'attributes' => [
-            'name'  => 'primary_font',
+            'name' => 'primary_font',
             'value' => 'Nunito Sans',
+        ],
+    ])
+    ->setField([
+        'id' => 'primary_color',
+        'section_id' => 'opt-text-subsection-general',
+        'type' => 'customColor',
+        'label' => __('Primary color'),
+        'attributes' => [
+            'name' => 'primary_color',
+            'value' => '#1d5f6f',
+        ],
+    ])
+    ->setField([
+        'id' => 'primary_color_hover',
+        'section_id' => 'opt-text-subsection-general',
+        'type' => 'customColor',
+        'label' => __('Hover primary color'),
+        'attributes' => [
+            'name' => 'primary_color_hover',
+            'value' => '#063a5d',
         ],
     ])
     ->setField([
@@ -269,22 +289,34 @@ theme_option()
             ],
             [
                 'id'         => 'number_of_related_properties',
-                'type'       => 'number',
-                'label'      => 'Number of related properties',
+                'type' => 'number',
+                'label' => 'Number of related properties',
                 'attributes' => [
-                    'name'    => 'number_of_related_properties',
-                    'value'   => 8,
+                    'name' => 'number_of_related_properties',
+                    'value' => 8,
                     'options' => [
                         'class' => 'form-control',
                     ],
                 ],
             ],
             [
-                'id'         => 'home_banner',
-                'type'       => 'mediaImage',
-                'label'      => __('Top banner homepage'),
+                'id' => 'home_banner_description',
+                'type' => 'text',
+                'label' => 'The description for banner search block',
                 'attributes' => [
-                    'name'  => 'home_banner',
+                    'name' => 'home_banner_description',
+                    'value' => null,
+                    'options' => [
+                        'class' => 'form-control',
+                    ],
+                ],
+            ],
+            [
+                'id' => 'home_banner',
+                'type' => 'mediaImage',
+                'label' => __('Top banner homepage'),
+                'attributes' => [
+                    'name' => 'home_banner',
                     'value' => null,
                 ],
             ],

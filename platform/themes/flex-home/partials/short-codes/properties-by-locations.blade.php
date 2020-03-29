@@ -29,8 +29,9 @@
                     <div class="owl-carousel" id="cityslide">
                         @foreach($cities as $city)
                             <div class="item itemarea">
-                                <a href="{{ route('public.properties-by-city', $city->slug) }}"><img src="{{ get_object_image($city->image, 'small') }}"
-                                                                                                  alt="{{ $city->name }}"><h4>{{ $city->name }}</h4>
+                                <a href="{{ route('public.properties-by-city', $city->slug) }}">
+                                    <img src="{{ get_object_image($city->image, 'small') }}" alt="{{ $city->name }}">
+                                    <h4>{{ $city->name }}</h4>
                                 </a>
                             </div>
                         @endforeach

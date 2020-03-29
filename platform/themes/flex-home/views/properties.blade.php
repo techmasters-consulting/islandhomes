@@ -21,9 +21,13 @@
                                 <div class="col-6 col-sm-6 col-md-4 colm10">
                                     <div class="item">
                                         <div class="blii">
-                                            <div class="img"><img class="thumb" data-src="{{ get_object_image($property->image, 'small') }}" src="{{ get_object_image($property->image, 'small') }}" alt="{{ $property->name }}">
+                                            <div class="img"><img class="thumb"
+                                                                  data-src="{{ get_object_image($property->image, 'small') }}"
+                                                                  src="{{ get_object_image($property->image, 'small') }}"
+                                                                  alt="{{ $property->name }}">
                                             </div>
                                             <a href="{{ $property->url }}" class="linkdetail"></a>
+                                            <div class="status">{!! $property->status->toHtml() !!}</div>
                                         </div>
 
                                         <div class="description">
@@ -31,8 +35,10 @@
                                         far
                                          fa-heart"></i></a>--}}
                                             <a href="{{ $property->url }}"><h5>{{ $property->name }}</h5>
-                                                <p class="dia_chi"><i class="fas fa-map-marker-alt"></i> {{ $property->location }}</p>
-                                                <p class="bold500">{{ __('Price') }}: {{ format_price($property->price, $property->currency) }}</p>
+                                                <p class="dia_chi"><i
+                                                        class="fas fa-map-marker-alt"></i> {{ $property->location }}</p>
+                                                <p class="bold500">{{ __('Price') }}
+                                                    : {{ format_price($property->price, $property->currency) }}</p>
                                             </a>
                                             <p class="threemt bold500">
                                                 <span data-toggle="tooltip" data-placement="top" data-original-title="{{ __('Number of rooms') }}"> <i><img src="{{ Theme::asset()->url('images/bed.svg') }}" alt="icon"></i> <i class="vti">{{ $property->number_bedroom }}</i> </span>

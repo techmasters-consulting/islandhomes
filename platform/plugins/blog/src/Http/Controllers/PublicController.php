@@ -99,7 +99,7 @@ class PublicController extends Controller
             admin_bar()->registerLink(trans('plugins/blog::tags.edit_this_tag'), route('tags.edit', $tag->id));
         }
 
-        $posts = get_posts_by_tag($tag->id);
+        $posts = get_posts_by_tag($tag->id, theme_option('number_of_posts_in_a_tag'));
 
         Theme::breadcrumb()->add(__('Home'), url('/'))->add($tag->name, route('public.tag', $slug->key));
 

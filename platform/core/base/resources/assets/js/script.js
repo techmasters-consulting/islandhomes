@@ -41,7 +41,7 @@ class Botble {
                     backgroundColor: 'none'
                 },
                 overlayCSS: {
-                    backgroundColor: options.overlayColor ? options.overlayColor : '#555',
+                    backgroundColor: options.overlayColor ? options.overlayColor : '#555555',
                     opacity: options.boxed ? 0.05 : 0.1,
                     cursor: 'wait'
                 }
@@ -56,7 +56,7 @@ class Botble {
                     backgroundColor: 'none'
                 },
                 overlayCSS: {
-                    backgroundColor: options.overlayColor ? options.overlayColor : '#555',
+                    backgroundColor: options.overlayColor ? options.overlayColor : '#555555',
                     opacity: options.boxed ? 0.05 : 0.1,
                     cursor: 'wait'
                 }
@@ -144,20 +144,20 @@ class Botble {
         $.each(errors, (index, item) => {
             message += item + '<br />';
 
-                let $input = $('*[name="' + index + '"]');
-                if ($input.closest('.next-input--stylized').length) {
-                    $input.closest('.next-input--stylized').addClass('field-has-error');
-                } else {
-                    $input.addClass('field-has-error');
-                }
+            let $input = $('*[name="' + index + '"]');
+            if ($input.closest('.next-input--stylized').length) {
+                $input.closest('.next-input--stylized').addClass('field-has-error');
+            } else {
+                $input.addClass('field-has-error');
+            }
 
-                let $input_array = $('*[name$="[' + index + ']"]');
+            let $input_array = $('*[name$="[' + index + ']"]');
 
-                if ($input_array.closest('.next-input--stylized').length) {
-                    $input_array.closest('.next-input--stylized').addClass('field-has-error');
-                } else {
-                    $input_array.addClass('field-has-error');
-                }
+            if ($input_array.closest('.next-input--stylized').length) {
+                $input_array.closest('.next-input--stylized').addClass('field-has-error');
+            } else {
+                $input_array.addClass('field-has-error');
+            }
         });
         Botble.showError(message);
     }
@@ -369,7 +369,39 @@ class Botble {
         }
 
         if (jQuery().colorpicker) {
-            $('.color-picker').colorpicker({});
+            $('.color-picker').colorpicker({
+                inline: false,
+                container: true,
+                extensions: [
+                    {
+                        name: 'swatches',
+                        options: {
+                            colors: {
+                                'tetrad1': '#000000',
+                                'tetrad2': '#000000',
+                                'tetrad3': '#000000',
+                                'tetrad4': '#000000'
+                            },
+                            namesAsValues: false
+                        }
+                    }
+                ]
+            })
+                .on('colorpickerChange colorpickerCreate', function (e) {
+                    var colors = e.color.generate('tetrad');
+
+                    colors.forEach(function (color, i) {
+                        var colorStr = color.string(),
+                            swatch = e.colorpicker.picker
+                                .find('.colorpicker-swatch[data-name="tetrad' + (i + 1) + '"]');
+
+                        swatch
+                            .attr('data-value', colorStr)
+                            .attr('title', colorStr)
+                            .find('> i')
+                            .css('background-color', colorStr);
+                    });
+                });
         }
 
         if (jQuery().fancybox) {

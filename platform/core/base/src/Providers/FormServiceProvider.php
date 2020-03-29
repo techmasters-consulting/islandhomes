@@ -90,15 +90,21 @@ class FormServiceProvider extends ServiceProvider
             'list'                => [],
             'selected'            => null,
             'selectAttributes'    => [],
-            'optionsAttributes'   => [],
+            'optionsAttributes' => [],
             'optgroupsAttributes' => [],
         ]);
 
         Form::component('googleFonts', 'core/base::elements.forms.google-fonts', [
             'name',
-            'selected'          => null,
-            'selectAttributes'  => [],
+            'selected' => null,
+            'selectAttributes' => [],
             'optionsAttributes' => [],
+        ]);
+
+        Form::component('customColor', 'core/base::elements.forms.color', [
+            'name',
+            'value' => null,
+            'attributes' => [],
         ]);
     }
 }

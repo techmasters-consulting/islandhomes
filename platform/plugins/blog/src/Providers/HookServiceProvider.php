@@ -61,6 +61,41 @@ class HookServiceProvider extends ServiceProvider
             shortcode()->setAdminConfig('blog-posts',
                 view('plugins/blog::partials.posts-short-code-admin-config')->render());
         }
+
+        theme_option()
+            ->setSection([
+                'title' => 'Blog',
+                'desc' => 'Theme options for Blog',
+                'id' => 'opt-text-subsection-blog',
+                'subsection' => true,
+                'icon' => 'fa fa-edit',
+                'fields' => [
+                    [
+                        'id' => 'number_of_posts_in_a_category',
+                        'type' => 'number',
+                        'label' => __('Number of posts in a category'),
+                        'attributes' => [
+                            'name' => 'number_of_posts_in_a_category',
+                            'value' => 12,
+                            'options' => [
+                                'class' => 'form-control',
+                            ],
+                        ],
+                    ],
+                    [
+                        'id' => 'number_of_posts_in_a_tag',
+                        'type' => 'number',
+                        'label' => __('Number of posts in a tag'),
+                        'attributes' => [
+                            'name' => 'number_of_posts_in_a_tag',
+                            'value' => 12,
+                            'options' => [
+                                'class' => 'form-control',
+                            ],
+                        ],
+                    ],
+                ],
+            ]);
     }
 
     /**
@@ -206,7 +241,8 @@ class HookServiceProvider extends ServiceProvider
                             [$category->id]
                         ));
 
-                        $posts = $this->app->make(PostInterface::class)->getByCategory($allRelatedCategoryIds, 12);
+                        $posts = $this->app->make(PostInterface::class)
+                            ->getByCategory($allRelatedCategoryIds, theme_option('number_of_posts_in_a_category', 12));
 
                         Theme::breadcrumb()->add(__('Home'), url('/'))
                             ->add($category->name, $category->url);
@@ -214,9 +250,9 @@ class HookServiceProvider extends ServiceProvider
                         do_action(BASE_ACTION_PUBLIC_RENDER_SINGLE, CATEGORY_MODULE_SCREEN_NAME, $category);
 
                         return [
-                            'view'         => 'category',
+                            'view' => 'category',
                             'default_view' => 'plugins/blog::themes.category',
-                            'data'         => compact('category', 'posts'),
+                            'data' => compact('category', 'posts'),
                             'slug'         => $category->slug,
                         ];
                     }

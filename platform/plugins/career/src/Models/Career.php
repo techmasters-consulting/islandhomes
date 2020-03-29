@@ -2,17 +2,12 @@
 
 namespace Botble\Career\Models;
 
+use Botble\Base\Models\BaseModel;
 use Botble\Base\Traits\EnumCastable;
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Slug\Traits\SlugTrait;
-use Eloquent;
 
-/**
- * Botble\Career\Models\Career
- *
- * @mixin \Eloquent
- */
-class Career extends Eloquent
+class Career extends BaseModel
 {
     use EnumCastable;
     use SlugTrait;

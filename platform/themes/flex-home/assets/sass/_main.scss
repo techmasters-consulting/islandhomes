@@ -207,11 +207,11 @@ header img.banner {
 
 .projecthome .item .description h5 {
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1em;
     line-height: 120%;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: 24px;
+    height: 42px;
     padding: 0;
     margin: 0;
     margin-top: 7px;
@@ -2570,10 +2570,6 @@ footer .copyright {
     .bannerhome .description {
         top: 22%
     }
-    .topsearch {
-        position: relative;
-        z-index: auto;
-    }
     .topsearch .typesearch a {
         color: #000;
     }
@@ -2599,10 +2595,6 @@ footer .copyright {
     .bannerhome .description {
         top: 22%
     }
-    .topsearch {
-        position: relative;
-        z-index: auto;
-    }
     .topsearch .typesearch a {
         color: #000;
     }
@@ -2627,13 +2619,6 @@ footer .copyright {
     }
     .bannerhome .description {
         top: 30%
-    }
-    .topsearch {
-        position: absolute;
-        bottom: 40%;
-        left: 0;
-        right: 0;
-        z-index: 1;
     }
     .topsearch .typesearch a {
         color: #FFF;
@@ -2674,13 +2659,6 @@ footer .copyright {
     }
     .bannerhome .description {
         top: 40%
-    }
-    .topsearch {
-        position: absolute;
-        bottom: 40%;
-        left: 0;
-        right: 0;
-        z-index: 1;
     }
     .topsearch .typesearch a {
         color: #FFF;

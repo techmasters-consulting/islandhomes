@@ -29,10 +29,6 @@
                   @method('PUT')
                   @csrf
                   <div class="form-group">
-                    <label for="current_password">{{ trans('plugins/vendor::dashboard.current_password') }}</label>
-                    <input type="password" class="form-control" name="current_password" id="current_password">
-                  </div>
-                  <div class="form-group">
                     <label for="password">{{ trans('plugins/vendor::dashboard.password_new') }}</label>
                     <input type="password" class="form-control" name="password" id="password">
                   </div>

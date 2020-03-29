@@ -23,8 +23,8 @@
 
     <div class="container-fluid w90 padtop20">
         <h1 class="titlehouse" id="house-40396">{{ $property->name }}</h1>
-        <p class="addresshouse"><i class="fas fa-map-marker-alt"></i>  {{ $property->location }}</p>
-        <p class="pricehouse"> {{ format_price($property->price, $property->currency) }} <span class="text-dark"> {{ $property->status->label() }}</span></p>
+        <p class="addresshouse"><i class="fas fa-map-marker-alt"></i> {{ $property->location }}</p>
+        <p class="pricehouse"> {{ format_price($property->price, $property->currency) }} {!! $property->status->toHtml() !!}</p>
         <div class="row">
             <div class="col-md-8">
                 <div class="row" style="padding-top: 15px;">

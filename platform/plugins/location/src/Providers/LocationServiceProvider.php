@@ -2,6 +2,7 @@
 
 namespace Botble\Location\Providers;
 
+use Botble\Location\Facades\LocationFacade;
 use Botble\Location\Models\City;
 use Botble\Location\Repositories\Caches\CityCacheDecorator;
 use Botble\Location\Repositories\Eloquent\CityRepository;
@@ -14,6 +15,7 @@ use Botble\Location\Models\State;
 use Botble\Location\Repositories\Caches\StateCacheDecorator;
 use Botble\Location\Repositories\Eloquent\StateRepository;
 use Botble\Location\Repositories\Interfaces\StateInterface;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Botble\Base\Supports\Helper;
@@ -46,6 +48,8 @@ class LocationServiceProvider extends ServiceProvider
         });
 
         Helper::autoload(__DIR__ . '/../../helpers');
+
+        AliasLoader::getInstance()->alias('Location', LocationFacade::class);
     }
 
     public function boot()
@@ -54,7 +58,8 @@ class LocationServiceProvider extends ServiceProvider
             ->loadAndPublishConfigurations(['permissions'])
             ->loadMigrations()
             ->loadAndPublishTranslations()
-            ->loadRoutes(['web']);
+            ->loadRoutes(['web'])
+            ->publishAssets();
 
         if (defined('LANGUAGE_MODULE_SCREEN_NAME')) {
             Language::registerModule([

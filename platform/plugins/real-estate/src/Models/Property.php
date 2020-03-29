@@ -4,6 +4,7 @@ namespace Botble\RealEstate\Models;
 
 use Botble\Base\Models\BaseModel;
 use Botble\Base\Traits\EnumCastable;
+use Botble\RealEstate\Enums\ModerationStatusEnum;
 use Botble\Location\Models\City;
 use Botble\RealEstate\Enums\PropertyPeriodEnum;
 use Botble\RealEstate\Enums\PropertyStatusEnum;
@@ -51,6 +52,8 @@ class Property extends BaseModel
         'author_id',
         'author_type',
         'category_id',
+        'expire_date',
+        'auto_renew',
     ];
 
     /**
@@ -58,7 +61,8 @@ class Property extends BaseModel
      */
     protected $casts = [
         'status' => PropertyStatusEnum::class,
-        'type'   => PropertyTypeEnum::class,
+        'moderation_status' => ModerationStatusEnum::class,
+        'type' => PropertyTypeEnum::class,
         'period' => PropertyPeriodEnum::class,
     ];
 
@@ -133,5 +137,23 @@ class Property extends BaseModel
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id')->withDefault();
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNotExpired($query)
+    {
+        return $query->where('expire_date', '>=', now(config('app.timezone'))->toDateTimeString());
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeExpired($query)
+    {
+        return $query->where('expire_date', '<', now(config('app.timezone'))->toDateTimeString());
     }
 }

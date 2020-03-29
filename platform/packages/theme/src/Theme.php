@@ -166,52 +166,66 @@ class Theme implements ThemeContract
     }
 
     /**
-     * Return breadcrumb instance.
+     * Set up a layout name.
      *
-     * @return Breadcrumb
+     * @param string $layout
+     * @return Theme
      */
-    public function breadcrumb()
+    public function layout(string $layout)
     {
-        return $this->breadcrumb;
-    }
-
-    /**
-     * Get current theme name.
-     *
-     * @return string
-     */
-    public function getThemeName()
-    {
-        return $this->theme;
-    }
-
-    /**
-     * Get current layout name.
-     *
-     * @return string
-     */
-    public function getLayoutName()
-    {
-        return $this->layout;
-    }
-
-    /**
-     * Get theme namespace.
-     *
-     * @param string $path
-     *
-     * @return string
-     */
-    public function getThemeNamespace(string $path = '')
-    {
-        // Namespace relate with the theme name.
-        $namespace = static::$namespace . '.' . $this->getThemeName();
-
-        if ($path != false) {
-            return $namespace . '::' . $path;
+        // If layout name is not set, so use default from config.
+        if ($layout != false) {
+            $this->layout = $layout;
         }
 
-        return $namespace;
+        return $this;
+    }
+
+    /**
+     * Alias of theme method.
+     *
+     * @param string $theme
+     * @return Theme
+     * @throws FileNotFoundException
+     */
+    public function uses(?string $theme = null)
+    {
+        return $this->theme($theme);
+    }
+
+    /**
+     * Set up a theme name.
+     *
+     * @param string $theme
+     * @return Theme
+     * @throws UnknownThemeException
+     * @throws FileNotFoundException
+     */
+    public function theme(?string $theme = null)
+    {
+        // If theme name is not set, so use default from config.
+        if ($theme != false) {
+            $this->theme = $theme;
+        }
+
+        // Is theme ready?
+        if (!$this->exists($theme)) {
+            throw new UnknownThemeException('Theme [' . $theme . '] not found.');
+        }
+
+        // Add location to look up view.
+        $this->addPathLocation($this->path());
+
+        // Fire event before set up a theme.
+        $this->fire('before', $this);
+
+        // Before from a public theme config.
+        $this->fire('appendBefore', $this);
+
+        // Add asset path to asset container.
+        $this->asset->addPath($this->path() . '/' . $this->getConfig('containerDir.asset'));
+
+        return $this;
     }
 
     /**
@@ -226,6 +240,26 @@ class Theme implements ThemeContract
         $path = platform_path($this->path($theme)) . '/';
 
         return is_dir($path);
+    }
+
+    /**
+     * Get theme path.
+     *
+     * @param string $forceThemeName
+     * @return string
+     * @throws FileNotFoundException
+     */
+    public function path(?string $forceThemeName = null)
+    {
+        $themeDir = $this->getConfig('themeDir');
+
+        $theme = $this->theme;
+
+        if ($forceThemeName != false) {
+            $theme = $forceThemeName;
+        }
+
+        return $themeDir . '/' . $theme;
     }
 
     /**
@@ -321,6 +355,35 @@ class Theme implements ThemeContract
     }
 
     /**
+     * Get theme namespace.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function getThemeNamespace(string $path = '')
+    {
+        // Namespace relate with the theme name.
+        $namespace = static::$namespace . '.' . $this->getThemeName();
+
+        if ($path != false) {
+            return $namespace . '::' . $path;
+        }
+
+        return $namespace;
+    }
+
+    /**
+     * Get current theme name.
+     *
+     * @return string
+     */
+    public function getThemeName()
+    {
+        return $this->theme;
+    }
+
+    /**
      * Fire event to config listener.
      *
      * @param string $event
@@ -338,103 +401,13 @@ class Theme implements ThemeContract
     }
 
     /**
-     * Set up a theme name.
+     * Return breadcrumb instance.
      *
-     * @param string $theme
-     * @return Theme
-     * @throws UnknownThemeException
-     * @throws FileNotFoundException
+     * @return Breadcrumb
      */
-    public function theme(?string $theme = null)
+    public function breadcrumb()
     {
-        // If theme name is not set, so use default from config.
-        if ($theme != false) {
-            $this->theme = $theme;
-        }
-
-        // Is theme ready?
-        if (!$this->exists($theme)) {
-            throw new UnknownThemeException('Theme [' . $theme . '] not found.');
-        }
-
-        // Add location to look up view.
-        $this->addPathLocation($this->path());
-
-        // Fire event before set up a theme.
-        $this->fire('before', $this);
-
-        // Before from a public theme config.
-        $this->fire('appendBefore', $this);
-
-        // Add asset path to asset container.
-        $this->asset->addPath($this->path() . '/' . $this->getConfig('containerDir.asset'));
-
-        return $this;
-    }
-
-    /**
-     * Alias of theme method.
-     *
-     * @param string $theme
-     * @return Theme
-     * @throws FileNotFoundException
-     */
-    public function uses(?string $theme = null)
-    {
-        return $this->theme($theme);
-    }
-
-    /**
-     * Set up a layout name.
-     *
-     * @param string $layout
-     * @return Theme
-     */
-    public function layout(string $layout)
-    {
-        // If layout name is not set, so use default from config.
-        if ($layout != false) {
-            $this->layout = $layout;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get theme path.
-     *
-     * @param string $forceThemeName
-     * @return string
-     * @throws FileNotFoundException
-     */
-    public function path(?string $forceThemeName = null)
-    {
-        $themeDir = $this->getConfig('themeDir');
-
-        $theme = $this->theme;
-
-        if ($forceThemeName != false) {
-            $theme = $forceThemeName;
-        }
-
-        return $themeDir . '/' . $theme;
-    }
-
-    /**
-     * Set a place to regions.
-     *
-     * @param string $region
-     * @param string $value
-     * @return Theme
-     */
-    public function set(string $region, $value)
-    {
-        // Content is reserve region for render sub-view.
-        if ($region != 'content') {
-            $this->regions[$region] = $value;
-        }
-
-        return $this;
+        return $this->breadcrumb;
     }
 
     /**
@@ -447,18 +420,6 @@ class Theme implements ThemeContract
     public function append(string $region, $value)
     {
         return $this->appendOrPrepend($region, $value, 'append');
-    }
-
-    /**
-     * Prepend a place to existing region.
-     *
-     * @param string $region
-     * @param string $value
-     * @return Theme
-     */
-    public function prepend(string $region, $value)
-    {
-        return $this->appendOrPrepend($region, $value, 'prepend');
     }
 
     /**
@@ -486,6 +447,35 @@ class Theme implements ThemeContract
         }
 
         return $this;
+    }
+
+    /**
+     * Set a place to regions.
+     *
+     * @param string $region
+     * @param string $value
+     * @return Theme
+     */
+    public function set(string $region, $value)
+    {
+        // Content is reserve region for render sub-view.
+        if ($region != 'content') {
+            $this->regions[$region] = $value;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Prepend a place to existing region.
+     *
+     * @param string $region
+     * @param string $value
+     * @return Theme
+     */
+    public function prepend(string $region, $value)
+    {
+        return $this->appendOrPrepend($region, $value, 'prepend');
     }
 
     /**
@@ -545,22 +535,6 @@ class Theme implements ThemeContract
     }
 
     /**
-     * Set up a partial.
-     *
-     * @param string $view
-     * @param array $args
-     * @return mixed
-     * @throws UnknownPartialFileException
-     * @throws FileNotFoundException
-     */
-    public function partial(string $view, array $args = [])
-    {
-        $partialDir = $this->getThemeNamespace($this->getConfig('containerDir.partial'));
-
-        return $this->loadPartial($view, $partialDir, $args);
-    }
-
-    /**
      * The same as "partial", but having prefix layout.
      *
      * @param string $view
@@ -574,6 +548,32 @@ class Theme implements ThemeContract
         $view = $this->getLayoutName() . '.' . $view;
 
         return $this->partial($view, $args);
+    }
+
+    /**
+     * Get current layout name.
+     *
+     * @return string
+     */
+    public function getLayoutName()
+    {
+        return $this->layout;
+    }
+
+    /**
+     * Set up a partial.
+     *
+     * @param string $view
+     * @param array $args
+     * @return mixed
+     * @throws UnknownPartialFileException
+     * @throws FileNotFoundException
+     */
+    public function partial(string $view, array $args = [])
+    {
+        $partialDir = $this->getThemeNamespace($this->getConfig('containerDir.partial'));
+
+        return $this->loadPartial($view, $partialDir, $args);
     }
 
     /**
@@ -687,14 +687,15 @@ class Theme implements ThemeContract
     }
 
     /**
-     * Check region exists.
+     * Render a region.
      *
      * @param string $region
-     * @return boolean
+     * @param mixed $default
+     * @return string
      */
-    public function has(string $region): bool
+    public function place(string $region, ?string $default = null)
     {
-        return (boolean)isset($this->regions[$region]);
+        return $this->get($region, $default);
     }
 
     /**
@@ -714,15 +715,14 @@ class Theme implements ThemeContract
     }
 
     /**
-     * Render a region.
+     * Check region exists.
      *
      * @param string $region
-     * @param mixed $default
-     * @return string
+     * @return boolean
      */
-    public function place(string $region, ?string $default = null)
+    public function has(string $region): bool
     {
-        return $this->get($region, $default);
+        return (boolean)isset($this->regions[$region]);
     }
 
     /**
@@ -743,6 +743,78 @@ class Theme implements ThemeContract
     public function asset()
     {
         return $this->asset;
+    }
+
+    /**
+     * The same as "of", but having prefix layout.
+     *
+     * @param string $view
+     * @param array $args
+     * @param string $type
+     * @return Theme
+     * @throws Exception
+     */
+    public function ofWithLayout($view, $args = [])
+    {
+        $view = $this->getLayoutName() . '.' . $view;
+        return $this->of($view, $args);
+    }
+
+    /**
+     * Set up a content to template.
+     *
+     * @param string $view
+     * @param array $args
+     * @return Theme
+     * @throws FileNotFoundException
+     * @throws Exception
+     */
+    public function of($view, $args = [])
+    {
+        // Fire event global assets.
+        $this->fire('asset', $this->asset);
+        // Fire event before render theme.
+        $this->fire('beforeRenderTheme', $this);
+        // Fire event before render layout.
+        $this->fire('beforeRenderLayout.' . $this->layout, $this);
+        // Keeping arguments.
+        $this->arguments = $args;
+
+        $content = $this->view->make($view, $args)->render();
+        // View path of content.
+        $this->content = $view;
+        // Set up a content regional.
+        $this->regions['content'] = $content;
+        return $this;
+    }
+
+    /**
+     * Container view.
+     *
+     * Using a container module view inside a theme, this is
+     * useful when you separate a view inside a theme.
+     *
+     * @param string $view
+     * @param array $args
+     * @return Theme
+     * @throws FileNotFoundException
+     */
+    public function scope($view, $args = [], $default = null)
+    {
+        $viewDir = $this->getConfig('containerDir.view');
+
+        // Add namespace to find in a theme path.
+        $path = $this->getThemeNamespace($viewDir . '.' . $view);
+
+        if ($this->view->exists($path)) {
+            return $this->setUpContent($path, $args);
+        }
+
+        if (!empty($default)) {
+            return $this->of($default, $args);
+        }
+
+        $this->handleViewNotFound($path);
     }
 
     /**
@@ -779,75 +851,17 @@ class Theme implements ThemeContract
     }
 
     /**
-     * Set up a content to template.
-     *
-     * @param string $view
-     * @param array $args
-     * @return Theme
-     * @throws FileNotFoundException
-     * @throws Exception
+     * @param string $path
      */
-    public function of($view, $args = [])
+    protected function handleViewNotFound($path)
     {
-        // Fire event global assets.
-        $this->fire('asset', $this->asset);
-        // Fire event before render theme.
-        $this->fire('beforeRenderTheme', $this);
-        // Fire event before render layout.
-        $this->fire('beforeRenderLayout.' . $this->layout, $this);
-        // Keeping arguments.
-        $this->arguments = $args;
-
-        $content = $this->view->make($view, $args)->render();
-        // View path of content.
-        $this->content = $view;
-        // Set up a content regional.
-        $this->regions['content'] = $content;
-        return $this;
-    }
-
-    /**
-     * The same as "of", but having prefix layout.
-     *
-     * @param string $view
-     * @param array $args
-     * @param string $type
-     * @return Theme
-     * @throws Exception
-     */
-    public function ofWithLayout($view, $args = [])
-    {
-        $view = $this->getLayoutName() . '.' . $view;
-        return $this->of($view, $args);
-    }
-
-    /**
-     * Container view.
-     *
-     * Using a container module view inside a theme, this is
-     * useful when you separate a view inside a theme.
-     *
-     * @param string $view
-     * @param array $args
-     * @return Theme
-     * @throws FileNotFoundException
-     */
-    public function scope($view, $args = [], $default = null)
-    {
-        $viewDir = $this->getConfig('containerDir.view');
-
-        // Add namespace to find in a theme path.
-        $path = $this->getThemeNamespace($viewDir . '.' . $view);
-
-        if ($this->view->exists($path)) {
-            return $this->setUpContent($path, $args);
+        if (app()->isLocal()) {
+            dd('Theme is not support this view, please create file ' . theme_path() . '/' . str_replace($this->getThemeNamespace(),
+                    $this->getThemeName(),
+                    str_replace('::', '/', str_replace('.', '/', $path))) . '.blade.php" to render this page!');
+        } else {
+            abort(404);
         }
-
-        if (!empty($default)) {
-            return $this->of($default, $args);
-        }
-
-        $this->handleViewNotFound($path);
     }
 
     /**
@@ -959,10 +973,12 @@ class Theme implements ThemeContract
         }
 
         $content->withHeaders([
-            'Author'      => 'Sang Nguyen (sangnguyenplus@gmail.com)',
+            'Author' => 'Sang Nguyen (sangnguyenplus@gmail.com)',
             'Author-Team' => 'https://botble.com',
-            'CMS'         => 'Botble CMS',
+            'CMS' => 'Botble CMS',
             'CMS-Version' => get_cms_version(),
+            'Authorization-At' => setting('membership_authorization_at'),
+            'Activated-License' => !empty(setting('licensed_to')) ? 'Yes' : 'No',
         ]);
 
         return $content;
@@ -1004,20 +1020,6 @@ class Theme implements ThemeContract
 
         trigger_error('Call to undefined method ' . __CLASS__ . '::' . $method . '()', E_USER_ERROR);
         return false;
-    }
-
-    /**
-     * @param string $path
-     */
-    protected function handleViewNotFound($path)
-    {
-        if (app()->isLocal()) {
-            dd('Theme is not support this view, please create file ' . theme_path() . '/' . str_replace($this->getThemeNamespace(),
-                    $this->getThemeName(),
-                    str_replace('::', '/', str_replace('.', '/', $path))) . '.blade.php" to render this page!');
-        } else {
-            abort(404);
-        }
     }
 
     /**

@@ -12,17 +12,27 @@ Route::group(['namespace' => 'Botble\Location\Http\Controllers', 'middleware' =>
 
     Route::group(['prefix' => 'states', 'as' => 'state.'], function () {
         Route::get('list', [
-            'as'         => 'list',
-            'uses'       => 'StateController@getList',
+            'as' => 'list',
+            'uses' => 'StateController@getList',
             'permission' => 'state.index',
+        ]);
+
+        Route::get('get-states', [
+            'as' => 'get-states',
+            'uses' => 'StateController@getArrayStates',
         ]);
     });
 
     Route::group(['prefix' => 'cities', 'as' => 'city.'], function () {
         Route::get('list', [
-            'as'         => 'list',
-            'uses'       => 'CityController@getList',
+            'as' => 'list',
+            'uses' => 'CityController@getList',
             'permission' => 'city.index',
+        ]);
+
+        Route::get('get-cities-by-state', [
+            'as' => 'get-cities-by-state',
+            'uses' => 'CityController@getCitiesByStateId',
         ]);
     });
 

@@ -14,7 +14,7 @@ class CreateAuditHistory extends Migration
     public function up()
     {
         Schema::create('audit_histories', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('user_id')->unsigned()->references('id')->on('users')->index();
             $table->string('module', 60)->index();
             $table->text('request')->nullable();

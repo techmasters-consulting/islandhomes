@@ -48,7 +48,7 @@ class PropertyStatusEnum extends Enum
                 return Html::tag('span', self::SOLD()->label(), ['class' => 'label-danger status-label'])
                     ->toHtml();
             case self::RENTING:
-                return Html::tag('span', self::RENTING()->label(), ['class' => 'label-warning status-label'])
+                return Html::tag('span', self::RENTING()->label(), ['class' => 'label-success status-label'])
                     ->toHtml();
             case self::RENTED:
                 return Html::tag('span', self::RENTED()->label(), ['class' => 'label-danger status-label'])

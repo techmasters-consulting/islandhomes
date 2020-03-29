@@ -7,7 +7,8 @@
         <div class="form-group">
             <label for="keyword" class="control-label">{{ __('Keyword') }}</label>
             <div class="input-has-icon">
-                <input type="text" id="keyword" class="form-control" name="k" value="{{ request()->input('k') }}" placeholder="{{ __('Enter keyword...') }}">
+                <input type="text" id="keyword" class="form-control" name="k" value="{{ request()->input('k') }}"
+                       placeholder="{{ __('Enter keyword...') }}">
                 <i class="fas fa-search"></i>
             </div>
         </div>
@@ -15,8 +16,11 @@
             <div class="form-group">
                 <label for="select-type" class="control-label">{{ __('Type') }}</label>
                 <select name="type" id="select-type" class="form-control">
-                    <option value="sale" @if (request()->input('type') == 'sale') selected @endif>{{ __('Sale') }}</option>
-                    <option value="rent" @if (request()->input('type') == 'rent') selected @endif>{{ __('Rent') }}</option>
+                    <option value="">{{ __('-- Select --') }}</option>
+                    <option value="sale"
+                            @if (request()->input('type') == 'sale') selected @endif>{{ __('Sale') }}</option>
+                    <option value="rent"
+                            @if (request()->input('type') == 'rent') selected @endif>{{ __('Rent') }}</option>
                 </select>
             </div>
         @endif
@@ -24,8 +28,10 @@
         <div class="form-group">
             <label for="select-category" class="control-label">{{ __('Category') }}</label>
             <select name="category_id" id="select-category" class="form-control">
+                <option value="">{{ __('-- Select --') }}</option>
                 @foreach($categories as $categoryId => $categoryName)
-                    <option value="{{ $categoryId }}" @if (request()->input('category_id') == $categoryId) selected @endif>{{ $categoryName }}</option>
+                    <option value="{{ $categoryId }}"
+                            @if (request()->input('category_id') == $categoryId) selected @endif>{{ $categoryName }}</option>
                 @endforeach
             </select>
         </div>
@@ -34,28 +40,37 @@
             <div class="form-group">
                 <label for="select-bedroom" class="control-label">{{ __('Number of bedrooms') }}</label>
                 <select name="bedroom" id="select-bedroom" class="form-control">
+                    <option value="">{{ __('-- Select --') }}</option>
                     @for($i = 1; $i < 5; $i++)
-                        <option value="{{ $i }}" @if (request()->input('bedroom') == $i) selected @endif>{{ $i }} {{ $i == 1 ? __('room') : __('rooms') }}</option>
+                        <option value="{{ $i }}"
+                                @if (request()->input('bedroom') == $i) selected @endif>{{ $i }} {{ $i == 1 ? __('room') : __('rooms') }}</option>
                     @endfor
-                    <option value="5" @if (request()->input('bedroom') == 5) selected @endif>{{ __('5+ rooms') }}</option>
+                    <option value="5"
+                            @if (request()->input('bedroom') == 5) selected @endif>{{ __('5+ rooms') }}</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="select-bathroom" class="control-label">{{ __('Number of bathrooms') }}</label>
                 <select name="bathroom" id="select-bathroom" class="form-control">
+                    <option value="">{{ __('-- Select --') }}</option>
                     @for($i = 1; $i < 5; $i++)
-                        <option value="{{ $i }}" @if (request()->input('bathroom') == $i) selected @endif>{{ $i }} {{ $i == 1 ? __('room') : __('rooms') }}</option>
+                        <option value="{{ $i }}"
+                                @if (request()->input('bathroom') == $i) selected @endif>{{ $i }} {{ $i == 1 ? __('room') : __('rooms') }}</option>
                     @endfor
-                    <option value="5" @if (request()->input('bathroom') == 5) selected @endif>{{ __('5+ rooms') }}</option>
+                    <option value="5"
+                            @if (request()->input('bathroom') == 5) selected @endif>{{ __('5+ rooms') }}</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="select-floor" class="control-label">{{ __('Number of floors') }}</label>
                 <select name="floor" id="select-floor" class="form-control">
+                    <option value="">{{ __('-- Select --') }}</option>
                     @for($i = 1; $i < 5; $i++)
-                        <option value="{{ $i }}" @if (request()->input('floor') == $i) selected @endif>{{ $i }} {{ $i == 1 ? __('floor') : __('floors') }}</option>
+                        <option value="{{ $i }}"
+                                @if (request()->input('floor') == $i) selected @endif>{{ $i }} {{ $i == 1 ? __('floor') : __('floors') }}</option>
                     @endfor
-                    <option value="5" @if (request()->input('floor') == 5) selected @endif>{{ __('5+ floors') }}</option>
+                    <option value="5"
+                            @if (request()->input('floor') == 5) selected @endif>{{ __('5+ floors') }}</option>
                 </select>
             </div>
             <div class="form-group">
@@ -78,7 +93,8 @@
                     </div>
                     <div class="col-md-6">
                         <label for="max_square" class="control-label">{{ __('Square to') }}</label>
-                        <input type="number" name="max_square" class="form-control" id="max_square" value="{{ request()->input('max_square') }}">
+                        <input type="number" name="max_square" class="form-control" id="max_square"
+                               value="{{ request()->input('max_square') }}">
                     </div>
                 </div>
             </div>
@@ -86,10 +102,13 @@
             <div class="form-group">
                 <label for="select-blocks" class="control-label">{{ __('Number of blocks') }}</label>
                 <select name="blocks" id="select-blocks" class="form-control">
+                    <option value="">{{ __('-- Select --') }}</option>
                     @for($i = 1; $i < 5; $i++)
-                        <option value="{{ $i }}" @if (request()->input('blocks') == $i) selected @endif>{{ $i }} {{ $i == 1 ? __('block') : __('blocks') }}</option>
+                        <option value="{{ $i }}"
+                                @if (request()->input('blocks') == $i) selected @endif>{{ $i }} {{ $i == 1 ? __('block') : __('blocks') }}</option>
                     @endfor
-                    <option value="5" @if (request()->input('blocks') == 5) selected @endif>{{ __('5+ blocks') }}</option>
+                    <option value="5"
+                            @if (request()->input('blocks') == 5) selected @endif>{{ __('5+ blocks') }}</option>
                 </select>
             </div>
             <div class="form-group">

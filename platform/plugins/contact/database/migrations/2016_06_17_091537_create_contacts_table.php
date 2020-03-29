@@ -16,7 +16,7 @@ class CreateContactsTable extends Migration
         Schema::dropIfExists('contact_replies');
 
         Schema::create('contacts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 60);
             $table->string('email', 60);
             $table->string('phone', 60)->nullable();
@@ -28,7 +28,7 @@ class CreateContactsTable extends Migration
         });
 
         Schema::create('contact_replies', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->text('message');
             $table->integer('contact_id');
             $table->timestamps();

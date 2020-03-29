@@ -27,7 +27,7 @@ class ThemeController extends BaseController
      */
     public function index()
     {
-        page_title()->setTitle(trans('packages/theme::theme.theme'));
+        page_title()->setTitle(trans('packages/theme::theme.name'));
 
         if (File::exists(theme_path('.DS_Store'))) {
             File::delete(theme_path('.DS_Store'));

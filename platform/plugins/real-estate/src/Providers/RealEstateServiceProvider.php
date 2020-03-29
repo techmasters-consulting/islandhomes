@@ -2,6 +2,7 @@
 
 namespace Botble\RealEstate\Providers;
 
+use Botble\RealEstate\Commands\RenewPropertiesCommand;
 use Botble\RealEstate\Models\Consult;
 use Botble\RealEstate\Models\Currency;
 use Botble\RealEstate\Models\Category;
@@ -30,6 +31,7 @@ use Botble\RealEstate\Repositories\Interfaces\ProjectInterface;
 use Botble\RealEstate\Repositories\Interfaces\FeatureInterface;
 use Botble\RealEstate\Repositories\Interfaces\PropertyInterface;
 use Botble\RealEstate\Repositories\Interfaces\CategoryInterface;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
@@ -172,15 +174,17 @@ class RealEstateServiceProvider extends ServiceProvider
                 ])
                 ->registerItem([
                     'id'          => 'cms-plugins-real-estate-category',
-                    'priority'    => 4,
-                    'parent_id'   => 'cms-plugins-real-estate',
-                    'name'        => 'plugins/real-estate::category.name',
-                    'icon'        => null,
-                    'url'         => route('category.index'),
+                    'priority' => 4,
+                    'parent_id' => 'cms-plugins-real-estate',
+                    'name' => 'plugins/real-estate::category.name',
+                    'icon' => null,
+                    'url' => route('category.index'),
                     'permissions' => ['category.index'],
                 ]);
 
         });
+
+        $this->app->register(CommandServiceProvider::class);
 
         $this->app->booted(function () {
             $modules = [
@@ -203,6 +207,8 @@ class RealEstateServiceProvider extends ServiceProvider
             SlugHelper::setPrefix(Property::class, 'properties');
 
             SeoHelper::registerModule($modules);
+
+            $this->app->make(Schedule::class)->command(RenewPropertiesCommand::class)->dailyAt('01:00');
         });
 
         $this->app->register(HookServiceProvider::class);

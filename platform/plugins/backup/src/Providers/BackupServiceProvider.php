@@ -27,6 +27,7 @@ class BackupServiceProvider extends ServiceProvider
             ->publishAssets();
 
         $this->app->register(HookServiceProvider::class);
+        $this->app->register(CommandServiceProvider::class);
 
         Event::listen(RouteMatched::class, function () {
             dashboard_menu()->registerItem([

@@ -7,6 +7,7 @@ use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Base\Models\BaseModel;
 use Botble\RealEstate\Models\Currency;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Package extends BaseModel
 {
@@ -25,9 +26,11 @@ class Package extends BaseModel
     protected $fillable = [
         'name',
         'price',
+        'usd_price',
         'currency_id',
         'percent_save',
         'number_of_listings',
+        'account_limit',
         'order',
         'is_default',
         'status',
@@ -46,5 +49,13 @@ class Package extends BaseModel
     public function currency()
     {
         return $this->belongsTo(Currency::class)->withDefault();
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function accounts(): BelongsToMany
+    {
+        return $this->belongsToMany(Vendor::class, 'vendor_packages', 'package_id', 'vendor_id');
     }
 }

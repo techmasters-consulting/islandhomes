@@ -58,6 +58,10 @@
 .topmenu {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     border-bottom: none;
+
+    .navbar-collapse {
+        text-align: center;
+    }
 }
 
 .single-post .head {
@@ -790,4 +794,67 @@ p:empty {
     font-size: 15px;
     padding: 10px;
     margin-left: 20px;
+}
+
+.blii {
+    .status {
+        position: absolute;
+        z-index: 9;
+        right: 10px;
+        top: 10px;
+    }
+}
+
+.status-label {
+    font-size: 1rem;
+    color: #fff;
+    padding: 3px 7px;
+    background-color: $primaryColor;
+
+    &.label-success {
+        background-color: #36c6d3;
+    }
+
+    &.label-danger {
+        background-color: #ed6b75;
+    }
+
+    &.label-warning {
+        background-color: #f1c40f;
+    }
+
+    &.label-info {
+        background-color: #659be0;
+    }
+}
+
+.home_banner {
+    height: 60vh;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    font-weight: 600;
+
+    .topsearch {
+        position: absolute;
+        width: 50%;
+        text-align: center;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        right: 0;
+        z-index: 9;
+        margin: auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .home_banner {
+        .topsearch {
+            width: 100%;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
 }

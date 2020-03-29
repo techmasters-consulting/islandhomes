@@ -13,7 +13,7 @@ class CreateSlugTable extends Migration
     public function up()
     {
         Schema::create('slugs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('key', 255);
             $table->integer('reference_id');
             $table->string('reference', 120);

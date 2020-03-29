@@ -54,7 +54,8 @@
 
 <div class="action_footer">
     <a href="#" class="cd-top"><i class="fas fa-arrow-up"></i></a>
-    <a href="tel:{{ theme_option('hotline') }}" style="color: white;font-size: 18px;"><i class="fas fa-phone"></i> <span>  &nbsp;{{ theme_option('hotline') }}</span></a>
+    <a href="tel:{{ theme_option('hotline') }}" style="color: white;font-size: 17px;"><i class="fas fa-phone"></i>
+        <span>  &nbsp;{{ theme_option('hotline') }}</span></a>
 </div>
 <div id="loading">
     <div class="lds-hourglass">

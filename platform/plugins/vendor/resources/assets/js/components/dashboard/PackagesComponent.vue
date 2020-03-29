@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="alert alert-info current-package">
-            <p>Your Credits: <strong>{{ account.credits }} credits</strong></p>
+            <p>Your Credits: <strong>{{ account.credits }} {{ __('credits')}}</strong></p>
         </div>
         <div class="packages-listing">
             <div class="row flex-items-xs-middle flex-items-xs-center">
@@ -12,15 +12,25 @@
                         color="#808080"
                     />
                 </div>
-                <div :class="data.length === 2 ? 'col-xs-12 col-lg-6' : 'col-xs-12 col-lg-4'" v-for="item in data" :key="item.id" v-if="!isLoading && data.length && account">
+                <div :class="data.length === 2 ? 'col-xs-12 col-lg-6' : 'col-xs-12 col-lg-4'" :key="item.id"
+                     style="margin-top: 30px" v-for="item in data" v-if="!isLoading && data.length && account">
                     <div class="card text-xs-center">
                         <div class="card-block">
                             <h4 class="card-title">
                                 {{ item.name }}
                             </h4>
                             <ul class="list-group">
-                                <li class="list-group-item">${{ parseFloat(item.price / item.number_of_listings).toFixed(2) }}/{{ __('per post') }}</li>
-                                <li class="list-group-item">${{ item.price }} {{ __('Total') }} (Save {{ item.percent_save }}%)</li>
+                                <li class="list-group-item" v-if="item.price">{{ item.price_per_post_text }} / {{
+                                    __('per post') }}
+                                </li>
+                                <li class="list-group-item" v-if="!item.price">{{ __('Free') }} {{
+                                    item.number_of_listings }} {{ __('post(s)') }}
+                                </li>
+
+                                <li class="list-group-item" v-if="item.price">{{ item.price_text }} {{ __('Total') }}
+                                    ({{ __('Save')}} {{ item.percent_save }}%)
+                                </li>
+                                <li class="list-group-item" v-if="!item.price">&mdash;</li>
                             </ul>
                             <button :class="isSubscribing && currentPackageId === item.id ? 'btn btn-primary mt-2 button-loading' : 'btn btn-primary mt-2'" @click="postSubscribe(item.id)">{{ __('Purchase') }}</button>
                         </div>
@@ -94,8 +104,9 @@
                                 window.location.href = res.data.data.next_page;
                             } else {
                                 this.account = res.data.data;
+                                Botble.showSuccess(res.data.message);
+                                this.getData();
                             }
-                            Botble.showSuccess(res.data.message);
                         }
                         this.isSubscribing = false;
                     });

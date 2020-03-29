@@ -9,14 +9,23 @@
     <link rel="canonical" href="{{ url('/') }}">
     <meta http-equiv="content-language" content="en">
 
-    {!! Theme::header() !!}
+{!! Theme::header() !!}
 
-    <!-- Fonts-->
-    <link href="https://fonts.googleapis.com/css?family={{ theme_option('primary_font', 'Nunito Sans') }}:300,600,700,800" rel="stylesheet" type="text/css">
+<!-- Fonts-->
+    <link
+        href="https://fonts.googleapis.com/css?family={{ theme_option('primary_font', 'Nunito Sans') }}:300,600,700,800"
+        rel="stylesheet" type="text/css">
     <!-- CSS Library-->
 
     <style>
-        body {font-family: '{{ theme_option('primary_font', 'Nunito Sans') }}', sans-serif !important;}
+        :root {
+            --primary-color: {{ theme_option('primary_color', '#1d5f6f') }};
+            --primary-color-hover: {{ theme_option('primary_color_hover', '#063a5d') }};
+        }
+
+        body {
+            font-family: '{{ theme_option('primary_font', 'Nunito Sans') }}', sans-serif !important;
+        }
     </style>
 </head>
 <body>
@@ -87,7 +96,8 @@
                             ])
                         !!}
                         @if (is_plugin_active('vendor'))
-                            <a class="btn btn-primary add-property" href="{{ route('public.vendor.properties.index') }}">
+                            <a class="btn btn-primary add-property"
+                               href="{{ route('public.vendor.properties.index') }}">
                                 <i class="fas fa-plus-circle"></i> {{ __('Add Property') }}
                             </a>
                         @endif
@@ -96,42 +106,39 @@
             </div>
         </div>
     </div>
-    @php $isHome = url()->current() == route('public.single'); @endphp
-    @if ($isHome)
-        @if (theme_option('home_banner'))
-            <img src="{{ get_image_url(theme_option('home_banner')) }}" class="banner" alt="Banner">
-        @else
-            <img src="{{ Theme::asset()->url('images/banner.jpg') }}" class="banner" alt="Banner">
-        @endif
-    @endif
-    @if ($isHome)
-        <div class="container-fluid topsearch">
-            <div class="row">
-                <div class="col-md-6 offset-md-3 col-sm-10 offset-sm-1">
-                    <form action="{{ route('public.projects') }}" method="GET" id="frmhomesearch">
-                        <div class="typesearch" id="hometypesearch">
-                            <a href="javascript:void(0)" class="active" rel="project" data-url="{{ route('public.projects') }}">{{ __('Projects') }}</a>
-                            <a href="javascript:void(0)" rel="sale" data-url="{{ route('public.properties') }}">{{ __('Sale') }}</a>
-                            <a href="javascript:void(0)" rel="rent" data-url="{{ route('public.properties') }}">{{ __('Rent') }}</a>
+    @if (url()->current() == route('public.single'))
+        <div class="home_banner"
+             style="background-image: url({{ theme_option('home_banner') ? get_image_url(theme_option('home_banner')) : Theme::asset()->url('images/banner.jpg') }})">
+            <div class="topsearch">
+                @if (theme_option('home_banner_description'))<h1 class="text-center text-white mb-4"
+                                                                 style="font-size: 36px; font-weight: 600;">{{ theme_option('home_banner_description') }}</h1>@endif
+                <form action="{{ route('public.projects') }}" method="GET" id="frmhomesearch">
+                    <div class="typesearch" id="hometypesearch">
+                        <a href="javascript:void(0)" class="active" rel="project"
+                           data-url="{{ route('public.projects') }}">{{ __('Projects') }}</a>
+                        <a href="javascript:void(0)" rel="sale"
+                           data-url="{{ route('public.properties') }}">{{ __('Sale') }}</a>
+                        <a href="javascript:void(0)" rel="rent"
+                           data-url="{{ route('public.properties') }}">{{ __('Rent') }}</a>
+                    </div>
+                    <div class="input-group input-group-lg">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><img
+                                    src="{{ Theme::asset()->url('images/search_icon.png') }}" alt="search"></span>
                         </div>
-                        <div class="input-group input-group-lg">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><img src="{{ Theme::asset()->url('images/search_icon.png') }}" alt="search"></span>
-                            </div>
-                            <input type="hidden" name="type" value="project" id="txttypesearch">
-                            <input type="text" class="form-control" name="k"
-                                   placeholder="{{ __('Enter keyword...') }}" id="txtkey" autocomplete="off">
-                            <div class="input-group-append">
-                                <button class="btn btn-orange" type="submit">{{ __('Search') }}</button>
-                            </div>
+                        <input type="hidden" name="type" value="project" id="txttypesearch">
+                        <input type="text" class="form-control" name="k"
+                               placeholder="{{ __('Enter keyword...') }}" id="txtkey" autocomplete="off">
+                        <div class="input-group-append">
+                            <button class="btn btn-orange" type="submit">{{ __('Search') }}</button>
                         </div>
-                        <div class="listsuggest stylebar">
+                    </div>
+                    <div class="listsuggest stylebar">
 
-                        </div>
-                    </form>
-
-                </div>
+                    </div>
+                </form>
             </div>
+        </div>
         </div>
     @endif
 </header>

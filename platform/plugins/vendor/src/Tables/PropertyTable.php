@@ -44,6 +44,9 @@ class PropertyTable extends \Botble\RealEstate\Tables\PropertyTable
             })
             ->editColumn('status', function ($item) {
                 return $item->status->toHtml();
+            })
+            ->editColumn('moderation_status', function ($item) {
+                return $item->moderation_status->toHtml();
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
@@ -70,6 +73,7 @@ class PropertyTable extends \Botble\RealEstate\Tables\PropertyTable
                 're_properties.images',
                 're_properties.created_at',
                 're_properties.status',
+                're_properties.moderation_status',
             ])
             ->where([
                 're_properties.author_id'   => auth()->guard('vendor')->user()->getKey(),

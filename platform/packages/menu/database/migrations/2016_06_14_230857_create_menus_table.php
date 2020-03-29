@@ -13,7 +13,7 @@ class CreateMenusTable extends Migration
     public function up()
     {
         Schema::create('menus', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
+            $table->id()->unsigned();
             $table->string('name', 120);
             $table->string('slug', 120)->unique()->nullable();
             $table->string('status', 60)->default('published');
@@ -21,7 +21,7 @@ class CreateMenusTable extends Migration
         });
 
         Schema::create('menu_nodes', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
+            $table->id()->unsigned();
             $table->integer('menu_id')->unsigned()->index()->references('id')->on('menus');
             $table->integer('parent_id')->default(0)->unsigned()->index();
             $table->integer('related_id')->default(0)->unsigned()->index();
@@ -37,7 +37,7 @@ class CreateMenusTable extends Migration
         });
 
         Schema::create('menu_locations', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('menu_id')->unsigned();
             $table->string('location', 120);
             $table->timestamps();

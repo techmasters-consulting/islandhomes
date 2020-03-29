@@ -18,7 +18,6 @@ class CityRequest extends Request
     {
         return [
             'name'       => 'required',
-            'slug'       => 'required|unique:cities,slug,' . $this->route('city'),
             'country_id' => 'required',
             'status'     => Rule::in(BaseStatusEnum::values()),
         ];

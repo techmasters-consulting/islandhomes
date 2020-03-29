@@ -15,7 +15,7 @@ class CreateRevisionsTable extends Migration
         Schema::dropIfExists('revisions');
 
         Schema::create('revisions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('revisionable_type');
             $table->integer('revisionable_id');
             $table->integer('user_id')->nullable();

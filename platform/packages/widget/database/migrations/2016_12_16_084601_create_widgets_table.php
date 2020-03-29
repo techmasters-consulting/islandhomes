@@ -14,7 +14,7 @@ class CreateWidgetsTable extends Migration
     public function up()
     {
         Schema::create('widgets', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('widget_id', 120);
             $table->string('sidebar_id', 120);
             $table->string('theme', 120);

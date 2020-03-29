@@ -91,9 +91,15 @@ class PropertyController extends BaseController
             $request->merge(['author_type' => Vendor::class]);
         }
 
-        $request->merge(['images' => json_encode($request->input('images', []))]);
+        $request->merge([
+            'expire_date' => now()->addDays(45),
+            'images' => json_encode($request->input('images', [])),
+        ]);
 
-        $property = $this->propertyRepository->create($request->input());
+        $property = $this->propertyRepository->getModel();
+        $property = $property->fill($request->input());
+        $property->moderation_status = $request->input('moderation_status');
+        $property->save();
 
         event(new CreatedContentEvent(PROPERTY_MODULE_SCREEN_NAME, $request, $property));
 
@@ -133,13 +139,14 @@ class PropertyController extends BaseController
     public function update($id, PropertyRequest $request, BaseHttpResponse $response)
     {
         $property = $this->propertyRepository->findOrFail($id);
-        $property->fill($request->input());
+        $property->fill($request->except(['expire_date']));
 
         if (is_plugin_active('vendor')) {
             $property->author_type = Vendor::class;
         }
 
         $property->images = json_encode($request->input('images', []));
+        $property->moderation_status = $request->input('moderation_status');
 
         $this->propertyRepository->createOrUpdate($property);
 

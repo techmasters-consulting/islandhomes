@@ -16,6 +16,8 @@ class AddColumnSlugIntoCitiesTable extends Migration
     {
         Schema::table('cities', function (Blueprint $table) {
             $table->string('slug', 120)->unique()->nullable();
+            $table->tinyInteger('is_featured')->default(0);
+            $table->string('image', 255)->nullable();
         });
 
         $cities = City::get();
@@ -34,7 +36,7 @@ class AddColumnSlugIntoCitiesTable extends Migration
     public function down()
     {
         Schema::table('cities', function (Blueprint $table) {
-            $table->dropColumn('slug');
+            $table->dropColumn(['slug', 'is_featured', 'image']);
         });
     }
 }

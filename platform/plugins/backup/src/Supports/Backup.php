@@ -3,7 +3,6 @@
 namespace Botble\Backup\Supports;
 
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use ZipArchive;
@@ -35,12 +34,10 @@ class Backup
     }
 
     /**
-     * @param Request $request
      * @return array
-     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function createBackupFolder(Request $request)
+    public function createBackupFolder($name, $description = null)
     {
         $backupFolder = $this->createFolder(storage_path('app/backup'));
         $now = now(config('app.timezone'))->format('Y-m-d-H-i-s');
@@ -54,9 +51,9 @@ class Backup
         }
 
         $data[$now] = [
-            'name'        => $request->input('name'),
-            'description' => $request->input('description'),
-            'date'        => now(config('app.timezone'))->toDateTimeString(),
+            'name' => $name,
+            'description' => $description,
+            'date' => now(config('app.timezone'))->toDateTimeString(),
         ];
         save_file_data($file, $data);
 
@@ -96,7 +93,6 @@ class Backup
 
     /**
      * @return bool
-     *
      * @throws Exception
      */
     public function backupDb()
@@ -256,7 +252,6 @@ class Backup
      * @param string $path
      * @param string $file
      * @return bool
-     *
      * @throws Exception
      */
     public function restoreDb($file, $path)
@@ -282,7 +277,6 @@ class Backup
      * @param string $fileName
      * @param string $pathTo
      * @return bool
-     *
      */
     public function restore($fileName, $pathTo)
     {

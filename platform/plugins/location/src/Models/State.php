@@ -23,6 +23,7 @@ class State extends BaseModel
      */
     protected $fillable = [
         'name',
+        'abbreviation',
         'country_id',
         'order',
         'is_default',

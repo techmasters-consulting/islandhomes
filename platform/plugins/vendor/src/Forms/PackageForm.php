@@ -55,20 +55,32 @@ class PackageForm extends FormAbstract
             ->add('price', 'text', [
                 'label'      => trans('plugins/vendor::package.price'),
                 'label_attr' => ['class' => 'control-label'],
-                'wrapper'    => [
+                'wrapper' => [
                     'class' => 'form-group col-md-6',
                 ],
-                'attr'       => [
-                    'id'          => 'price-number',
+                'attr' => [
+                    'id' => 'price-number',
                     'placeholder' => trans('plugins/vendor::package.price'),
-                    'class'       => 'form-control input-mask-number',
+                    'class' => 'form-control input-mask-number',
+                ],
+            ])
+            ->add('usd_price', 'text', [
+                'label' => 'Manual Currency exchange to USD',
+                'label_attr' => ['class' => 'control-label'],
+                'wrapper' => [
+                    'class' => 'form-group col-md-6',
+                ],
+                'attr' => [
+                    'id' => 'usd_price-number',
+                    'placeholder' => trans('plugins/vendor::package.usd_price'),
+                    'class' => 'form-control input-mask-number',
                 ],
             ])
             ->add('currency_id', 'customSelect', [
                 'label'      => trans('plugins/vendor::package.currency'),
                 'label_attr' => ['class' => 'control-label'],
                 'wrapper'    => [
-                    'class' => 'form-group col-md-6',
+                    'class' => 'form-group col-md-12',
                 ],
                 'attr'       => [
                     'class' => 'form-control select-full',
@@ -85,7 +97,7 @@ class PackageForm extends FormAbstract
                 'label'      => trans('plugins/vendor::package.percent_save'),
                 'label_attr' => ['class' => 'control-label'],
                 'wrapper'    => [
-                    'class' => 'form-group col-md-6',
+                    'class' => 'form-group col-md-4',
                 ],
                 'attr'       => [
                     'id'          => 'percent-save-number',
@@ -94,15 +106,27 @@ class PackageForm extends FormAbstract
                 ],
             ])
             ->add('number_of_listings', 'text', [
-                'label'      => trans('plugins/vendor::package.number_of_listings'),
+                'label' => trans('plugins/vendor::package.number_of_listings'),
                 'label_attr' => ['class' => 'control-label'],
-                'wrapper'    => [
-                    'class' => 'form-group col-md-6',
+                'wrapper' => [
+                    'class' => 'form-group col-md-4',
                 ],
-                'attr'       => [
-                    'id'          => 'price-number',
+                'attr' => [
+                    'id' => 'price-number',
                     'placeholder' => trans('plugins/vendor::package.number_of_listings'),
-                    'class'       => 'form-control input-mask-number',
+                    'class' => 'form-control input-mask-number',
+                ],
+            ])
+            ->add('account_limit', 'text', [
+                'label' => trans('plugins/vendor::package.account_limit'),
+                'label_attr' => ['class' => 'control-label'],
+                'wrapper' => [
+                    'class' => 'form-group col-md-4',
+                ],
+                'attr' => [
+                    'id' => 'percent-save-number',
+                    'placeholder' => trans('plugins/vendor::package.account_limit_placeholder'),
+                    'class' => 'form-control input-mask-number',
                 ],
             ])
             ->add('rowClose2', 'html', [

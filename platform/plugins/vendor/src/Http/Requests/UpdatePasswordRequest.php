@@ -16,8 +16,7 @@ class UpdatePasswordRequest extends Request
     public function rules()
     {
         return [
-            'current_password' => 'required|min:6|max:60',
-            'password'         => 'required|min:6|max:60|confirmed',
+            'password' => 'required|min:6|max:60|confirmed',
         ];
     }
 }

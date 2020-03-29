@@ -41,14 +41,14 @@ class CityTable extends TableAbstract
     /**
      * CityTable constructor.
      * @param DataTables $table
-     * @param UrlGenerator $urlDevTool
+     * @param UrlGenerator $urlGenerator
      * @param CityInterface $cityRepository
      * @param CountryInterface $countryRepository
      * @param StateInterface $stateRepository
      */
     public function __construct(
         DataTables $table,
-        UrlGenerator $urlDevTool,
+        UrlGenerator $urlGenerator,
         CityInterface $cityRepository,
         CountryInterface $countryRepository,
         StateInterface $stateRepository
@@ -57,7 +57,7 @@ class CityTable extends TableAbstract
         $this->countryRepository = $countryRepository;
         $this->stateRepository = $stateRepository;
         $this->setOption('id', 'table-plugins-city');
-        parent::__construct($table, $urlDevTool);
+        parent::__construct($table, $urlGenerator);
 
         if (!Auth::user()->hasAnyPermission(['city.edit', 'city.destroy'])) {
             $this->hasOperations = false;
@@ -208,13 +208,11 @@ class CityTable extends TableAbstract
                 'title'    => trans('plugins/location::city.state'),
                 'type'     => 'select',
                 'validate' => 'required|max:120',
-                'callback' => 'getStates',
             ],
             'cities.country_id' => [
                 'title'    => trans('plugins/location::city.country'),
                 'type'     => 'select',
                 'validate' => 'required|max:120',
-                'callback' => 'getCountries',
             ],
             'cities.status'     => [
                 'title'    => trans('core/base::tables.status'),
@@ -227,21 +225,5 @@ class CityTable extends TableAbstract
                 'type'  => 'date',
             ],
         ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getStates()
-    {
-        return $this->stateRepository->pluck('states.name', 'states.id');
-    }
-
-    /**
-     * @return array
-     */
-    public function getCountries()
-    {
-        return $this->countryRepository->pluck('countries.name', 'countries.id');
     }
 }

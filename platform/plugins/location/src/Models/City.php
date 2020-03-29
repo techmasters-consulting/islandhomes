@@ -26,6 +26,7 @@ class City extends BaseModel
         'slug',
         'state_id',
         'country_id',
+        'record_id',
         'order',
         'is_default',
         'is_featured',

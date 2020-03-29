@@ -8,6 +8,7 @@ use Botble\Blog\Repositories\Interfaces\PostInterface;
 use Botble\Career\Models\Career;
 use Botble\Career\Repositories\Interfaces\CareerInterface;
 use Botble\Page\Repositories\Interfaces\PageInterface;
+use Botble\RealEstate\Enums\ModerationStatusEnum;
 use Botble\RealEstate\Enums\PropertyStatusEnum;
 use Botble\RealEstate\Enums\PropertyTypeEnum;
 use Botble\RealEstate\Models\Project;
@@ -149,9 +150,15 @@ class FlexHomeController extends PublicController
             abort(404);
         }
 
-        $property = $propertyRepository->getFirstBy([
-            'id' => $slug->reference_id,
-        ], ['*'], ['features', 'project', 'currency', 'author', 'category']);
+        $property = $propertyRepository->advancedGet([
+            'condition' => [
+                're_properties.id' => $slug->reference_id,
+                're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
+                ['re_properties.expire_date', '>=', now(config('app.timezone'))->toDateTimeString()],
+            ],
+            'with' => ['features', 'project', 'currency', 'author', 'category'],
+            'take' => 1,
+        ]);
 
         if (!$property) {
             abort(404);
@@ -222,9 +229,10 @@ class FlexHomeController extends PublicController
 
         $params = [
             'paginate' => [
-                'per_page'      => theme_option('number_of_projects_per_page', 12),
+                'per_page' => theme_option('number_of_projects_per_page', 12),
                 'current_paged' => $request->input('page', 1),
             ],
+            'order_by' => ['re_projects.created_at' => 'DESC'],
         ];
 
         $projects = $projectRepository->getProjects($filters, $params);
@@ -273,9 +281,10 @@ class FlexHomeController extends PublicController
 
         $params = [
             'paginate' => [
-                'per_page'      => theme_option('number_of_properties_per_page', 12),
+                'per_page' => theme_option('number_of_properties_per_page', 12),
                 'current_paged' => $request->input('page', 1),
             ],
+            'order_by' => ['re_properties.created_at' => 'DESC'],
         ];
 
         $properties = $propertyRepository->getProperties($filters, $params);
@@ -309,11 +318,11 @@ class FlexHomeController extends PublicController
     }
 
     /**
+     * @param Request $request
      * @param CareerInterface $careerRepository
      * @return \Illuminate\Http\Response|\Response
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function careers(CareerInterface $careerRepository)
+    public function careers(Request $request, CareerInterface $careerRepository)
     {
         SeoHelper::setTitle(__('Careers'));
 
@@ -321,7 +330,16 @@ class FlexHomeController extends PublicController
             ->add(__('Home'), url('/'))
             ->add(__('Careers'), route('public.careers'));
 
-        $careers = $careerRepository->allBy(['status' => BaseStatusEnum::PUBLISHED]);
+        $careers = $careerRepository->advancedGet([
+            'condition' => [
+                'careers.status' => BaseStatusEnum::PUBLISHED,
+            ],
+            'paginate' => [
+                'per_page' => 10,
+                'current_paged' => $request->input('page', 1),
+            ],
+            'order_by' => ['careers.created_at' => 'DESC'],
+        ]);
 
         return Theme::scope('careers', compact('careers'))->render();
     }
@@ -381,9 +399,10 @@ class FlexHomeController extends PublicController
 
         $params = [
             'paginate' => [
-                'per_page'      => theme_option('number_of_projects_per_page', 12),
+                'per_page' => theme_option('number_of_projects_per_page', 12),
                 'current_paged' => $request->input('page', 1),
             ],
+            'order_by' => ['re_projects.created_at' => 'DESC'],
         ];
 
         $projects = $projectRepository->getProjects($filters, $params);
@@ -414,9 +433,10 @@ class FlexHomeController extends PublicController
 
         $params = [
             'paginate' => [
-                'per_page'      => theme_option('number_of_properties_per_page', 12),
+                'per_page' => theme_option('number_of_properties_per_page', 12),
                 'current_paged' => $request->input('page', 1),
             ],
+            'order_by' => ['re_properties.created_at' => 'DESC'],
         ];
 
         $properties = $propertyRepository->getProperties($filters, $params);
@@ -444,44 +464,56 @@ class FlexHomeController extends PublicController
                 $properties = app(PropertyInterface::class)->advancedGet([
                     'condition' => [
                         're_properties.is_featured' => true,
-                        're_properties.type'        => PropertyTypeEnum::RENT,
-                        're_properties.status'      => PropertyStatusEnum::RENTING,
+                        're_properties.type' => PropertyTypeEnum::RENT,
+                        ['re_properties.status', 'IN', [PropertyStatusEnum::RENTING, PropertyStatusEnum::RENTED]],
+                        ['re_properties.expire_date', '>=', now(config('app.timezone'))->toDateTimeString()],
+                        're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
                     ],
-                    'take'      => theme_option('number_of_properties_for_sale', 8),
-                    'with'      => ['currency'],
+                    'take' => theme_option('number_of_properties_for_sale', 8),
+                    'with' => ['currency'],
+                    'order_by' => ['re_properties.created_at' => 'DESC'],
                 ]);
                 break;
             case 'sale':
                 $properties = app(PropertyInterface::class)->advancedGet([
                     'condition' => [
                         're_properties.is_featured' => true,
-                        're_properties.type'        => PropertyTypeEnum::SALE,
-                        're_properties.status'      => PropertyStatusEnum::SELLING,
+                        're_properties.type' => PropertyTypeEnum::SALE,
+                        ['re_properties.status', 'IN', [PropertyStatusEnum::SELLING, PropertyStatusEnum::SOLD, PropertyStatusEnum::PRE_SALE]],
+                        ['re_properties.expire_date', '>=', now(config('app.timezone'))->toDateTimeString()],
+                        're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
                     ],
-                    'take'      => theme_option('number_of_properties_for_sale', 8),
-                    'with'      => ['currency'],
+                    'take' => theme_option('number_of_properties_for_sale', 8),
+                    'with' => ['currency'],
+                    'order_by' => ['re_properties.created_at' => 'DESC'],
                 ]);
                 break;
             case 'project-properties-for-sell':
                 $properties = app(PropertyInterface::class)->advancedGet([
                     'condition' => [
                         're_properties.project_id' => $request->input('project_id'),
-                        're_properties.type'       => PropertyTypeEnum::SALE,
-                        're_properties.status'     => PropertyStatusEnum::SELLING,
+                        're_properties.type' => PropertyTypeEnum::SALE,
+                        ['re_properties.status', 'IN', [PropertyStatusEnum::SELLING, PropertyStatusEnum::SOLD, PropertyStatusEnum::PRE_SALE]],
+                        ['re_properties.expire_date', '>=', now(config('app.timezone'))->toDateTimeString()],
+                        're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
                     ],
-                    'take'      => theme_option('number_of_properties_for_sale', 8),
-                    'with'      => ['currency'],
+                    'take' => theme_option('number_of_properties_for_sale', 8),
+                    'with' => ['currency'],
+                    'order_by' => ['re_properties.created_at' => 'DESC'],
                 ]);
                 break;
             case 'project-properties-for-rent':
                 $properties = app(PropertyInterface::class)->advancedGet([
                     'condition' => [
                         're_properties.project_id' => $request->input('project_id'),
-                        're_properties.type'       => PropertyTypeEnum::RENT,
-                        're_properties.status'     => PropertyStatusEnum::RENTING,
+                        're_properties.type' => PropertyTypeEnum::RENT,
+                        ['re_properties.status', 'IN', [PropertyStatusEnum::RENTING, PropertyStatusEnum::RENTED]],
+                        ['re_properties.expire_date', '>=', now(config('app.timezone'))->toDateTimeString()],
+                        're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
                     ],
-                    'take'      => theme_option('number_of_properties_for_sale', 8),
-                    'with'      => ['currency'],
+                    'take' => theme_option('number_of_properties_for_sale', 8),
+                    'with' => ['currency'],
+                    'order_by' => ['re_properties.created_at' => 'DESC'],
                 ]);
                 break;
         }

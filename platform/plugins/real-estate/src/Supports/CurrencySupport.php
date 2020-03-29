@@ -36,11 +36,14 @@ class CurrencySupport
             $currency = app(CurrencyInterface::class)->getFirstBy(['is_default' => 1]);
 
             if (!$currency) {
-                $currency = new Currency();
+                $currency = new Currency;
             }
 
             $this->currency = $currency;
         }
+
+        $this->setApplicationCurrency($currency);
+
         return $currency;
     }
 }

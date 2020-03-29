@@ -2,6 +2,7 @@
 
 namespace Botble\RealEstate\Repositories\Eloquent;
 
+use Botble\RealEstate\Enums\ModerationStatusEnum;
 use Botble\RealEstate\Enums\PropertyStatusEnum;
 use Botble\RealEstate\Enums\PropertyTypeEnum;
 use Botble\RealEstate\Repositories\Interfaces\PropertyInterface;
@@ -21,16 +22,20 @@ class PropertyRepository extends RepositoriesAbstract implements PropertyInterfa
             ->where('id', '<>', $propertyId);
 
         $params = [
-            'condition' => [],
-            'order_by'  => [
-                'created_at' => 'DESC',
+            'condition' => [
+                ['re_properties.expire_date', '>=', now(config('app.timezone'))->toDateTimeString()],
+                ['re_properties.status', 'NOT_IN', [PropertyStatusEnum::NOT_AVAILABLE]],
+                're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
             ],
-            'take'      => $limit,
-            'paginate'  => [
-                'per_page'      => 12,
+            'order_by' => [
+                're_properties.created_at' => 'DESC',
+            ],
+            'take' => $limit,
+            'paginate' => [
+                'per_page' => 12,
                 'current_paged' => 1,
             ],
-            'select'    => [
+            'select' => [
                 're_properties.*',
             ],
             'with'      => [],
@@ -62,6 +67,8 @@ class PropertyRepository extends RepositoriesAbstract implements PropertyInterfa
             'condition' => [],
             'order_by'  => [
                 're_properties.created_at' => 'DESC',
+                ['re_properties.expire_date', '>=', now(config('app.timezone'))->toDateTimeString()],
+                're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
             ],
             'take'      => null,
             'paginate'  => [

@@ -3,6 +3,7 @@
 namespace Botble\Backup\Http\Controllers;
 
 use Assets;
+use Botble\Backup\Http\Requests\BackupRequest;
 use Botble\Backup\Supports\Backup;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
@@ -48,18 +49,17 @@ class BackupController extends BaseController
     }
 
     /**
-     * @param Request $request
+     * @param BackupRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      * @throws \Throwable
      */
-    public function store(Request $request, BaseHttpResponse $response)
+    public function store(BackupRequest $request, BaseHttpResponse $response)
     {
         try {
-            $data = $this->backup->createBackupFolder($request);
+            $data = $this->backup->createBackupFolder($request->input('name'), $request->input('description'));
             $this->backup->backupDb();
-            $this->backup->backupFolder(public_path('storage'));
+            $this->backup->backupFolder(config('filesystems.disks.public.root'));
             do_action(BACKUP_ACTION_AFTER_BACKUP, BACKUP_MODULE_SCREEN_NAME, $request);
 
             return $response
@@ -76,7 +76,6 @@ class BackupController extends BaseController
      * @param string $folder
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      */
     public function destroy($folder, BaseHttpResponse $response)
     {
@@ -107,7 +106,7 @@ class BackupController extends BaseController
                 }
 
                 if (Str::contains(basename($file), 'storage')) {
-                    $pathTo = public_path('storage');
+                    $pathTo = config('filesystems.disks.public.root');
                     foreach (File::glob(rtrim($pathTo, '/') . '/*') as $item) {
                         if (File::isDirectory($item)) {
                             File::deleteDirectory($item);
@@ -141,7 +140,6 @@ class BackupController extends BaseController
     /**
      * @param string $folder
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|boolean
-     *
      */
     public function getDownloadDatabase($folder)
     {
@@ -158,7 +156,6 @@ class BackupController extends BaseController
     /**
      * @param string $folder
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|boolean
-     *
      */
     public function getDownloadUploadFolder($folder)
     {

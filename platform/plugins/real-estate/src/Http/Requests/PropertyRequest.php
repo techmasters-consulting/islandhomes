@@ -2,6 +2,7 @@
 
 namespace Botble\RealEstate\Http\Requests;
 
+use Botble\RealEstate\Enums\ModerationStatusEnum;
 use Botble\RealEstate\Enums\PropertyStatusEnum;
 use Botble\Support\Http\Requests\Request;
 use Illuminate\Validation\Rule;
@@ -17,14 +18,15 @@ class PropertyRequest extends Request
     public function rules()
     {
         return [
-            'name'            => 'required',
-            'description'     => 'max:350',
-            'content'         => 'required',
-            'number_bedroom'  => 'numeric|min:0|max:10000|nullable',
+            'name' => 'required',
+            'description' => 'max:350',
+            'content' => 'required',
+            'number_bedroom' => 'numeric|min:0|max:10000|nullable',
             'number_bathroom' => 'numeric|min:0|max:10000|nullable',
-            'number_floor'    => 'numeric|min:0|max:10000|nullable',
-            'price'           => 'numeric|min:0|nullable',
-            'status'          => Rule::in(PropertyStatusEnum::values()),
+            'number_floor' => 'numeric|min:0|max:10000|nullable',
+            'price' => 'numeric|min:0|nullable',
+            'status' => Rule::in(PropertyStatusEnum::values()),
+            'moderation_status' => Rule::in(ModerationStatusEnum::values()),
         ];
     }
 }

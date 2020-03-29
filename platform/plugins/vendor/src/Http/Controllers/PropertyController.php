@@ -101,11 +101,13 @@ class PropertyController extends Controller
             abort(403);
         }
 
+        $request->merge(['expire_date' => now()->addDays(45)]);
+
         /**
          * @var Property $property
          */
         $property = $this->propertyRepository->createOrUpdate(array_merge($request->input(), [
-            'author_id'   => auth()->guard('vendor')->user()->getKey(),
+            'author_id' => auth()->guard('vendor')->user()->getKey(),
             'author_type' => Vendor::class,
         ]));
 
@@ -180,7 +182,7 @@ class PropertyController extends Controller
             abort(404);
         }
 
-        $property->fill($request->input());
+        $property->fill($request->except(['expire_date']));
 
         $this->propertyRepository->createOrUpdate($property);
 

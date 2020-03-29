@@ -15,7 +15,7 @@ class CreateBlogTable extends Migration
     public function up()
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 120);
             $table->integer('parent_id')->unsigned()->default(0);
             $table->string('description', 400)->nullable();
@@ -30,7 +30,7 @@ class CreateBlogTable extends Migration
         });
 
         Schema::create('tags', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 120);
             $table->integer('author_id');
             $table->string('author_type', 255)->default(addslashes(User::class));
@@ -41,7 +41,7 @@ class CreateBlogTable extends Migration
         });
 
         Schema::create('posts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 255);
             $table->string('description', 400)->nullable();
             $table->text('content')->nullable();
@@ -56,13 +56,13 @@ class CreateBlogTable extends Migration
         });
 
         Schema::create('post_tags', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('tag_id')->unsigned()->references('id')->on('tags')->onDelete('cascade');
             $table->integer('post_id')->unsigned()->references('id')->on('posts')->onDelete('cascade');
         });
 
         Schema::create('post_categories', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('category_id')->unsigned()->references('id')->on('categories')->onDelete('cascade');
             $table->integer('post_id')->unsigned()->references('id')->on('posts')->onDelete('cascade');
         });

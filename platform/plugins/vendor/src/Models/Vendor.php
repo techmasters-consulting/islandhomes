@@ -6,6 +6,7 @@ use Botble\Media\Models\MediaFile;
 use Botble\RealEstate\Models\Property;
 use Botble\Vendor\Notifications\ResetPasswordNotification;
 use Botble\Base\Supports\Gravatar;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -149,5 +150,13 @@ class Vendor extends Authenticatable
     public function transactions()
     {
         return $this->hasMany(Transaction::class, 'account_id');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function packages(): BelongsToMany
+    {
+        return $this->belongsToMany(Package::class, 'vendor_packages', 'vendor_id', 'package_id');
     }
 }

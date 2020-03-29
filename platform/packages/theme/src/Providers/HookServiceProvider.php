@@ -115,7 +115,7 @@ class HookServiceProvider extends ServiceProvider
 
     /**
      * @param array $widgets
-     * @param Collection $widget_settings
+     * @param Collection $widgetSettings
      * @return array
      * @throws Throwable
      */

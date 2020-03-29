@@ -14,13 +14,13 @@ class FixColumnNumberBlockInRePropertiesTable extends Migration
     public function up()
     {
         Schema::table('re_projects', function (Blueprint $table) {
-            $table->smallInteger('number_block')->unsigned()->nullable()->change();
+            $table->integer('number_block')->nullable()->change();
         });
 
         Schema::table('re_properties', function (Blueprint $table) {
-            $table->smallInteger('number_bedroom')->unsigned()->nullable()->change();
-            $table->smallInteger('number_bathroom')->unsigned()->nullable()->change();
-            $table->smallInteger('number_floor')->unsigned()->nullable()->change();
+            $table->integer('number_bedroom')->nullable()->change();
+            $table->integer('number_bathroom')->nullable()->change();
+            $table->integer('number_floor')->nullable()->change();
         });
     }
 

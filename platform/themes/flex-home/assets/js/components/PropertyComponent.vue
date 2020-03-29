@@ -16,6 +16,8 @@
                     <div class="img"><img class="thumb" :data-src="item.image" :src="item.image" :alt="item.name">
                     </div>
                     <a :href="item.url" class="linkdetail"></a>
+                    <div class="status"
+                         v-html="$sanitize(item.status_html, {allowedTags: ['span'], allowedAttributes: {'span': ['class']}})"></div>
                 </div>
                 <div class="info">
                     <h3><a :href="item.url">{{ item.name }}</a></h3>

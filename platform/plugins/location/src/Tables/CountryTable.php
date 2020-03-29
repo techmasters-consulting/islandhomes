@@ -29,14 +29,14 @@ class CountryTable extends TableAbstract
     /**
      * CountryTable constructor.
      * @param DataTables $table
-     * @param UrlGenerator $urlDevTool
+     * @param UrlGenerator $urlGenerator
      * @param CountryInterface $countryRepository
      */
-    public function __construct(DataTables $table, UrlGenerator $urlDevTool, CountryInterface $countryRepository)
+    public function __construct(DataTables $table, UrlGenerator $urlGenerator, CountryInterface $countryRepository)
     {
         $this->repository = $countryRepository;
         $this->setOption('id', 'table-plugins-country');
-        parent::__construct($table, $urlDevTool);
+        parent::__construct($table, $urlGenerator);
 
         if (!Auth::user()->hasAnyPermission(['country.edit', 'country.destroy'])) {
             $this->hasOperations = false;

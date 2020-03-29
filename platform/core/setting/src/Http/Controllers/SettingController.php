@@ -258,7 +258,7 @@ class SettingController extends BaseController
             return $response->setError()->setMessage('Your license is invalid, please contact support.');
         }
 
-        $result = $coreApi->verifyLicense();
+        $result = $coreApi->verifyLicense(true);
 
         if (!$result['status']) {
             return $response->setError()->setMessage($result['message']);

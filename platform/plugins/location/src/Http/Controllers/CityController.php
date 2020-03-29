@@ -2,6 +2,7 @@
 
 namespace Botble\Location\Http\Controllers;
 
+use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Base\Events\BeforeEditContentEvent;
 use Botble\Location\Http\Requests\CityRequest;
 use Botble\Location\Http\Resources\CityResource;
@@ -180,11 +181,34 @@ class CityController extends BaseController
             'condition' => [
                 ['cities.name', 'LIKE', '%' . $keyword . '%'],
             ],
-            'select'    => ['cities.id', 'cities.name'],
-            'take'      => 10,
+            'select' => ['cities.id', 'cities.name'],
+            'take' => 10,
 
         ]);
 
         return $response->setData(CityResource::collection($data));
+    }
+
+    /**
+     * @param Request $request
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     */
+    public function getCitiesByStateId(Request $request, BaseHttpResponse $response)
+    {
+        if (!$request->input('state_id')) {
+            return $response;
+        }
+
+        $cities = $this->cityRepository->advancedGet([
+            'condition' => [
+                'status' => BaseStatusEnum::PUBLISHED,
+                'state_id' => $request->input('state_id'),
+            ],
+            'order_by' => ['order' => 'DESC'],
+            'select' => ['id', 'name'],
+        ]);
+
+        return $response->setData($cities);
     }
 }
