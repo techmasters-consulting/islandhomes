@@ -57,7 +57,13 @@ class PaymentTable extends TableAbstract
                 return table_checkbox($item->id);
             })
             ->editColumn('payment_channel', function ($item) {
-                return $item->payment_channel->label();
+
+                if ($item->payment_channel->label() == 'Direct') {
+                    return $item->payment_channel->label() . ' ' . 'Bank Transfer';
+                } else {
+                    return $item->payment_channel->label();
+                }
+
             })
             ->editColumn('amount', function ($item) {
                 return $item->amount . ' ' . $item->currency;

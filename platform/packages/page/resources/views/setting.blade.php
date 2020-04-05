@@ -20,6 +20,7 @@
                         @foreach($pages as $page)
                             <option value="{{ $page->id }}" @if (setting('show_on_front') == $page->id) selected @endif>{{ $page->name }}</option>
                         @endforeach
+
                     </select>
                     <svg class="svg-next-icon svg-next-icon-size-16">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-chevron"></use>

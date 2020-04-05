@@ -183,18 +183,119 @@
                                                 <input type="text" class="next-input" name="payment_stripe_client_id" id="stripe_client_id" value="{{ setting('payment_stripe_client_id') }}">
                                             </div>
                                             <div class="form-group">
-                                                <label class="text-title-field" for="stripe_secret">{{ trans('plugins/payment::payment.secret') }}</label>
+                                                <label class="text-title-field"
+                                                       for="stripe_secret">{{ trans('plugins/payment::payment.secret') }}</label>
                                                 <div class="input-option">
-                                                    <input type="password" class="next-input" placeholder="••••••••" id="stripe_secret" name="payment_stripe_secret" value="{{ setting('payment_stripe_secret') }}">
+                                                    <input type="password" class="next-input" placeholder="••••••••"
+                                                           id="stripe_secret" name="payment_stripe_secret"
+                                                           value="{{ setting('payment_stripe_secret') }}">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 bg-white text-right">
-                                    <button class="btn btn-warning disable-payment-item @if ($stripeStatus == 0) hidden @endif" type="button">{{ trans('plugins/payment::payment.deactivate') }}</button>
-                                    <button class="btn btn-info save-payment-item btn-text-trigger-save @if ($stripeStatus == 1) hidden @endif" type="button">{{ trans('plugins/payment::payment.activate') }}</button>
-                                    <button class="btn btn-info save-payment-item btn-text-trigger-update @if ($stripeStatus == 0) hidden @endif" type="button">{{ trans('plugins/payment::payment.update') }}</button>
+                                    <button
+                                        class="btn btn-warning disable-payment-item @if ($stripeStatus == 0) hidden @endif"
+                                        type="button">{{ trans('plugins/payment::payment.deactivate') }}</button>
+                                    <button
+                                        class="btn btn-info save-payment-item btn-text-trigger-save @if ($stripeStatus == 1) hidden @endif"
+                                        type="button">{{ trans('plugins/payment::payment.activate') }}</button>
+                                    <button
+                                        class="btn btn-info save-payment-item btn-text-trigger-update @if ($stripeStatus == 0) hidden @endif"
+                                        type="button">{{ trans('plugins/payment::payment.update') }}</button>
+                                </div>
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    @php $OfflineStatus = setting('payment_offline_status'); @endphp
+                    <table class="table payment-method-item">
+                        <tbody>
+                        <tr class="border-pay-row">
+                            <td class="border-pay-col"><i class="fa fa-theme-payments"></i></td>
+                            <td style="width: 20%;">
+                                <img class="filter-black"
+                                     src="{{ url('vendor/core/plugins/payment/images/bank.svg') }}">
+                            </td>
+                            <td class="border-right">
+                                <ul>
+                                    <li>
+                                        <a href="#" target="_blank">Bank Transfer</a>
+                                        <p>Customer can buy product and pay directly using any local bank in their
+                                            region</p>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tbody class="border-none-t">
+                        <tr class="bg-white">
+                            <td colspan="3">
+                                <div class="float-left" style="margin-top: 5px;">
+                                    <div class="payment-name-label-group @if ($OfflineStatus == 0) hidden @endif">
+                                        <span
+                                            class="payment-note v-a-t">{{ trans('plugins/payment::payment.use') }}:</span>
+                                        <label class="ws-nm inline-display method-name-label">Bank Transfer</label>
+                                    </div>
+                                </div>
+                                <div class="float-right">
+                                    <a class="btn btn-secondary toggle-payment-item edit-payment-item-btn-trigger @if ($OfflineStatus == 0) hidden @endif">{{ trans('plugins/payment::payment.edit') }}</a>
+                                    <a class="btn btn-secondary toggle-payment-item save-payment-item-btn-trigger @if ($OfflineStatus == 1) hidden @endif">{{ trans('plugins/payment::payment.settings') }}</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="paypal-online-payment payment-content-item hidden">
+                            <td class="border-left" colspan="3">
+                                {!! Form::open() !!}
+                                <input class="payment_type" name="type" type="hidden" value="offline">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <ul>
+                                            <li>
+                                                <label>{{ trans('plugins/payment::payment.configuration_instruction', ['name' => 'Bank Transfer']) }}</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="well bg-white">
+                                            <div class="form-group">
+                                                <label class="text-title-field" for="offline_name">Bank Transfer
+                                                    Name</label>
+                                                <input type="text" class="next-input input-name"
+                                                       name="payment_offline_name" id="offline_name" data-counter="400"
+                                                       value="{{ setting('payment_offline_name', trans('plugins/payment::payment.pay_online_via', ['name' => 'offline'])) }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="text-title-field" for="offline_number">Bank Transfer
+                                                    Account Number</label>
+                                                <input type="text" class="next-input input-name"
+                                                       name="payment_offline_number" id="offline_number"
+                                                       data-counter="400"
+                                                       value="{{ setting('payment_offline_number', trans('plugins/payment::payment.pay_online_via', ['name' => 'offline'])) }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="text-title-field" for="offline_instruction">Bank Transfer
+                                                    Instruction</label>
+                                                <textarea type="text" class="next-input input-name"
+                                                          name="payment_offline_instruction" id="offline_instruction"
+                                                          data-counter="400">{{ setting('payment_offline_instruction', trans('plugins/payment::payment.pay_online_via', ['name' => 'offline'])) }}
+                                                </textarea></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 bg-white text-right">
+                                    <button
+                                        class="btn btn-warning disable-payment-item @if ($OfflineStatus == 0) hidden @endif"
+                                        type="button">{{ trans('plugins/payment::payment.deactivate') }}</button>
+                                    <button
+                                        class="btn btn-info save-payment-item btn-text-trigger-save @if ($OfflineStatus == 1) hidden @endif"
+                                        type="button">{{ trans('plugins/payment::payment.activate') }}</button>
+                                    <button
+                                        class="btn btn-info save-payment-item btn-text-trigger-update @if ($OfflineStatus == 0) hidden @endif"
+                                        type="button">{{ trans('plugins/payment::payment.update') }}</button>
                                 </div>
                                 {!! Form::close() !!}
                             </td>

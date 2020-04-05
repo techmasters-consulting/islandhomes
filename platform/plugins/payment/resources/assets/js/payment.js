@@ -8,6 +8,31 @@ BPayment.init = function () {
     }
     $(document).on('change', '.js_payment_method', function () {
         $('.payment_collapse_wrap').removeClass('collapse').removeClass('show').removeClass('active');
+
+        if ($('input[name=payment_method]:checked').val() === 'offline') {
+            $(".payment-checkout-btn").fadeIn("slow").hide();
+            $(".payment-offline-btn").fadeIn("slow").show();
+
+        }
+        if ($('input[name=payment_method]:checked').val() === 'paypal') {
+            $(".payment-offline-btn").fadeIn("slow").hide();
+            $(".payment-checkout-btn").fadeIn("slow").show();
+
+
+        }
+    });
+    $(document).on('click', '.payment-offline-btn', function () {
+
+        $(".payment-checkout-btn").fadeIn("slow").show();
+
+
+    });
+
+    $(document).on('click', '.disableBtn', function () {
+
+        $(".payment-offline-btn").hide();
+
+
     });
 
     $(document).on('click', '.payment-checkout-btn', function () {

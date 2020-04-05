@@ -10,9 +10,26 @@
                     </h4>
                 </div>
                 <div class="widget-body">
+
                     <p>{{ __('Created At') }}: <strong>{{ $payment->created_at }}</strong></p>
-                    <p>{{ __('Payment Channel') }}: <strong>{{ $payment->payment_channel->label() }}</strong></p>
+                    @if($payment->payment_channel->label() == 'Direct')
+                        <p>{{ __('Name') }}:
+                            <strong>{{ \Botble\Vendor\Models\Vendor::find($payment->user_id)->payments->first()->first_name.' '.\Botble\Vendor\Models\Vendor::find($payment->user_id)->payments->first()->last_name }}</strong>
+                        </p>
+                    @endif
+
+
+                    @if($payment->payment_channel->label() == 'Direct')
+                        <p>{{ __('Package Credit Requested') }}: <strong>{{ $payment->description}}</strong></p>
+                    @endif
+
+                    <p>{{ __('Payment Channel') }}: <strong>{{ $payment->payment_channel->label() }} Bank
+                            Transfer</strong></p>
                     <p>{{ __('Total') }}: <strong>{{ $payment->amount }} {{ $payment->currency }}</strong></p>
+
+                    @if($payment->payment_channel->label() == 'Direct')
+                        <p>{{ __('Status') }}: <strong>Pending</strong></p>
+                    @endif
                     {!! $detail !!}
                 </div>
             </div>

@@ -12,18 +12,21 @@ use Botble\Payment\Services\Gateways\PayPal\PayPalPaymentService;
 use Botble\Payment\Services\Gateways\Stripe\StripePaymentService;
 use Botble\Payment\Tables\PaymentTable;
 use Botble\Setting\Supports\SettingStore;
+use DateTime;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Throwable;
 
 class PaymentController extends Controller
 {
-    /**
+    /**uuid
      * @var PayPalPaymentService
      */
     protected $payPalService;
@@ -125,7 +128,7 @@ class PaymentController extends Controller
      * @param Request $request
      * @return RedirectResponse|Redirector
      */
-    public function postCheckout(Request $request)
+    public function postCheckout(Request $request, BaseHttpResponse $response)
     {
         $error = false;
         $errorMessage = null;
@@ -134,7 +137,7 @@ class PaymentController extends Controller
         $currency = strtoupper($currency);
 
         $data = [
-            'amount'   => $request->input('amount'),
+            'amount' => $request->input('amount'),
             'currency' => $currency,
             'type'     => $request->input('payment_method'),
         ];
@@ -152,24 +155,49 @@ class PaymentController extends Controller
                 break;
             case PaymentMethodEnum::PAYPAL:
                 $checkoutUrl = $this->payPalService->execute($request);
+
                 if ($checkoutUrl) {
                     return redirect($checkoutUrl);
                 } else {
                     $error = true;
                     $errorMessage = $this->payPalService->getErrorMessage();
                 }
+
+                break;
+            case PaymentMethodEnum::DIRECT:
+                $userData = auth()->guard('vendor')->user();
+                $date = new DateTime();
+                $this->paymentRepository->insert(
+                    [
+                        'amount' => $request->amount,
+                        'payment_channel' => 'direct',
+                        'currency' => $request->currency,
+                        'charge_id' => 'Bank_' . mt_rand(1000000, 9999999),
+                        'user_id' => $userData->id,
+                        'description' => $request->name,
+                        'created_at' => $date->format('Y-m-d H:i:s')
+                    ]
+                );
+
+
                 break;
             default:
                 break;
         }
 
-        $returnUrl = $request->input('return_url') . '?' . http_build_query($data);
+        if (PaymentMethodEnum::DIRECT == 'direct') {
 
-        if ($error) {
-            return redirect()->back()->with('error_msg', $errorMessage);
+            return redirect()->to('/contact')->with('success_msg', 'Your Transaction is been processed');
+        } else {
+            $returnUrl = $request->input('return_url') . '?' . http_build_query($data);
+            if ($error) {
+                return redirect()->back()->with('error_msg', $errorMessage);
+            }
+
+            return redirect()->to($returnUrl)->with('success_msg', trans('plugins/payment::payment.checkout_success'));
         }
 
-        return redirect()->to($returnUrl)->with('success_msg', trans('plugins/payment::payment.checkout_success'));
+
     }
 
     /**

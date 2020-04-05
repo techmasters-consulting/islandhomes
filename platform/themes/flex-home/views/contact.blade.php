@@ -24,20 +24,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <form action="{{ route('public.send.contact') }}" method="post" class="generic-form">
-                                <div class="wrapper">
-                                    <h2 class="h2">{{ __('HOW WE CAN HELP YOU?') }}</h2>
-                                    @csrf
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" name="name" placeholder="{{ __('Name') }} *"
-                                               required="">
-                                    </div>
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" name="email"
-                                               placeholder="{{ __('Email') }} *" required="">
-                                    </div>
-                                    <div class="form-group">
+                    <div class="col-md-6">
+                        <form action="{{ route('public.send.contact') }}" method="post" class="generic-form">
+                            <div class="wrapper">
+                                <h2 class="h2">{{ __('HOW CAN WE HELP YOU?') }}</h2>
+                                @csrf
+                                <div class="form-group">
+                                    <input class="form-control" type="text" name="name" placeholder="{{ __('Name') }} *"
+                                           required="">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" type="text" name="email"
+                                           placeholder="{{ __('Email') }} *" required="">
+                                </div>
+                                <div class="form-group">
                                         <input class="form-control" type="text" name="phone"
                                                placeholder="{{ __('Phone') }}">
                                     </div>

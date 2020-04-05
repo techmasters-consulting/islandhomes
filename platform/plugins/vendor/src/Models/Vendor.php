@@ -3,6 +3,7 @@
 namespace Botble\Vendor\Models;
 
 use Botble\Media\Models\MediaFile;
+use Botble\Payment\Models\Payment;
 use Botble\RealEstate\Models\Property;
 use Botble\Vendor\Notifications\ResetPasswordNotification;
 use Botble\Base\Supports\Gravatar;
@@ -158,5 +159,11 @@ class Vendor extends Authenticatable
     public function packages(): BelongsToMany
     {
         return $this->belongsToMany(Package::class, 'vendor_packages', 'vendor_id', 'package_id');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Vendor::class, 'id');
+        // return $this->belongTo(Package::class, 'vendor_packages', 'vendor_id', 'package_id');
     }
 }
