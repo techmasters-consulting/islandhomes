@@ -1,0 +1,367 @@
+[28-Apr-2020 06:00:00 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:00:00 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:01:16 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:01:16 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:02:49 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:02:49 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:07:18 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:07:18 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:08:04 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:08:04 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:32:31 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:32:31 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:34:57 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:34:57 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:35:47 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:35:47 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:37:53 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 06:37:53 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 07:22:18 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 07:22:18 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 07:27:46 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[28-Apr-2020 07:27:46 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 05:36:51 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 05:36:51 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 05:52:55 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 05:52:55 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 05:53:23 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 05:53:23 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 05:53:37 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 05:53:37 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 05:55:23 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 05:55:23 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:02:51 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:02:51 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:04:18 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:04:18 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:13:27 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:13:27 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:13:34 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:13:34 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:13:49 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:13:49 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:13:55 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:13:55 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:14:32 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:14:32 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:15:02 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:15:02 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:21:32 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of TypeError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(TypeError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(TypeError))
+#3 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(TypeError))
+#4 {mai in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:21:32 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:51:41 UTC] PHP Warning:  Uncaught ErrorException: require(/home/islandhomes/public_html/routes/api.php): failed to open stream: No such file or directory in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php:35
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php(35): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'require(/home/i...', '/home/islandhom...', 35, Array)
+#1 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php(35): require()
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(417): Illuminate\Routing\RouteFileRegistrar->register('/home/islandhom...')
+#3 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(374): Illuminate\Routing\Router->loadRoutes('/home/islandhom...')
+#4 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteRegistrar.php(1 in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php on line 35
+[29-Apr-2020 06:51:41 UTC] PHP Fatal error:  Illuminate\Routing\RouteFileRegistrar::register(): Failed opening required '/home/islandhomes/public_html/routes/api.php' (include_path='.:/opt/alt/php73/usr/share/pear') in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php on line 35
+[29-Apr-2020 06:51:41 UTC] PHP Warning:  Uncaught ErrorException: require(/home/islandhomes/public_html/routes/api.php): failed to open stream: No such file or directory in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php:35
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php(35): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'require(/home/i...', '/home/islandhom...', 35, Array)
+#1 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php(35): require()
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(417): Illuminate\Routing\RouteFileRegistrar->register('/home/islandhom...')
+#3 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(374): Illuminate\Routing\Router->loadRoutes('/home/islandhom...')
+#4 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteRegistrar.php(1 in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php on line 35
+[29-Apr-2020 06:51:41 UTC] PHP Fatal error:  Illuminate\Routing\RouteFileRegistrar::register(): Failed opening required '/home/islandhomes/public_html/routes/api.php' (include_path='.:/opt/alt/php73/usr/share/pear') in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php on line 35
+[29-Apr-2020 06:51:41 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:51:41 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65
+[29-Apr-2020 06:51:42 UTC] PHP Warning:  Uncaught ErrorException: require(/home/islandhomes/public_html/routes/api.php): failed to open stream: No such file or directory in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php:35
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php(35): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'require(/home/i...', '/home/islandhom...', 35, Array)
+#1 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php(35): require()
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(417): Illuminate\Routing\RouteFileRegistrar->register('/home/islandhom...')
+#3 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(374): Illuminate\Routing\Router->loadRoutes('/home/islandhom...')
+#4 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteRegistrar.php(1 in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php on line 35
+[29-Apr-2020 06:51:42 UTC] PHP Fatal error:  Illuminate\Routing\RouteFileRegistrar::register(): Failed opening required '/home/islandhomes/public_html/routes/api.php' (include_path='.:/opt/alt/php73/usr/share/pear') in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Routing/RouteFileRegistrar.php on line 35
+[29-Apr-2020 06:51:42 UTC] PHP Fatal error:  Uncaught TypeError: Argument 1 passed to Botble\Base\Supports\EmailHandler::sendErrorException() must be an instance of Exception, instance of Symfony\Component\ErrorHandler\Error\FatalError given, called in /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php on line 261 and defined in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php:65
+Stack trace:
+#0 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Support/Facades/Facade.php(261): Botble\Base\Supports\EmailHandler->sendErrorException(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#1 /home/islandhomes/public_html/platform/core/base/src/Exceptions/Handler.php(145): Illuminate\Support\Facades\Facade::__callStatic('sendErrorExcept...', Array)
+#2 /home/islandhomes/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(88): Botble\Base\Exceptions\Handler->report(Object(Symfony\Component\ErrorHandler\Error\FatalError))
+#3 in /home/islandhomes/public_html/platform/core/base/src/Supports/EmailHandler.php on line 65

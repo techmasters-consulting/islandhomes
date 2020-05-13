@@ -1,0 +1,10 @@
+{
+    "name": "Botble\\RealEstate",
+    "description": "real-estate plugin",
+    "type": "package",
+    "require": {
+        "laravel/cashier": "^10.0",
+        "paypal/rest-api-sdk-php": "^1.14",
+        "spatie/laravel-feed": "^2.6"
+    }
+}
