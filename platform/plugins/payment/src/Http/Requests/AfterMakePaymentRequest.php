@@ -28,7 +28,7 @@ class AfterMakePaymentRequest extends Request
     {
         $messages = parent::messages();
 
-        $messages['paymentId.required'] = __('You\'ve canceled the payment!');
+        $messages['paymentId.required'] = __('Payment failed!');
 
         return $messages;
     }

@@ -16,17 +16,16 @@
                     <div class="img"><img class="thumb" :data-src="item.image" :src="item.image" :alt="item.name">
                     </div>
                     <a :href="item.url" class="linkdetail"></a>
-                    <div class="status"
-                         v-html="$sanitize(item.status_html, {allowedTags: ['span'], allowedAttributes: {'span': ['class']}})"></div>
+                    <div class="status" v-html="$sanitize(item.status_html, {allowedTags: ['span'], allowedAttributes: {'span': ['class']}})"></div>
                 </div>
                 <div class="info">
                     <h3><a :href="item.url">{{ item.name }}</a></h3>
                     <p class="city"><i class="fas fa-map-marker-alt" style="opacity: 0.7"></i>  {{ item.location }}</p>
                     <p class="bold500">{{ __('Price') }}: {{ item.price }} </p>
                     <p class="threemt bold500">
-                        <span data-toggle="tooltip" data-placement="top" :data-original-title="__('Number of rooms')"> <i><img src="/themes/flex-home/images/bed.svg" alt="icon"></i> <i class="vti">{{ item.number_bedroom }}</i> </span>
-                        <span data-toggle="tooltip" data-placement="top" :data-original-title="__('Number of rest rooms')">  <i><img src="/themes/flex-home/images/bath.svg" alt="icon"></i> <i class="vti">{{ item.number_bathroom }}</i></span>
-                        <span data-toggle="tooltip" data-placement="top" :data-original-title="__('Square')"> <i><img src="/themes/flex-home/images/area.svg" alt="icon"></i> <i class="vti">{{ item.square }} m2</i> </span>
+                        <span data-toggle="tooltip" data-placement="top" :data-original-title="__('Number of rooms')" v-if="item.number_bedroom"> <i><img src="/themes/flex-home/images/bed.svg" alt="icon"></i> <i class="vti">{{ item.number_bedroom }}</i> </span>
+                        <span data-toggle="tooltip" data-placement="top" :data-original-title="__('Number of rest rooms')" v-if="item.number_bathroom">  <i><img src="/themes/flex-home/images/bath.svg" alt="icon"></i> <i class="vti">{{ item.number_bathroom }}</i></span>
+                        <span data-toggle="tooltip" data-placement="top" :data-original-title="__('Square')" v-if="item.square"> <i><img src="/themes/flex-home/images/area.svg" alt="icon"></i> <i class="vti">{{ item.square }} {{ __('m2')}}</i> </span>
                     </p>
                 </div>
             </div>

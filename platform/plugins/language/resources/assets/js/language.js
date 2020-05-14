@@ -15,9 +15,9 @@ class LanguageManagement {
             });
         }
 
-        let table_language = $('.table-language');
+        let languageTable = $('.table-language');
 
-        $(document).on('change', '#language_id', (event) => {
+        $(document).on('change', '#language_id', event =>  {
             let language = $(event.currentTarget).find('option:selected').data('language');
             if (typeof language != 'undefined' && language.length > 0) {
                 $('#lang_name').val(language[2]);
@@ -29,7 +29,7 @@ class LanguageManagement {
             }
         });
 
-        $(document).on('click', '#btn-language-submit', (event) => {
+        $(document).on('click', '#btn-language-submit', event =>  {
             event.preventDefault();
             let name = $('#lang_name').val();
             let locale = $('#lang_locale').val();
@@ -40,7 +40,7 @@ class LanguageManagement {
             LanguageManagement.createOrUpdateLanguage(0, name, locale, code, flag, order, is_rtl, 0);
         });
 
-        $(document).on('click', '#btn-language-submit-edit', (event) => {
+        $(document).on('click', '#btn-language-submit-edit', event =>  {
             event.preventDefault();
             let id = $('#lang_id').val();
             let name = $('#lang_name').val();
@@ -52,14 +52,14 @@ class LanguageManagement {
             LanguageManagement.createOrUpdateLanguage(id, name, locale, code, flag, order, is_rtl, 1);
         });
 
-        table_language.on('click', '.deleteDialog', (event) => {
+        languageTable.on('click', '.deleteDialog', event =>  {
             event.preventDefault();
 
             $('.delete-crud-entry').data('section', $(event.currentTarget).data('section'));
             $('.modal-confirm-delete').modal('show');
         });
 
-        $('.delete-crud-entry').on('click', (event) => {
+        $('.delete-crud-entry').on('click', event =>  {
             event.preventDefault();
             $('.modal-confirm-delete').modal('hide');
 
@@ -68,56 +68,56 @@ class LanguageManagement {
             $.ajax({
                 url: deleteURL,
                 type: 'DELETE',
-                success: (data) => {
+                success: data =>  {
                     if (data.error) {
                         Botble.showError(data.message);
                     } else {
                         if (data.data) {
-                            table_language.find('i[data-id=' + data.data + ']').unwrap();
+                            languageTable.find('i[data-id=' + data.data + ']').unwrap();
                             $('.tooltip').remove();
                         }
-                        table_language.find('a[data-section="' + deleteURL + '"]').closest('tr').remove();
+                        languageTable.find('a[data-section="' + deleteURL + '"]').closest('tr').remove();
                         Botble.showSuccess(data.message);
                     }
                 },
-                error: (data) => {
+                error: data =>  {
                     Botble.handleError(data);
                 }
             });
         });
 
-        table_language.on('click', '.set-language-default', (event) => {
+        languageTable.on('click', '.set-language-default', event =>  {
             event.preventDefault();
             let _self = $(event.currentTarget);
 
             $.ajax({
                 url: _self.data('section'),
                 type: 'GET',
-                success: (data) => {
+                success: data =>  {
                     if (data.error) {
                         Botble.showError(data.message);
                     } else {
-                        let star = table_language.find('td > i');
+                        let star = languageTable.find('td > i');
                         star.replaceWith('<a data-section="' + route('languages.set.default') + '?lang_id=' + star.data('id') + '" class="set-language-default tip" data-original-title="Choose ' + star.data('name') + ' as default language">' + star.closest('td').html() + '</a>');
                         _self.find('i').unwrap();
                         $('.tooltip').remove();
                         Botble.showSuccess(data.message);
                     }
                 },
-                error: (data) => {
+                error: data =>  {
                     Botble.handleError(data);
                 }
             });
         });
 
-        table_language.on('click', '.edit-language-button', (event) => {
+        languageTable.on('click', '.edit-language-button', event =>  {
             event.preventDefault();
             let _self = $(event.currentTarget);
 
             $.ajax({
                 url: route('languages.get') + '?lang_id=' + _self.data('id'),
                 type: 'GET',
-                success: (data) => {
+                success: data =>  {
                     if (data.error) {
                         Botble.showError(data.message);
                     } else {
@@ -135,7 +135,35 @@ class LanguageManagement {
                         $('#btn-language-submit').prop('id', 'btn-language-submit-edit').text('Update');
                     }
                 },
-                error: (data) => {
+                error: data =>  {
+                    Botble.handleError(data);
+                }
+            });
+        });
+
+        $(document).on('click', '.button-save-language-settings', event => {
+            event.preventDefault();
+            let _self = $(event.currentTarget);
+            _self.addClass('button-loading');
+
+            let $form = _self.closest('form');
+
+            $.ajax({
+                url: $form.prop('action'),
+                type: 'POST',
+                data: $form.serialize(),
+                success: data => {
+                    _self.removeClass('button-loading');
+
+                    if (data.error) {
+                        Botble.showError(data.message);
+                    } else {
+                        Botble.showSuccess(data.message);
+                        $form.removeClass('dirty');
+                    }
+                },
+                error: data => {
+                    _self.removeClass('button-loading');
                     Botble.handleError(data);
                 }
             });
@@ -159,7 +187,7 @@ class LanguageManagement {
                 lang_order: order,
                 lang_is_rtl: is_rtl
             },
-            success: (data) => {
+            success: data =>  {
                 if (data.error) {
                     Botble.showError(data.message);
                 } else {
@@ -181,7 +209,7 @@ class LanguageManagement {
                 $('#btn-language-submit-edit').prop('id', 'btn-language-submit').text('Add new language');
                 $('#btn-language-submit').removeClass('button-loading');
             },
-            error: (data) => {
+            error: data =>  {
                 $('#btn-language-submit').removeClass('button-loading');
                 Botble.handleError(data);
             }

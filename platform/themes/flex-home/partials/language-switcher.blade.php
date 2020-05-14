@@ -26,12 +26,14 @@
                         </button>
                         <ul class="dropdown-menu language_bar_chooser">
                             @foreach ($supportedLocales as $localeCode => $properties)
-                                <li @if ($localeCode == Language::getCurrentLocale()) class="active" @endif>
-                                    <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ $showRelated ? Language::getLocalizedURL($localeCode) : url($localeCode) }}">
-                                        @if (($languageDisplay == 'all' || $languageDisplay == 'flag')){!! language_flag($properties['lang_flag'], $properties['lang_name']) !!}@endif
-                                        @if (($languageDisplay == 'all' || $languageDisplay == 'name'))<span>{{ $properties['lang_name'] }}</span>@endif
-                                    </a>
-                                </li>
+                                @if ($localeCode != Language::getCurrentLocale())
+                                    <li>
+                                        <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ $showRelated ? Language::getLocalizedURL($localeCode) : url($localeCode) }}">
+                                            @if (($languageDisplay == 'all' || $languageDisplay == 'flag')){!! language_flag($properties['lang_flag'], $properties['lang_name']) !!}@endif
+                                            @if (($languageDisplay == 'all' || $languageDisplay == 'name'))<span>{{ $properties['lang_name'] }}</span>@endif
+                                        </a>
+                                    </li>
+                                @endif
                             @endforeach
                         </ul>
                     </div>
@@ -39,10 +41,12 @@
             @else
                 <strong class="language-label">{{ __('Languages') }}</strong>:
                 @foreach ($supportedLocales as $localeCode => $properties)
-                    <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ setting('language_show_default_item_if_current_version_not_existed', true) ? Language::getLocalizedURL($localeCode) : url($localeCode) }}">
-                        @if (($languageDisplay == 'all' || $languageDisplay == 'flag')){!! language_flag($properties['lang_flag'], $properties['lang_name']) !!}@endif
-                        @if (($languageDisplay == 'all' || $languageDisplay == 'name'))<span>{{ $properties['lang_name'] }}</span>@endif
-                    </a> &nbsp;
+                    @if ($localeCode != Language::getCurrentLocale())
+                        <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ setting('language_show_default_item_if_current_version_not_existed', true) ? Language::getLocalizedURL($localeCode) : url($localeCode) }}">
+                            @if (($languageDisplay == 'all' || $languageDisplay == 'flag')){!! language_flag($properties['lang_flag'], $properties['lang_name']) !!}@endif
+                            @if (($languageDisplay == 'all' || $languageDisplay == 'name'))<span>{{ $properties['lang_name'] }}</span>@endif
+                        </a> &nbsp;
+                    @endif
                 @endforeach
             @endif
         </div>

@@ -1,15 +1,8 @@
 let glob = require('glob');
 
-require('./platform/core/webpack.mix.js');
+configs = [
+    './platform/*/webpack.mix.js',
+    './platform/**/*/webpack.mix.js',
+];
 
-glob.sync('./platform/packages/*/webpack.mix.js').forEach(config => {
-    require(config);
-});
-
-glob.sync('./platform/themes/*/webpack.mix.js').forEach(config => {
-    require(config);
-});
-
-glob.sync('./platform/plugins/*/webpack.mix.js').forEach(config => {
-    require(config);
-});
+configs.forEach(config => glob.sync(config).forEach(item => require(item)));

@@ -9,7 +9,7 @@ use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Base\Supports\Helper;
 use Exception;
-use File;
+use Illuminate\Encryption\Encrypter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -24,7 +24,6 @@ class BackupController extends BaseController
     /**
      * BackupController constructor.
      * @param Backup $backup
-     *
      */
     public function __construct(Backup $backup)
     {
@@ -33,7 +32,6 @@ class BackupController extends BaseController
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function getIndex()
@@ -65,10 +63,10 @@ class BackupController extends BaseController
             return $response
                 ->setData(view('plugins/backup::partials.backup-item', $data)->render())
                 ->setMessage(trans('plugins/backup::backup.create_backup_success'));
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage($ex->getMessage());
+                ->setMessage($exception->getMessage());
         }
     }
 
@@ -80,12 +78,12 @@ class BackupController extends BaseController
     public function destroy($folder, BaseHttpResponse $response)
     {
         try {
-            $this->backup->deleteFolderBackup(storage_path('app/backup/') . $folder);
+            $this->backup->deleteFolderBackup($this->backup->getBackupPath($folder));
             return $response->setMessage(trans('plugins/backup::backup.delete_backup_success'));
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage($ex->getMessage());
+                ->setMessage($exception->getMessage());
         }
     }
 
@@ -94,47 +92,50 @@ class BackupController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      */
     public function getRestore($folder, Request $request, BaseHttpResponse $response)
     {
         try {
-            $path = storage_path('app/backup/') . $folder;
+            $path = $this->backup->getBackupPath($folder);
             foreach (scan_folder($path) as $file) {
                 if (Str::contains(basename($file), 'database')) {
-                    $this->backup->restoreDb($path . DIRECTORY_SEPARATOR . $file, $path);
+                    $this->backup->restoreDatabase($path . DIRECTORY_SEPARATOR . $file, $path);
                 }
 
                 if (Str::contains(basename($file), 'storage')) {
                     $pathTo = config('filesystems.disks.public.root');
-                    foreach (File::glob(rtrim($pathTo, '/') . '/*') as $item) {
-                        if (File::isDirectory($item)) {
-                            File::deleteDirectory($item);
-                        } elseif (!in_array(File::basename($item), ['.htaccess', '.gitignore'])) {
-                            File::delete($item);
-                        }
-                    }
-
-                    $this->backup->restore($path . DIRECTORY_SEPARATOR . $file, $pathTo);
+                    $this->backup->cleanDirectory($pathTo);
+                    $this->backup->extractFileTo($path . DIRECTORY_SEPARATOR . $file, $pathTo);
                 }
             }
 
-            Helper::executeCommand('cache:clear');
-
-            try {
-                Helper::executeCommand('key:generate');
-            } catch (Exception $exception) {
-                info($exception->getMessage());
-            }
+            Helper::clearCache();
+            $this->generateAppKey();
 
             do_action(BACKUP_ACTION_AFTER_RESTORE, BACKUP_MODULE_SCREEN_NAME, $request);
 
             return $response->setMessage(trans('plugins/backup::backup.restore_backup_success'));
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage($ex->getMessage());
+                ->setMessage($exception->getMessage());
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function generateAppKey(): void
+    {
+        $key = 'base64:' . base64_encode(Encrypter::generateKey(config('app.cipher')));
+
+        file_put_contents(app()->environmentFilePath(), preg_replace(
+            '/^APP_KEY' . preg_quote('=' . config('app.key'), '/') . '/m',
+            'APP_KEY=' . $key,
+            file_get_contents(app()->environmentFilePath())
+        ));
+
+        config(['app.key' => $key]);
     }
 
     /**
@@ -143,7 +144,7 @@ class BackupController extends BaseController
      */
     public function getDownloadDatabase($folder)
     {
-        $path = storage_path('app/backup/') . $folder;
+        $path = $this->backup->getBackupPath($folder);
         foreach (scan_folder($path) as $file) {
             if (Str::contains(basename($file), 'database')) {
                 return response()->download($path . DIRECTORY_SEPARATOR . $file);
@@ -159,7 +160,7 @@ class BackupController extends BaseController
      */
     public function getDownloadUploadFolder($folder)
     {
-        $path = storage_path('app/backup/') . $folder;
+        $path = $this->backup->getBackupPath($folder);
         foreach (scan_folder($path) as $file) {
             if (Str::contains(basename($file), 'storage')) {
                 return response()->download($path . DIRECTORY_SEPARATOR . $file);

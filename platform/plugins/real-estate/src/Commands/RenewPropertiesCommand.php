@@ -61,7 +61,7 @@ class RenewPropertiesCommand extends Command
                 continue;
             }
 
-            $property->expire_date = now()->addDays(45);
+            $property->expire_date = now()->addDays(config('plugins.real-estate.real-estate.property_expired_after_x_days'));
             $property->save();
 
             $property->author->credits--;

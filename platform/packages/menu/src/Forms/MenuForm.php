@@ -2,21 +2,29 @@
 
 namespace Botble\Menu\Forms;
 
+use Assets;
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Base\Forms\FormAbstract;
 use Botble\Menu\Http\Requests\MenuRequest;
 use Botble\Menu\Models\Menu;
-use Throwable;
 
 class MenuForm extends FormAbstract
 {
 
     /**
-     * @return mixed|void
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function buildForm()
     {
+        Assets::addScriptsDirectly([
+                'vendor/core/packages/menu/libraries/jquery-nestable/jquery.nestable.js',
+                'vendor/core/packages/menu/js/menu.js',
+            ])
+            ->addStylesDirectly([
+                'vendor/core/packages/menu/libraries/jquery-nestable/jquery.nestable.css',
+                'vendor/core/packages/menu/css/menu.css',
+            ]);
+
         $locations = [];
 
         if ($this->getModel()) {

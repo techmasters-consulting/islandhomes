@@ -4,7 +4,7 @@
             @foreach($contact->replies as $reply)
                 <p>{{ trans('plugins/contact::contact.tables.time') }}: <i>{{ $reply->created_at }}</i></p>
                 <p>{{ trans('plugins/contact::contact.tables.content') }}:</p>
-                <pre class="message-content">{!! $reply->message !!}</pre>
+                <pre class="message-content">{!! clean($reply->message) !!}</pre>
             @endforeach
         @else
             <p>{{ __('No reply yet!') }}</p>

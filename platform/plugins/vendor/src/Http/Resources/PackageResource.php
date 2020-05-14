@@ -17,13 +17,13 @@ class PackageResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'price' => $this->price,
-            'price_text' => format_price($this->price, $this->currency),
+            'id'                  => $this->id,
+            'name'                => $this->name,
+            'price'               => $this->price,
+            'price_text'          => format_price($this->price, $this->currency),
             'price_per_post_text' => format_price($this->price / $this->number_of_listings, $this->currency),
-            'percent_save' => $this->percent_save,
-            'number_of_listings' => $this->number_of_listings,
+            'percent_save'        => $this->percent_save,
+            'number_of_listings'  => $this->number_of_listings,
         ];
     }
 }

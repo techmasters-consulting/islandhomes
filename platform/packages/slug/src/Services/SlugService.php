@@ -2,6 +2,7 @@
 
 namespace Botble\Slug\Services;
 
+use Botble\Base\Models\BaseModel;
 use Botble\Slug\Repositories\Interfaces\SlugInterface;
 use Illuminate\Support\Str;
 use SlugHelper;
@@ -16,7 +17,6 @@ class SlugService
     /**
      * SlugService constructor.
      * @param SlugInterface $slugRepository
-     *
      */
     public function __construct(SlugInterface $slugRepository)
     {
@@ -24,8 +24,8 @@ class SlugService
     }
 
     /**
-     * @param $name
-     * @param int $slug_id
+     * @param string $name
+     * @param int $slugId
      * @return int|string
      */
     public function create($name, $slugId = 0, $model = null)
@@ -45,11 +45,10 @@ class SlugService
     }
 
     /**
-     * @param $slug
-     * @param $slugId
-     * @param $model
+     * @param string $slug
+     * @param string $slugId
+     * @param BaseModel $model
      * @return bool
-     *
      */
     protected function checkIfExistedSlug($slug, $slugId, $model)
     {

@@ -2,14 +2,13 @@
 
 namespace Botble\Blog\Forms;
 
-use Assets;
 use Botble\Base\Enums\BaseStatusEnum;
+use Botble\Base\Forms\Fields\TagField;
 use Botble\Base\Forms\FormAbstract;
 use Botble\Blog\Forms\Fields\CategoryMultiField;
 use Botble\Blog\Http\Requests\PostRequest;
 use Botble\Blog\Models\Post;
 use Botble\Blog\Repositories\Interfaces\CategoryInterface;
-use Throwable;
 
 class PostForm extends FormAbstract
 {
@@ -20,15 +19,10 @@ class PostForm extends FormAbstract
     protected $template = 'core/base::forms.form-tabs';
 
     /**
-     * @return mixed|void
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function buildForm()
     {
-        Assets::addScripts(['bootstrap-tagsinput', 'typeahead'])
-            ->addStyles(['bootstrap-tagsinput'])
-            ->addScriptsDirectly('vendor/core/js/tags.js');
-
         $selectedCategories = [];
         if ($this->getModel()) {
             $selectedCategories = $this->getModel()->categories()->pluck('category_id')->all();
@@ -57,6 +51,7 @@ class PostForm extends FormAbstract
             ->setupModel(new Post)
             ->setValidatorClass(PostRequest::class)
             ->withCustomFields()
+            ->addCustomField('tags', TagField::class)
             ->add('name', 'text', [
                 'label'      => trans('core/base::forms.name'),
                 'label_attr' => ['class' => 'control-label required'],
@@ -108,23 +103,13 @@ class PostForm extends FormAbstract
                 'label'      => trans('core/base::forms.image'),
                 'label_attr' => ['class' => 'control-label'],
             ])
-            ->add('tag', 'text', [
+            ->add('tag', 'tags', [
                 'label'      => trans('plugins/blog::posts.form.tags'),
                 'label_attr' => ['class' => 'control-label'],
-                'attr'       => [
-                    'class'       => 'form-control',
-                    'id'          => 'tags',
-                    'data-role'   => 'tagsinput',
-                    'placeholder' => trans('plugins/blog::posts.form.tags_placeholder'),
-                ],
                 'value'      => $tags,
-                'help_block' => [
-                    'text' => 'Tag route',
-                    'tag'  => 'div',
-                    'attr' => [
-                        'data-tag-route' => route('tags.all'),
-                        'class'          => 'hidden',
-                    ],
+                'attr' => [
+                    'placeholder' => __('Write some tags'),
+                    'data-url'    => route('tags.all'),
                 ],
             ])
             ->setBreakFieldPoint('status');

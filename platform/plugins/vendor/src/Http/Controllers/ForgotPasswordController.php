@@ -25,12 +25,13 @@ class ForgotPasswordController extends Controller
     /**
      * Display the form to request a password reset link.
      *
-     * @return \Illuminate\Http\Response|\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function showLinkRequestForm()
     {
         SeoHelper::setTitle(trans('plugins/vendor::vendor.forgot_password'));
+
         return view('plugins/vendor::auth.passwords.email');
     }
 

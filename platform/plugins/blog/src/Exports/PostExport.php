@@ -4,15 +4,13 @@ namespace Botble\Blog\Exports;
 
 use Botble\Table\Supports\TableExportHandler;
 use Maatwebsite\Excel\Events\AfterSheet;
-use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 
 class PostExport extends TableExportHandler
 {
     /**
-     * @param AfterSheet $event
-     * @throws Exception
+     * {@inheritDoc}
      */
     protected function afterSheet(AfterSheet $event)
     {
@@ -71,7 +69,7 @@ class PostExport extends TableExportHandler
     }
 
     /**
-     * @param $imageUrl
+     * @param string $imageUrl
      * @return null|resource
      */
     protected function getImageResourceFromURL($imageUrl)

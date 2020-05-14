@@ -2,41 +2,43 @@
 
 namespace Botble\SeoHelper;
 
+use Botble\Base\Models\BaseModel;
 use Botble\SeoHelper\Contracts\SeoHelperContract;
 use Botble\SeoHelper\Contracts\SeoMetaContract;
 use Botble\SeoHelper\Contracts\SeoOpenGraphContract;
 use Botble\SeoHelper\Contracts\SeoTwitterContract;
 use Exception;
+use Illuminate\Http\Request;
 
 class SeoHelper implements SeoHelperContract
 {
     /**
      * The SeoMeta instance.
      *
-     * @var \Botble\SeoHelper\Contracts\SeoMetaContract
+     * @var SeoMetaContract
      */
     private $seoMeta;
 
     /**
      * The SeoOpenGraph instance.
      *
-     * @var \Botble\SeoHelper\Contracts\SeoOpenGraphContract
+     * @var SeoOpenGraphContract
      */
     private $seoOpenGraph;
 
     /**
      * The SeoTwitter instance.
      *
-     * @var \Botble\SeoHelper\Contracts\SeoTwitterContract
+     * @var SeoTwitterContract
      */
     private $seoTwitter;
 
     /**
      * Make SeoHelper instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\SeoMetaContract $seoMeta
-     * @param  \Botble\SeoHelper\Contracts\SeoOpenGraphContract $seoOpenGraph
-     * @param  \Botble\SeoHelper\Contracts\SeoTwitterContract $seoTwitter
+     * @param SeoMetaContract $seoMeta
+     * @param SeoOpenGraphContract $seoOpenGraph
+     * @param SeoTwitterContract $seoTwitter
      */
     public function __construct(
         SeoMetaContract $seoMeta,
@@ -50,21 +52,11 @@ class SeoHelper implements SeoHelperContract
     }
 
     /**
-     * Get SeoMeta instance.
-     *
-     * @return \Botble\SeoHelper\Contracts\SeoMetaContract
-     */
-    public function meta()
-    {
-        return $this->seoMeta;
-    }
-
-    /**
      * Set SeoMeta instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\SeoMetaContract $seoMeta
+     * @param SeoMetaContract $seoMeta
      *
-     * @return \Botble\SeoHelper\SeoHelper
+     * @return SeoHelper
      */
     public function setSeoMeta(SeoMetaContract $seoMeta)
     {
@@ -76,19 +68,9 @@ class SeoHelper implements SeoHelperContract
     /**
      * Get SeoOpenGraph instance.
      *
-     * @return \Botble\SeoHelper\Contracts\SeoOpenGraphContract
-     */
-    public function openGraph()
-    {
-        return $this->seoOpenGraph;
-    }
-
-    /**
-     * Get SeoOpenGraph instance.
+     * @param SeoOpenGraphContract $seoOpenGraph
      *
-     * @param  \Botble\SeoHelper\Contracts\SeoOpenGraphContract $seoOpenGraph
-     *
-     * @return \Botble\SeoHelper\SeoHelper
+     * @return SeoHelper
      */
     public function setSeoOpenGraph(SeoOpenGraphContract $seoOpenGraph)
     {
@@ -98,21 +80,11 @@ class SeoHelper implements SeoHelperContract
     }
 
     /**
-     * Get SeoTwitter instance.
-     *
-     * @return \Botble\SeoHelper\Contracts\SeoTwitterContract
-     */
-    public function twitter()
-    {
-        return $this->seoTwitter;
-    }
-
-    /**
      * Set SeoTwitter instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\SeoTwitterContract $seoTwitter
+     * @param SeoTwitterContract $seoTwitter
      *
-     * @return \Botble\SeoHelper\SeoHelper
+     * @return SeoHelper
      */
     public function setSeoTwitter(SeoTwitterContract $seoTwitter)
     {
@@ -122,13 +94,23 @@ class SeoHelper implements SeoHelperContract
     }
 
     /**
+     * Get SeoOpenGraph instance.
+     *
+     * @return SeoOpenGraphContract
+     */
+    public function openGraph()
+    {
+        return $this->seoOpenGraph;
+    }
+
+    /**
      * Set title.
      *
-     * @param  string $title
-     * @param  string|null $siteName
-     * @param  string|null $separator
+     * @param string $title
+     * @param string|null $siteName
+     * @param string|null $separator
      *
-     * @return \Botble\SeoHelper\SeoHelper
+     * @return SeoHelper
      */
     public function setTitle($title, $siteName = null, $separator = null)
     {
@@ -138,6 +120,26 @@ class SeoHelper implements SeoHelperContract
         $this->twitter()->setTitle($title);
 
         return $this;
+    }
+
+    /**
+     * Get SeoMeta instance.
+     *
+     * @return SeoMetaContract
+     */
+    public function meta()
+    {
+        return $this->seoMeta;
+    }
+
+    /**
+     * Get SeoTwitter instance.
+     *
+     * @return SeoTwitterContract
+     */
+    public function twitter()
+    {
+        return $this->seoTwitter;
     }
 
     /**
@@ -151,9 +153,9 @@ class SeoHelper implements SeoHelperContract
     /**
      * Set description.
      *
-     * @param  string $description
+     * @param string $description
      *
-     * @return \Botble\SeoHelper\Contracts\SeoHelperContract
+     * @return SeoHelperContract
      */
     public function setDescription($description)
     {
@@ -162,6 +164,16 @@ class SeoHelper implements SeoHelperContract
         $this->twitter()->setDescription($description);
 
         return $this;
+    }
+
+    /**
+     * Render the tag.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->render();
     }
 
     /**
@@ -179,21 +191,10 @@ class SeoHelper implements SeoHelperContract
     }
 
     /**
-     * Render the tag.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->render();
-    }
-
-    /**
-     * @param $screen
-     * @param \Illuminate\Http\Request $request
-     * @param $object
+     * @param string $screen
+     * @param Request $request
+     * @param BaseModel $object
      * @return bool
-     *
      */
     public function saveMetaData($screen, $request, $object)
     {
@@ -213,8 +214,8 @@ class SeoHelper implements SeoHelperContract
     }
 
     /**
-     * @param $screen
-     * @param $object
+     * @param string $screen
+     * @param BaseModel $object
      * @return bool
      */
     public function deleteMetaData($screen, $object)

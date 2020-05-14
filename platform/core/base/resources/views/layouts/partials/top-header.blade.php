@@ -50,7 +50,7 @@
                             </li>
                         @endif
 
-                        @if (setting('enable_multi_language_in_admin') != false)
+                        @if (setting('enable_multi_language_in_admin') != false && count($locales) > 1)
                             <li class="language dropdown">
                                 <a href="javascript:;" class="dropdown-toggle dropdown-header-name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     @if (array_key_exists(app()->getLocale(), $locales))

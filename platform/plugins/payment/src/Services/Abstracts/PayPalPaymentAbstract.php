@@ -2,6 +2,7 @@
 
 namespace Botble\Payment\Services\Abstracts;
 
+use Botble\Payment\Enums\PaymentMethodEnum;
 use Botble\Support\Services\ProduceServiceInterface;
 use Botble\Payment\Services\Traits\PaymentErrorTrait;
 use Exception;
@@ -210,7 +211,7 @@ abstract class PayPalPaymentAbstract implements ProduceServiceInterface
     public function createPayment($transactionDescription)
     {
         $payer = new Payer;
-        $payer->setPaymentMethod('paypal');
+        $payer->setPaymentMethod(PaymentMethodEnum::PAYPAL);
 
         $itemList = new ItemList;
         $itemList->setItems($this->itemList);

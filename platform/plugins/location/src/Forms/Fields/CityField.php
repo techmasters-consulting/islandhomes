@@ -9,14 +9,12 @@ class CityField extends SelectType
 {
 
     /**
-     * The name of the property that holds the value.
-     *
-     * @var string
+     * {@inheritDoc}
      */
     protected $valueProperty = 'selected';
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     protected function getTemplate()
     {

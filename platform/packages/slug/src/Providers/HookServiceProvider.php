@@ -4,6 +4,7 @@ namespace Botble\Slug\Providers;
 
 use Assets;
 use Botble\Base\Forms\FormAbstract;
+use Botble\Base\Models\BaseModel;
 use Botble\Slug\Forms\Fields\PermalinkField;
 use Eloquent;
 use Illuminate\Database\Eloquent\Model;
@@ -26,16 +27,20 @@ class HookServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param $object
-     * @param null $prefix
+     * @param BaseModel $object
+     * @param null|string  $prefix
      * @return null|string
      * @throws Throwable
      */
     public function addSlugBox($object = null)
     {
         if ($object && SlugHelper::isSupportedModel(get_class($object))) {
-            Assets::addScriptsDirectly('vendor/core/packages/slug/js/slug.js');
+
+            Assets::addScriptsDirectly('vendor/core/packages/slug/js/slug.js')
+                ->addStylesDirectly('vendor/core/packages/slug/css/slug.css');
+
             $prefix = SlugHelper::getPrefix(get_class($object));
+
             return view('packages/slug::partials.slug', compact('object', 'prefix'))->render();
         }
 

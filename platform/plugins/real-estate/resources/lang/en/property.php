@@ -39,18 +39,18 @@ return [
         PropertyStatusEnum::RENTED        => 'Rented',
         PropertyStatusEnum::BUILDING      => 'Building',
     ],
-    'types' => [
+    'types'    => [
         PropertyTypeEnum::SALE => 'Sale',
         PropertyTypeEnum::RENT => 'Rent',
     ],
-    'periods' => [
-        PropertyPeriodEnum::DAY => 'Day',
+    'periods'  => [
+        PropertyPeriodEnum::DAY   => 'Day',
         PropertyPeriodEnum::MONTH => 'Month',
-        PropertyPeriodEnum::YEAR => 'Year',
+        PropertyPeriodEnum::YEAR  => 'Year',
     ],
-    'moderation_status' => 'Moderation status',
+    'moderation_status'   => 'Moderation status',
     'moderation-statuses' => [
-        ModerationStatusEnum::PENDING => 'Pending',
+        ModerationStatusEnum::PENDING  => 'Pending',
         ModerationStatusEnum::APPROVED => 'Approved',
         ModerationStatusEnum::REJECTED => 'Rejected',
     ],

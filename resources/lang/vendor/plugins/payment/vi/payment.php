@@ -1,5 +1,7 @@
 <?php
 
+use Botble\Payment\Enums\PaymentMethodEnum;
+
 return [
     'payments'                              => 'Thanh toán',
     'checkout_success'                      => 'Thanh toán thành công!',
@@ -53,4 +55,16 @@ return [
     'deactivate_payment_method'             => 'Huỷ kích hoạt phương thức',
     'deactivate_payment_method_description' => 'Bạn có chắc chắn muốn huỷ phương thức thành toán này?',
     'agree'                                 => 'Đồng ý',
+    'name'                                  => 'Thanh toán',
+    'create'                                => 'Thêm thanh toán mới',
+    'go_back'                               => 'Trở lại',
+    'information'                           => 'Thông tin',
+    'methods'                               => [
+        PaymentMethodEnum::PAYPAL        => 'PayPal',
+        PaymentMethodEnum::STRIPE        => 'Stripe',
+        PaymentMethodEnum::COD           => 'Thanh toán khi giao hàng (COD)',
+        PaymentMethodEnum::BANK_TRANSFER => 'Chuyển khoản qua ngân hàng',
+    ],
+    'payment_methods_instruction' => 'Hướng dẫn khách hàng thanh toán trực tiếp. Có thể chọn thanh toán khi giao hàng hoặc chuyển khoản',
+    'payment_method_description' => 'Hướng dẫn thanh toán – (Hiển thị ở trang thông báo mua hàng thành công và trang thanh toán)',
 ];

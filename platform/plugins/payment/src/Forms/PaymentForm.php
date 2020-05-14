@@ -11,8 +11,7 @@ class PaymentForm extends FormAbstract
 {
 
     /**
-     * @return mixed|void
-     * @throws \Throwable
+     * {@inheritDoc}
      */
     public function buildForm()
     {

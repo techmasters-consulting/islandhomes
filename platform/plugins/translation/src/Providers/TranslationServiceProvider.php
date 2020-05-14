@@ -46,15 +46,16 @@ class TranslationServiceProvider extends ServiceProvider
             ->publishAssets();
 
         Event::listen(RouteMatched::class, function () {
-            dashboard_menu()->registerItem([
-                'id'          => 'cms-plugin-translation',
-                'priority'    => 6,
-                'parent_id'   => 'cms-core-platform-administration',
-                'name'        => 'plugins/translation::translation.menu_name',
-                'icon'        => null,
-                'url'         => route('translations.index'),
-                'permissions' => ['translations.index'],
-            ]);
+            dashboard_menu()
+                ->registerItem([
+                    'id'          => 'cms-plugin-translation',
+                    'priority'    => 6,
+                    'parent_id'   => 'cms-core-platform-administration',
+                    'name'        => 'plugins/translation::translation.translations',
+                    'icon'        => null,
+                    'url'         => route('translations.index'),
+                    'permissions' => ['translations.index'],
+                ]);
         });
     }
 }

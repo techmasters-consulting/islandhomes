@@ -3,6 +3,7 @@
 namespace Botble\Shortcode;
 
 use Botble\Shortcode\Compilers\ShortcodeCompiler;
+use Illuminate\Support\Str;
 
 class Shortcode
 {
@@ -34,7 +35,7 @@ class Shortcode
      * @return Shortcode
      * @since 2.1
      */
-    public function register($key, $name, $description = null, $callback)
+    public function register($key, $name, $description = null, $callback = null)
     {
         $this->compiler->add($key, $name, $description, $callback);
 
@@ -84,7 +85,7 @@ class Shortcode
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @return string
      * @since 2.1
      */
@@ -102,11 +103,26 @@ class Shortcode
     }
 
     /**
-     * @param $key
-     * @param $html
+     * @param string $key
+     * @param string $html
      */
-    public function setAdminConfig($key, $html)
+    public function setAdminConfig(string $key, $html)
     {
         $this->compiler->setAdminConfig($key, $html);
+    }
+
+    /**
+     * @param string $name
+     * @param array $attributes
+     * @return string
+     */
+    public function generateShortcode($name, array $attributes = [])
+    {
+        $parsedAttributes = '';
+        foreach ($attributes as $key => $attribute) {
+            $parsedAttributes .= ' ' . $key . '="' . Str::slug($attribute) . '"';
+        }
+
+        return '[' . $name . $parsedAttributes . '][/' . $name . ']';
     }
 }

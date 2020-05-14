@@ -13,7 +13,7 @@ class Location {
                 beforeSend: () => {
                     $element.closest('form').find('button[type=submit], input[type=submit]').prop('disabled', true);
                 },
-                success: (data) => {
+                success: data =>  {
                     let option = '<option value="">' + ($city.data('placeholder')) + '</option>';
                     $.each(data.data,(index, item) => {
                         if (item.id === $city.data('origin-value')) {
@@ -37,7 +37,7 @@ $(document).ready(() => {
         $.each($state_fields, (index, el) => {
             Location.changeProvince($(el));
         });
-        $(document).on('change', 'select[data-type=state]', (event) => {
+        $(document).on('change', 'select[data-type=state]', event =>  {
             Location.changeProvince($(event.currentTarget));
         });
     }

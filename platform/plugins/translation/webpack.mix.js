@@ -1,11 +1,11 @@
 let mix = require('laravel-mix');
 
-const publicPath = 'public/vendor/core/plugins/translation';
-const resourcePath = './platform/plugins/translation';
+const dist = 'public/vendor/core/plugins/translation';
+const source = './platform/plugins/translation';
 
 mix
-    .js(resourcePath + '/resources/assets/js/translation.js', publicPath + '/js')
-    .copy(publicPath + '/js/translation.js', resourcePath + '/public/js')
+    .js(source + '/resources/assets/js/translation.js', dist + '/js')
+    .sass(source + '/resources/assets/sass/translation.scss', dist + '/css')
 
-    .sass(resourcePath + '/resources/assets/sass/translation.scss', publicPath + '/css')
-    .copy(publicPath + '/css/translation.css', resourcePath + '/public/css');
+    .copy(dist + '/js', source + '/public/js')
+    .copy(dist + '/css', source + '/public/css');

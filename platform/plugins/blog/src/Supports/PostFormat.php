@@ -28,7 +28,6 @@ class PostFormat
     /**
      * @param array $formats
      * @return void
-     *
      * @since 16-09-2016
      */
     public static function registerPostFormat(array $formats = [])
@@ -41,7 +40,6 @@ class PostFormat
     /**
      * @param bool $isConvertToList
      * @return array
-     *
      * @since 16-09-2016
      */
     public static function getPostFormats($isConvertToList = false)

@@ -1,20 +1,20 @@
 class BackupManagement {
     init() {
         let table_backup = $('#table-backups');
-        table_backup.on('click', '.deleteDialog', (event) => {
+        table_backup.on('click', '.deleteDialog', event => {
             event.preventDefault();
 
             $('.delete-crud-entry').data('section', $(event.currentTarget).data('section'));
             $('.modal-confirm-delete').modal('show');
         });
 
-        table_backup.on('click', '.restoreBackup', (event) => {
+        table_backup.on('click', '.restoreBackup', event => {
             event.preventDefault();
             $('#restore-backup-button').data('section', $(event.currentTarget).data('section'));
             $('#restore-backup-modal').modal('show');
         });
 
-        $('.delete-crud-entry').on('click', (event) => {
+        $('.delete-crud-entry').on('click', event =>  {
             event.preventDefault();
             $('.modal-confirm-delete').modal('hide');
 
@@ -23,7 +23,7 @@ class BackupManagement {
             $.ajax({
                 url: deleteURL,
                 type: 'DELETE',
-                success: (data) => {
+                success: data => {
                     if (data.error) {
                         Botble.showError(data.message);
                     } else {
@@ -31,13 +31,13 @@ class BackupManagement {
                         Botble.showSuccess(data.message);
                     }
                 },
-                error: (data) => {
+                error: data => {
                     Botble.handleError(data);
                 }
             });
         });
 
-        $('#restore-backup-button').on('click', (event) => {
+        $('#restore-backup-button').on('click', event => {
             event.preventDefault();
             let _self = $(event.currentTarget);
             _self.addClass('button-loading');
@@ -45,7 +45,7 @@ class BackupManagement {
             $.ajax({
                 url: _self.data('section'),
                 type: 'GET',
-                success: (data) => {
+                success: data => {
                     _self.removeClass('button-loading');
                     _self.closest('.modal').modal('hide');
 
@@ -56,21 +56,21 @@ class BackupManagement {
                         window.location.reload();
                     }
                 },
-                error: (data) => {
+                error: data => {
                     _self.removeClass('button-loading');
                     Botble.handleError(data);
                 }
             });
         });
 
-        $(document).on('click', '#generate_backup', (event) => {
+        $(document).on('click', '#generate_backup', event => {
             event.preventDefault();
             $('#name').val('');
             $('#description').val('');
             $('#create-backup-modal').modal('show');
         });
 
-        $('#create-backup-modal').on('click', '#create-backup-button', (event) => {
+        $('#create-backup-modal').on('click', '#create-backup-button', event => {
             event.preventDefault();
             let _self = $(event.currentTarget);
             _self.addClass('button-loading');
@@ -95,7 +95,7 @@ class BackupManagement {
                         name: name,
                         description: description
                     },
-                    success: (data) => {
+                    success: data => {
                         _self.removeClass('button-loading');
                         _self.closest('.modal').modal('hide');
 
@@ -107,7 +107,7 @@ class BackupManagement {
                             Botble.showSuccess(data.message);
                         }
                     },
-                    error: (data) => {
+                    error: data => {
                         _self.removeClass('button-loading');
                         Botble.handleError(data);
                     }

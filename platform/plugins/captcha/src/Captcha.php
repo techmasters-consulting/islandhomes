@@ -2,420 +2,251 @@
 
 namespace Botble\Captcha;
 
-use Botble\Captcha\Contracts\CaptchaContract;
-use Botble\Captcha\Contracts\Utilities\AttributesContract;
-use Botble\Captcha\Contracts\Utilities\RequestContract;
-use Botble\Captcha\Exceptions\ApiException;
-use Botble\Captcha\Utilities\Attributes;
-use Botble\Captcha\Utilities\Request;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Arr;
-use Psr\Http\Message\ServerRequestInterface;
+use ReCaptcha\ReCaptcha;
 
-class Captcha implements CaptchaContract
+class Captcha
 {
-    const CLIENT_URL = 'https://www.google.com/recaptcha/api.js';
-    const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
-    const CAPTCHA_NAME = 'g-recaptcha-response';
+    const CAPTCHA_CLIENT_API = 'https://www.google.com/recaptcha/api.js';
 
     /**
-     * The shared key between your site and ReCAPTCHA
+     * Name of callback function
      *
-     * @var string
+     * @var string $callbackName
      */
-    protected $secret;
+    protected $callbackName = 'buzzNoCaptchaOnLoadCallback';
 
     /**
-     * Your site key
+     * Name of widget ids
      *
-     * @var string
+     * @var string $widgetIdName
      */
-    protected $siteKey;
+    protected $widgetIdName = 'buzzNoCaptchaWidgetIds';
 
     /**
-     * Forces the widget to render in a specific language.
-     * Auto-detects the user's language if unspecified.
+     * Each captcha attributes in multiple mode
      *
-     * @var string
+     * @var array $captchaAttributes
      */
-    protected $lang;
+    protected $captchaAttributes = [];
 
     /**
-     * Decides if we've already loaded the script file or not.
-     *
-     * @var bool
+     * @var Repository $config
      */
-    protected $scriptLoaded = false;
+    protected $config;
 
     /**
-     * HTTP Request Client
-     *
-     * @var \Botble\Captcha\Contracts\Utilities\RequestContract
+     * @var Repository $app
      */
-    protected $request;
+    protected $app;
 
     /**
-     * Captcha Attributes
-     *
-     * @var \Botble\Captcha\Contracts\Utilities\AttributesContract
+     * @param Application $app
      */
-    protected $attributes;
-
-    /**
-     * Captcha constructor.
-     *
-     * @param  string $secret
-     * @param  string $siteKey
-     * @param  string|null $lang
-     * @param  array $attributes
-     * @throws ApiException
-     */
-    public function __construct($secret, $siteKey, $lang = null, array $attributes = [])
+    public function __construct(Application $app)
     {
-        $this->setSecret($secret);
-        $this->setSiteKey($siteKey);
-        $this->setLang($lang);
-
-        $this->setRequestClient(new Request);
-        $this->setAttributes(new Attributes($attributes));
+        $this->app = $app;
+        $this->config = $this->app['config'];
     }
 
     /**
-     * Set the secret key.
+     * Create captcha html element
      *
-     * @param  string $secret
-     *
-     * @return self
-     * @throws ApiException
-     */
-    protected function setSecret($secret)
-    {
-        $this->checkKey('secret key', $secret);
-
-        $this->secret = $secret;
-
-        return $this;
-    }
-
-    /**
-     * Set Site key.
-     *
-     * @param  string $siteKey
-     *
-     * @return self
-     * @throws ApiException
-     */
-    protected function setSiteKey($siteKey)
-    {
-        $this->checkKey('site key', $siteKey);
-
-        $this->siteKey = $siteKey;
-
-        return $this;
-    }
-
-    /**
-     * Set language code.
-     *
-     * @param  string $lang
-     *
-     * @return self
-     */
-    public function setLang($lang)
-    {
-        $this->lang = $lang;
-
-        return $this;
-    }
-
-    /**
-     * Get script source link.
-     *
-     * @param  string|null $callbackName
+     * @param array $attributes
+     * @param array $options
      *
      * @return string
      */
-    protected function getScriptSrc($callbackName = null)
+    public function display($attributes = [], $options = [])
     {
-        $queries = [];
-
-        if ($this->hasLang()) {
-            Arr::set($queries, 'hl', $this->lang);
+        if (is_string($attributes)) {
+            $attributes = [];
         }
 
-        if ($this->hasCallbackName($callbackName)) {
-            Arr::set($queries, 'onload', $callbackName);
-            Arr::set($queries, 'render', 'explicit');
+        $isMultiple = (bool)$this->optionOrConfig($options, 'options.multiple');
+        if (!array_key_exists('id', $attributes)) {
+            $attributes['id'] = $this->randomCaptchaId();
+        }
+        $html = '';
+        if (!$isMultiple && Arr::get($attributes, 'add-js', true)) {
+            $html .= '<script src="' . $this->getJsLink($options) . '" async defer></script>';
+        }
+        unset($attributes['add-js']);
+        $attributeOptions = $this->optionOrConfig($options, 'attributes');
+        if (!empty($attributeOptions)) {
+            $attributes = array_merge($attributeOptions, $attributes);
+        }
+        if ($isMultiple) {
+            array_push($this->captchaAttributes, $attributes);
+        } else {
+            $attributes['data-sitekey'] = $this->optionOrConfig($options, 'site_key');
         }
 
-        return static::CLIENT_URL . (count($queries) ? '?' . http_build_query($queries) : '');
+        return $html . '<div class="g-recaptcha"' . $this->buildAttributes($attributes) . '></div>';
     }
 
     /**
-     * Set HTTP Request Client.
+     * @param array $options
+     * @param string $key
+     * @param mixed $default
      *
-     * @param  RequestContract $request
-     *
-     * @return self
+     * @return mixed
      */
-    public function setRequestClient(RequestContract $request)
+    protected function optionOrConfig($options = [], $key = '', $default = null)
     {
-        $this->request = $request;
-
-        return $this;
+        return Arr::get($options, str_replace('options.', '', $key),
+            $this->config->get('plugins.captcha.general.' . $key, $default));
     }
 
     /**
-     * Set Captcha Attributes.
-     *
-     * @param  AttributesContract $attributes
-     *
-     * @return self
-     */
-    public function setAttributes(AttributesContract $attributes)
-    {
-        $this->attributes = $attributes;
-
-        return $this;
-    }
-
-    /**
-     * Display Captcha.
-     *
-     * @param  string|null $name
-     * @param  array $attributes
+     * Random id unique
      *
      * @return string
      */
-    public function display($name = null, array $attributes = [])
+    protected function randomCaptchaId()
     {
-        $output = $this->attributes->build($this->siteKey, array_merge(
-            $this->attributes->prepareNameAttribute($name),
-            $attributes
-        ));
-
-        return '<div ' . $output . '></div>';
+        return 'buzzNoCaptchaId_' . md5(uniqid(rand(), true));
     }
 
     /**
-     * Display image Captcha.
+     * Create javascript api link with language
      *
-     * @param  string|null $name
-     * @param  array $attributes
+     * @param array $options
      *
      * @return string
      */
-    public function image($name = null, array $attributes = [])
+    public function getJsLink($options = [])
     {
-        return $this->display(
-            $name,
-            array_merge($attributes, $this->attributes->getImageAttribute())
+        $query = [];
+        if ($this->optionOrConfig($options, 'options.multiple')) {
+            $query = [
+                'onload' => $this->callbackName,
+                'render' => 'explicit',
+            ];
+        }
+        $lang = $this->optionOrConfig($options, 'options.lang');
+        if ($lang) {
+            $query['hl'] = $lang;
+        }
+
+        return static::CAPTCHA_CLIENT_API . '?' . http_build_query($query);
+    }
+
+    /**
+     * Create captcha element with attributes
+     *
+     * @param array $attributes
+     *
+     * @return string
+     */
+    protected function buildAttributes(array $attributes)
+    {
+        $html = [];
+        foreach ($attributes as $key => $value) {
+            $html[] = $key . '="' . $value . '"';
+        }
+
+        return count($html) ? ' ' . implode(' ', $html) : '';
+    }
+
+    /**
+     * @return null
+     * @deprecated 5.3
+     */
+    public function script()
+    {
+        return null;
+    }
+
+    /**
+     * Display multiple captcha on page
+     *
+     * @param array $options
+     *
+     * @return string
+     */
+    public function displayMultiple($options = [])
+    {
+        if (!$this->optionOrConfig($options, 'options.multiple')) {
+            return '';
+        }
+        $renderHtml = '';
+        foreach ($this->captchaAttributes as $captchaAttribute) {
+            $renderHtml .= $this->widgetIdName . '["' . $captchaAttribute['id'] . '"]=' . $this->buildCaptchaHtml($captchaAttribute, $options);
+        }
+
+        return '<script type="text/javascript">var ' .  $this->widgetIdName . '={};var ' . $this->callbackName . '=function(){' . $renderHtml . '};</script>';
+    }
+
+    /**
+     * Build captcha by attributes
+     *
+     * @param array $captchaAttribute
+     * @param array $options
+     *
+     * @return string
+     */
+    protected function buildCaptchaHtml($captchaAttribute = [], $options = [])
+    {
+        $options = array_merge(
+            ['sitekey' => $this->optionOrConfig($options, 'site_key')],
+            $this->optionOrConfig($options, 'attributes', [])
         );
+        foreach ($captchaAttribute as $key => $value) {
+            $options[str_replace('data-', '', $key)] = $value;
+        }
+        $options = json_encode($options);
+
+        return 'grecaptcha.render("' . $captchaAttribute['id'] . '",' . $options . ');';
     }
 
     /**
-     * Display audio Captcha.
-     *
-     * @param  string|null $name
-     * @param  array $attributes
-     *
+     * @param array $options
+     * @param array $attributes
      * @return string
      */
-    public function audio($name = null, array $attributes = [])
+    public function displayJs($options = [], $attributes = ['async', 'defer'])
     {
-        return $this->display(
-            $name,
-            array_merge($attributes, $this->attributes->getAudioAttribute())
-        );
+        return '<script src="' . htmlspecialchars($this->getJsLink($options)) . '" ' . implode(' ',
+                $attributes) . '></script>';
     }
 
     /**
-     * Verify Response.
+     * @param boolean $multiple
+     */
+    public function multiple($multiple = true)
+    {
+        $this->config->set('plugins.captcha.general.options.multiple', $multiple);
+    }
+
+    /**
+     * @param array $options
+     */
+    public function setOptions($options = [])
+    {
+        $this->config->set('plugins.captcha.general.options', $options);
+    }
+
+    /**
+     * Verify captcha
      *
-     * @param  string $response
-     * @param  string $clientIp
+     * @param string $response
+     * @param string $clientIp
+     * @param array $options
      *
      * @return bool
      */
-    public function verify($response, $clientIp = null)
+    public function verify($response, $clientIp = null, $options = [])
     {
         if (empty($response)) {
             return false;
         }
+        $getRequestMethod = $this->optionOrConfig($options, 'request_method');
+        $requestMethod = is_string($getRequestMethod) ? $this->app->call($getRequestMethod) : null;
+        $reCaptCha = new ReCaptcha($this->optionOrConfig($options, 'secret'), $requestMethod);
 
-        $response = $this->sendVerifyRequest([
-            'secret'   => $this->secret,
-            'response' => $response,
-            'remoteip' => $clientIp,
-        ]);
-
-        return isset($response['success']) && $response['success'] === true;
-    }
-
-    /**
-     * Calls the reCAPTCHA site verify API to verify whether the user passes CAPTCHA
-     * test using a PSR-7 ServerRequest object.
-     *
-     * @param  \Psr\Http\Message\ServerRequestInterface $request
-     *
-     * @return bool
-     */
-    public function verifyRequest(ServerRequestInterface $request)
-    {
-        $body = $request->getParsedBody();
-        $server = $request->getServerParams();
-
-        $response = isset($body[self::CAPTCHA_NAME])
-            ? $body[self::CAPTCHA_NAME]
-            : '';
-
-        $remoteIp = isset($server['REMOTE_ADDR'])
-            ? $server['REMOTE_ADDR']
-            : null;
-
-        return $this->verify($response, $remoteIp);
-    }
-
-    /**
-     * Get script tag.
-     *
-     * @param  string|null $callbackName
-     *
-     * @return string
-     */
-    public function script($callbackName = null)
-    {
-        $script = '';
-
-        if (!$this->scriptLoaded) {
-            $script = '<script src="' . $this->getScriptSrc($callbackName) . '" async defer></script>';
-            $this->scriptLoaded = true;
-        }
-
-        return $script;
-    }
-
-    /**
-     * Get script tag with a callback function.
-     *
-     * @param  array $captcha
-     * @param  string $callbackName
-     *
-     * @return string
-     */
-    public function scriptWithCallback(array $captcha, $callbackName = 'captchaRenderCallback')
-    {
-        $script = $this->script($callbackName);
-
-        if (empty($script) || empty($captcha)) {
-            return $script;
-        }
-
-        return implode(PHP_EOL, [implode(PHP_EOL, [
-            '<script>',
-            'var ' . $callbackName . ' = function() {',
-            $this->renderCaptchas($captcha),
-            '};',
-            '</script>',
-        ]), $script]);
-    }
-
-    /**
-     * Rendering captcha with callback function.
-     *
-     * @param  array $captcha
-     *
-     * @return string
-     */
-    protected function renderCaptchas(array $captcha)
-    {
-        return implode(PHP_EOL, array_map(function ($captcha) {
-            return 'if (document.getElementById("' . $captcha . '")) { grecaptcha.render("' . $captcha . '", {"sitekey" : "' . $this->siteKey . '"}); }';
-        }, $captcha));
-    }
-
-    /**
-     * Check if has lang.
-     *
-     * @return bool
-     */
-    protected function hasLang()
-    {
-        return !empty($this->lang);
-    }
-
-    /**
-     * Check if callback is not empty.
-     *
-     * @param  string|null $callbackName
-     *
-     * @return bool
-     */
-    protected function hasCallbackName($callbackName)
-    {
-        return !(empty($callbackName) || trim($callbackName) === '');
-    }
-
-    /**
-     * Check key.
-     *
-     * @param  string $name
-     * @param  string $value
-     * @throws ApiException
-     */
-    private function checkKey($name, &$value)
-    {
-        $this->checkIsString($name, $value);
-
-        $value = trim($value);
-
-        $this->checkIsNotEmpty($name, $value);
-    }
-
-    /**
-     * Check if the value is a string value.
-     *
-     * @param  string $name
-     * @param  string $value
-     *
-     * @throws ApiException
-     */
-    protected function checkIsString($name, $value)
-    {
-        if (!is_string($value)) {
-            throw new ApiException(
-                'The ' . $name . ' must be a string value, ' . gettype($value) . ' given'
-            );
-        }
-    }
-
-    /**
-     * Check if the value is not empty.
-     *
-     * @param string $name
-     * @param string $value
-     *
-     * @throws ApiException
-     */
-    protected function checkIsNotEmpty($name, $value)
-    {
-        if (empty($value)) {
-            throw new ApiException('The ' . $name . ' must not be empty');
-        }
-    }
-
-    /**
-     * Send verify request to API and get response.
-     *
-     * @param  array $query
-     *
-     * @return array
-     */
-    protected function sendVerifyRequest(array $query = [])
-    {
-        $query = array_filter($query);
-        $url = static::VERIFY_URL . '?' . http_build_query($query);
-        $response = $this->request->send($url);
-
-        return $response;
+        return $reCaptCha->verify($response, $clientIp)->isSuccess();
     }
 }

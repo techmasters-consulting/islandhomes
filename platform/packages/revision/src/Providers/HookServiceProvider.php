@@ -3,7 +3,7 @@
 namespace Botble\Revision\Providers;
 
 use Assets;
-use Eloquent;
+use Botble\Base\Models\BaseModel;
 use Illuminate\Support\ServiceProvider;
 use Throwable;
 
@@ -16,14 +16,13 @@ class HookServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param $tabs
-     * @param $screen
+     * @param string $tabs
+     * @param BaseModel $data
      * @return string
-     *
      * @throws Throwable
      * @since 2.0
      */
-    public function addHistoryTab($tabs, $screen, $data = null)
+    public function addHistoryTab($tabs, $data = null)
     {
         if (!empty($data) && in_array(get_class($data), config('packages.revision.general.supported', []))) {
             Assets::addScriptsDirectly([
@@ -38,15 +37,13 @@ class HookServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param $tabs
-     * @param $screen
-     * @param Eloquent $data
+     * @param string $tabs
+     * @param BaseModel $data
      * @return string
-     *
      * @throws Throwable
      * @since 2.0
      */
-    public function addHistoryContent($tabs, $screen, $data = null)
+    public function addHistoryContent($tabs, $data = null)
     {
         if (!empty($data) && in_array(get_class($data), config('packages.revision.general.supported', []))) {
             return $tabs . view('packages/revision::history-content', ['model' => $data])->render();

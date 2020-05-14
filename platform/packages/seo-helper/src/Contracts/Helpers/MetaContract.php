@@ -17,7 +17,7 @@ interface MetaContract extends RenderableContract
     /**
      * Set the meta prefix name.
      *
-     * @param  string $prefix
+     * @param string $prefix
      *
      * @return self
      */
@@ -26,7 +26,7 @@ interface MetaContract extends RenderableContract
     /**
      * Set the meta property name.
      *
-     * @param  string $nameProperty
+     * @param string $nameProperty
      *
      * @return self
      */
@@ -35,10 +35,10 @@ interface MetaContract extends RenderableContract
     /**
      * Make Meta instance.
      *
-     * @param  string $name
-     * @param  string $content
-     * @param  string $propertyName
-     * @param  string $prefix
+     * @param string $name
+     * @param string $content
+     * @param string $propertyName
+     * @param string $prefix
      *
      * @return self
      */

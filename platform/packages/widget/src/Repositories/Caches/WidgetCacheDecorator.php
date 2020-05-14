@@ -8,7 +8,7 @@ use Botble\Widget\Repositories\Interfaces\WidgetInterface;
 class WidgetCacheDecorator extends CacheAbstractDecorator implements WidgetInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getByTheme($theme)
     {

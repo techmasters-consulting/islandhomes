@@ -21,10 +21,7 @@
                                 <div class="col-6 col-sm-6 col-md-4 colm10">
                                     <div class="item">
                                         <div class="blii">
-                                            <div class="img"><img class="thumb"
-                                                                  data-src="{{ get_object_image($property->image, 'small') }}"
-                                                                  src="{{ get_object_image($property->image, 'small') }}"
-                                                                  alt="{{ $property->name }}">
+                                            <div class="img"><img class="thumb" data-src="{{ get_object_image($property->image, 'small') }}" src="{{ get_object_image($property->image, 'small') }}" alt="{{ $property->name }}">
                                             </div>
                                             <a href="{{ $property->url }}" class="linkdetail"></a>
                                             <div class="status">{!! $property->status->toHtml() !!}</div>
@@ -35,15 +32,19 @@
                                         far
                                          fa-heart"></i></a>--}}
                                             <a href="{{ $property->url }}"><h5>{{ $property->name }}</h5>
-                                                <p class="dia_chi"><i
-                                                        class="fas fa-map-marker-alt"></i> {{ $property->location }}</p>
-                                                <p class="bold500">{{ __('Price') }}
-                                                    : {{ format_price($property->price, $property->currency) }}</p>
+                                                <p class="dia_chi"><i class="fas fa-map-marker-alt"></i> {{ $property->location }}</p>
+                                                <p class="bold500">{{ __('Price') }}: {{ format_price($property->price, $property->currency) }}</p>
                                             </a>
                                             <p class="threemt bold500">
-                                                <span data-toggle="tooltip" data-placement="top" data-original-title="{{ __('Number of rooms') }}"> <i><img src="{{ Theme::asset()->url('images/bed.svg') }}" alt="icon"></i> <i class="vti">{{ $property->number_bedroom }}</i> </span>
-                                                <span data-toggle="tooltip" data-placement="top" data-original-title="{{ __('Number of rest rooms') }}">  <i><img src="{{ Theme::asset()->url('images/bath.svg') }}" alt="icon"></i> <i class="vti">{{ $property->number_bathroom }}</i></span>
-                                                <span data-toggle="tooltip" data-placement="top" data-original-title="{{ __('Square') }}"> <i><img src="{{ Theme::asset()->url('images/area.svg') }}" alt="icon"></i> <i class="vti">{{ $property->square }} m2</i> </span>
+                                                @if ($property->number_bedroom)
+                                                    <span data-toggle="tooltip" data-placement="top" data-original-title="{{ __('Number of rooms') }}"> <i><img src="{{ Theme::asset()->url('images/bed.svg') }}" alt="icon"></i> <i class="vti">{{ $property->number_bedroom }}</i> </span>
+                                                @endif
+                                                @if ($property->number_bathroom)
+                                                    <span data-toggle="tooltip" data-placement="top" data-original-title="{{ __('Number of rest rooms') }}">  <i><img src="{{ Theme::asset()->url('images/bath.svg') }}" alt="icon"></i> <i class="vti">{{ $property->number_bathroom }}</i></span>
+                                                @endif
+                                                @if ($property->square)
+                                                    <span data-toggle="tooltip" data-placement="top" data-original-title="{{ __('Square') }}"> <i><img src="{{ Theme::asset()->url('images/area.svg') }}" alt="icon"></i> <i class="vti">{{ $property->square }} {{ __('m2') }}</i> </span>
+                                                @endif
                                             </p>
                                         </div>
                                     </div>

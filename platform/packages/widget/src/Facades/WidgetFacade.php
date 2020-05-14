@@ -18,7 +18,7 @@ class WidgetFacade extends Facade
     /**
      * Get the widget group object.
      *
-     * @param $name
+     * @param string $name
      *
      * @return WidgetGroup
      */

@@ -133,10 +133,10 @@ class PageController extends BaseController
             event(new DeletedContentEvent(PAGE_MODULE_SCREEN_NAME, $request, $page));
 
             return $response->setMessage(trans('packages/page::pages.deleted'));
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage($ex->getMessage());
+                ->setMessage($exception->getMessage());
         }
     }
 

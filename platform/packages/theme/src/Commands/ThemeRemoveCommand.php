@@ -2,19 +2,20 @@
 
 namespace Botble\Theme\Commands;
 
-use Botble\Setting\Repositories\Interfaces\SettingInterface;
-use Botble\Setting\Supports\SettingStore;
 use Botble\Theme\Commands\Traits\ThemeTrait;
-use Botble\Theme\Events\ThemeRemoveEvent;
-use Botble\Widget\Repositories\Interfaces\WidgetInterface;
+use Botble\Theme\Services\ThemeService;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
-use Illuminate\Filesystem\Filesystem as File;
 
 class ThemeRemoveCommand extends Command
 {
     use ThemeTrait;
     use ConfirmableTrait;
+
+    /**
+     * @var ThemeService
+     */
+    public $themeService;
 
     /**
      * The console command name.
@@ -35,60 +36,19 @@ class ThemeRemoveCommand extends Command
     protected $description = 'Remove an existing theme';
 
     /**
-     * @var File
+     * ThemeRemoveCommand constructor.
+     * @param ThemeService $themeService
      */
-    protected $files;
-
-    /**
-     * @var WidgetInterface
-     */
-    protected $widgetRepository;
-
-    /**
-     * @var SettingInterface
-     */
-    protected $settingRepository;
-
-    /**
-     * @var SettingStore
-     */
-    protected $settingStore;
-
-    /**
-     * @var ThemeAssetsRemoveCommand
-     */
-    protected $themeAssetsRemoveCommand;
-
-    /**
-     * Create a new command instance.
-     *
-     * @param File $files
-     * @param WidgetInterface $widgetRepository
-     * @param SettingInterface $settingRepository
-     * @param SettingStore $settingStore
-     * @param ThemeAssetsRemoveCommand $themeAssetsRemoveCommand
-     */
-    public function __construct(
-        File $files,
-        WidgetInterface $widgetRepository,
-        SettingInterface $settingRepository,
-        SettingStore $settingStore,
-        ThemeAssetsRemoveCommand $themeAssetsRemoveCommand
-    ) {
-        $this->files = $files;
-        $this->widgetRepository = $widgetRepository;
-        $this->settingRepository = $settingRepository;
-        $this->settingStore = $settingStore;
-        $this->themeAssetsRemoveCommand = $themeAssetsRemoveCommand;
-
+    public function __construct(ThemeService $themeService)
+    {
         parent::__construct();
+        $this->themeService = $themeService;
     }
 
     /**
      * Execute the console command.
      *
      * @return bool
-     * @throws \Exception
      */
     public function handle()
     {
@@ -101,39 +61,15 @@ class ThemeRemoveCommand extends Command
             return false;
         }
 
-        if (!$this->files->isDirectory($this->getPath(null))) {
-            $this->error('Theme "' . $this->getTheme() . '" is not exists.');
+        $result = $this->themeService->remove($this->argument('name'));
+
+        if ($result['error']) {
+            $this->error($result['message']);
             return false;
         }
 
-        if ($this->settingStore->get('theme') == $this->getTheme()) {
-            $this->error('Cannot remove activated theme, please activate another theme before removing "' . $this->getTheme() . '"!');
-            return false;
-        }
+        $this->info($result['message']);
 
-        $themePath = $this->getPath(null);
-
-        return $this->processRemove($themePath);
-    }
-
-    /**
-     * @param string $themePath
-     * @return boolean
-     * @throws \Exception
-     */
-    protected function processRemove($themePath)
-    {
-        $this->call($this->themeAssetsRemoveCommand->getName(), ['name' => $this->getTheme()]);
-
-        $this->files->deleteDirectory($themePath, false);
-        $this->widgetRepository->deleteBy(['theme' => $this->getTheme()]);
-        $this->settingRepository->getModel()
-            ->where('key', 'like', 'theme-' . $this->getTheme() . '-%')
-            ->delete();
-
-        event(new ThemeRemoveEvent($this->getTheme()));
-
-        $this->info('Theme "' . $this->getTheme() . '" has been destroyed.');
         return true;
     }
 }

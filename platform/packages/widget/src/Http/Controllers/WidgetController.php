@@ -77,15 +77,15 @@ class WidgetController extends BaseController
     public function postSaveWidgetToSidebar(Request $request, BaseHttpResponse $response)
     {
         try {
-            $sidebar_id = $request->get('sidebar_id');
+            $sidebarId = $request->get('sidebar_id');
             $this->widgetRepository->deleteBy([
-                'sidebar_id' => $sidebar_id,
+                'sidebar_id' => $sidebarId,
                 'theme'      => $this->theme,
             ]);
             foreach ($request->get('items', []) as $key => $item) {
                 parse_str($item, $data);
                 $args = [
-                    'sidebar_id' => $sidebar_id,
+                    'sidebar_id' => $sidebarId,
                     'widget_id'  => $data['id'],
                     'theme'      => $this->theme,
                     'position'   => $key,
@@ -95,7 +95,7 @@ class WidgetController extends BaseController
             }
 
             $widget_areas = $this->widgetRepository->allBy([
-                'sidebar_id' => $sidebar_id,
+                'sidebar_id' => $sidebarId,
                 'theme'      => $this->theme,
             ]);
             return $response
@@ -123,10 +123,10 @@ class WidgetController extends BaseController
                 'widget_id'  => $request->get('widget_id'),
             ]);
             return $response->setMessage(trans('packages/widget::global.delete_success'));
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage($ex->getMessage());
+                ->setMessage($exception->getMessage());
         }
     }
 
@@ -167,12 +167,12 @@ class WidgetController extends BaseController
      */
     protected function getCurrentLocaleCode()
     {
-        $language_code = null;
+        $languageCode = null;
         if (is_plugin_active('language')) {
-            $current_locale = is_in_admin() ? Language::getCurrentAdminLocaleCode() : Language::getCurrentLocaleCode();
-            $language_code = $current_locale && $current_locale != Language::getDefaultLocaleCode() ? '-' . $current_locale : null;
+            $currentLocale = is_in_admin() ? Language::getCurrentAdminLocaleCode() : Language::getCurrentLocaleCode();
+            $languageCode = $currentLocale && $currentLocale != Language::getDefaultLocaleCode() ? '-' . $currentLocale : null;
         }
 
-        return $language_code;
+        return $languageCode;
     }
 }

@@ -57,8 +57,6 @@ class PackageController extends BaseController
     }
 
     /**
-     * Insert new Package into database
-     *
      * @param PackageRequest $request
      * @return BaseHttpResponse
      */
@@ -75,8 +73,6 @@ class PackageController extends BaseController
     }
 
     /**
-     * Show edit form
-     *
      * @param $id
      * @param Request $request
      * @param FormBuilder $formBuilder

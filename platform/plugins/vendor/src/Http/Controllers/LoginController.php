@@ -122,7 +122,7 @@ class LoginController extends Controller
         if ($this->guard()->validate($this->credentials($request))) {
             $vendor = $this->guard()->getLastAttempted();
 
-            if (config('plugins.vendor.general.verify_email') && empty($vendor->confirmed_at)) {
+            if (setting('verify_account_email', config('plugins.vendor.general.verify_email')) && empty($vendor->confirmed_at)) {
                 throw ValidationException::withMessages([
                     'confirmation' => [
                         trans('plugins/vendor::vendor.not_confirmed', [

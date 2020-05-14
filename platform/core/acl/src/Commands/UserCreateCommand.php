@@ -52,7 +52,7 @@ class UserCreateCommand extends Command
      */
     public function handle()
     {
-        $this->info('Creating a Super User...');
+        $this->info('Creating a super user...');
 
         try {
             $user = $this->userRepository->getModel();

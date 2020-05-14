@@ -82,8 +82,9 @@ class Assets extends BaseAssets
                     in_array($language[0], [$locale, str_replace('-', '_', $locale)])
                 ) {
                     $languages[$locale] = [
-                        'name' => $language[2],
-                        'flag' => $language[4],
+                        'locale' => $locale,
+                        'name'   => $language[2],
+                        'flag'   => $language[4],
                     ];
                 }
             }

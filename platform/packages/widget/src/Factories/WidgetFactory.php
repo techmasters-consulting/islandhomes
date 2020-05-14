@@ -27,7 +27,7 @@ class WidgetFactory extends AbstractWidgetFactory
     /**
      * @return array
      */
-    public function getWidgets()
+    public function getWidgets(): array
     {
         return $this->widgets;
     }

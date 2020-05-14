@@ -3,12 +3,17 @@
 namespace Botble\Theme\Commands;
 
 use Botble\Theme\Commands\Traits\ThemeTrait;
+use Botble\Theme\Services\ThemeService;
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem as File;
 
 class ThemeAssetsRemoveCommand extends Command
 {
     use ThemeTrait;
+
+    /**
+     * @var ThemeService
+     */
+    public $themeService;
 
     /**
      * The console command name.
@@ -29,20 +34,13 @@ class ThemeAssetsRemoveCommand extends Command
     protected $description = 'Remove assets for a theme';
 
     /**
-     * @var File
+     * ThemeAssetsRemoveCommand constructor.
+     * @param ThemeService $themeService
      */
-    protected $files;
-
-    /**
-     * Create a new command instance.
-     *
-     * @param File $files
-     */
-    public function __construct(File $files)
+    public function __construct(ThemeService $themeService)
     {
-        $this->files = $files;
-
         parent::__construct();
+        $this->themeService = $themeService;
     }
 
     /**
@@ -57,14 +55,14 @@ class ThemeAssetsRemoveCommand extends Command
             return false;
         }
 
-        if (!$this->files->isDirectory($this->getPath(null))) {
-            $this->error('Theme "' . $this->getTheme() . '" is not exists.');
+        $result = $this->themeService->removeAssets($this->argument('name'));
+
+        if ($result['error']) {
+            $this->error($result['message']);
             return false;
         }
 
-        $this->files->deleteDirectory(public_path('themes/' . $this->getTheme()));
-
-        $this->info('Remove assets of a theme ' . $this->getTheme() . ' successfully!');
+        $this->info($result['message']);
 
         return true;
     }

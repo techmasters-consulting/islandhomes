@@ -16,7 +16,6 @@ Route::group(['namespace' => 'Theme\FlexHome\Http\Controllers', 'middleware' => 
 
     Theme::routes();
     Route::post('ajax/subscribers', 'FlexHomeController@newsletters');
-
     Route::group(apply_filters(BASE_FILTER_GROUP_PUBLIC_ROUTE, []), function () {
 
         Route::get('/', 'FlexHomeController@getIndex')->name('public.index');
@@ -35,4 +34,5 @@ Route::group(['namespace' => 'Theme\FlexHome\Http\Controllers', 'middleware' => 
         Route::get('ajax/posts', 'FlexHomeController@ajaxGetPosts')->name('public.ajax.posts');
 
     });
+
 });

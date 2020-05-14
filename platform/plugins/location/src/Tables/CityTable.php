@@ -8,10 +8,8 @@ use Botble\Location\Repositories\Interfaces\CityInterface;
 use Botble\Location\Repositories\Interfaces\CountryInterface;
 use Botble\Location\Repositories\Interfaces\StateInterface;
 use Botble\Table\Abstracts\TableAbstract;
+use Html;
 use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\JsonResponse;
-use Throwable;
 use Yajra\DataTables\DataTables;
 use Botble\Location\Models\City;
 
@@ -66,10 +64,7 @@ class CityTable extends TableAbstract
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return JsonResponse
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function ajax()
     {
@@ -79,19 +74,19 @@ class CityTable extends TableAbstract
                 if (!Auth::user()->hasPermission('city.edit')) {
                     return $item->name;
                 }
-                return anchor_link(route('city.edit', $item->id), $item->name);
+                return Html::link(route('city.edit', $item->id), $item->name);
             })
             ->editColumn('state_id', function ($item) {
-                if (!$item->state_id) {
+                if (!$item->state_id && $item->state->name) {
                     return null;
                 }
-                return anchor_link(route('state.edit', $item->state_id), $item->state->name);
+                return Html::link(route('state.edit', $item->state_id), $item->state->name);
             })
             ->editColumn('country_id', function ($item) {
-                if (!$item->country_id) {
+                if (!$item->country_id && $item->country->name) {
                     return null;
                 }
-                return anchor_link(route('country.edit', $item->country_id), $item->country->name);
+                return Html::link(route('country.edit', $item->country_id), $item->country->name);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
@@ -112,10 +107,7 @@ class CityTable extends TableAbstract
     }
 
     /**
-     * Get the query object to be processed by table.
-     *
-     * @return \Illuminate\Database\Query\Builder|Builder
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function query()
     {
@@ -133,8 +125,7 @@ class CityTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function columns()
     {
@@ -173,9 +164,7 @@ class CityTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws Throwable
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function buttons()
     {
@@ -185,8 +174,7 @@ class CityTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function bulkActions(): array
     {
@@ -194,7 +182,7 @@ class CityTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getBulkChanges(): array
     {

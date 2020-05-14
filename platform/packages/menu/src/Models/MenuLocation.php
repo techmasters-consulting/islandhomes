@@ -26,7 +26,7 @@ class MenuLocation extends BaseModel
     /**
      * @return BelongsTo
      */
-    public function menu()
+    public function menu(): BelongsTo
     {
         return $this->belongsTo(Menu::class, 'menu_id')->withDefault();
     }

@@ -55,13 +55,13 @@ class PackageForm extends FormAbstract
             ->add('price', 'text', [
                 'label'      => trans('plugins/vendor::package.price'),
                 'label_attr' => ['class' => 'control-label'],
-                'wrapper' => [
+                'wrapper'    => [
                     'class' => 'form-group col-md-6',
                 ],
-                'attr' => [
-                    'id' => 'price-number',
+                'attr'       => [
+                    'id'          => 'price-number',
                     'placeholder' => trans('plugins/vendor::package.price'),
-                    'class' => 'form-control input-mask-number',
+                    'class'       => 'form-control input-mask-number',
                 ],
             ])
             ->add('usd_price', 'text', [
@@ -106,27 +106,27 @@ class PackageForm extends FormAbstract
                 ],
             ])
             ->add('number_of_listings', 'text', [
-                'label' => trans('plugins/vendor::package.number_of_listings'),
+                'label'      => trans('plugins/vendor::package.number_of_listings'),
                 'label_attr' => ['class' => 'control-label'],
-                'wrapper' => [
+                'wrapper'    => [
                     'class' => 'form-group col-md-4',
                 ],
-                'attr' => [
-                    'id' => 'price-number',
+                'attr'       => [
+                    'id'          => 'price-number',
                     'placeholder' => trans('plugins/vendor::package.number_of_listings'),
-                    'class' => 'form-control input-mask-number',
+                    'class'       => 'form-control input-mask-number',
                 ],
             ])
             ->add('account_limit', 'text', [
-                'label' => trans('plugins/vendor::package.account_limit'),
+                'label'      => trans('plugins/vendor::package.account_limit'),
                 'label_attr' => ['class' => 'control-label'],
-                'wrapper' => [
+                'wrapper'    => [
                     'class' => 'form-group col-md-4',
                 ],
-                'attr' => [
-                    'id' => 'percent-save-number',
+                'attr'       => [
+                    'id'          => 'percent-save-number',
                     'placeholder' => trans('plugins/vendor::package.account_limit_placeholder'),
-                    'class' => 'form-control input-mask-number',
+                    'class'       => 'form-control input-mask-number',
                 ],
             ])
             ->add('rowClose2', 'html', [

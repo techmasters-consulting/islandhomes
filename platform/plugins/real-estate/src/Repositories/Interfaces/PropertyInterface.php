@@ -19,4 +19,19 @@ interface PropertyInterface extends RepositoryInterface
      * @return array
      */
     public function getProperties($filters = [], $params = []);
+
+    /**
+     * @param int $propertyId
+     * @param array $with
+     * @return array
+     */
+    public function getProperty(int $propertyId, array $with = []);
+
+    /**
+     * @param array $condition
+     * @param int $limit
+     * @param array $with
+     * @return array
+     */
+    public function getPropertiesByConditions(array $condition, $limit, array $with = []);
 }

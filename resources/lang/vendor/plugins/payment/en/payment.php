@@ -1,6 +1,7 @@
 <?php
 
 use Botble\Payment\Enums\PaymentMethodEnum;
+use Botble\Payment\Enums\PaymentStatusEnum;
 
 return [
     'payments'                              => 'Payments',
@@ -60,8 +61,21 @@ return [
     'go_back'                               => 'Go back',
     'information'                           => 'Information',
     'methods'                               => [
-        PaymentMethodEnum::PAYPAL => 'PayPal',
-        PaymentMethodEnum::STRIPE => 'Stripe',
-        PaymentMethodEnum::DIRECT => 'Direct',
+        PaymentMethodEnum::PAYPAL        => 'PayPal',
+        PaymentMethodEnum::STRIPE        => 'Stripe',
+        PaymentMethodEnum::COD           => 'Cash on delivery (COD)',
+        PaymentMethodEnum::BANK_TRANSFER => 'Bank transfer',
     ],
+    'statuses'                              => [
+        PaymentStatusEnum::PENDING   => 'Pending',
+        PaymentStatusEnum::COMPLETED => 'Completed',
+        PaymentStatusEnum::REFUNDING => 'Refunding',
+        PaymentStatusEnum::REFUNDED  => 'Refunded',
+        PaymentStatusEnum::FRAUD     => 'Fraud',
+    ],
+    'payment_methods_instruction'           => 'Guide customers to pay directly. You can choose to pay by delivery or bank transfer',
+    'payment_method_description'            => 'Payment guide - (Displayed on the notice of successful purchase and payment page)',
+    'payment_via_cod'                       => 'Cash on delivery (COD)',
+    'payment_via_bank_transfer'             => 'Bank transfer',
+    'payment_pending'                       => 'Checkout successfully. Your payment is pending and will be checked by our staff.',
 ];

@@ -2,15 +2,20 @@
 
 namespace Botble\Theme\Commands;
 
-use Botble\Setting\Supports\SettingStore;
 use Botble\Theme\Commands\Traits\ThemeTrait;
+use Botble\Theme\Services\ThemeService;
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem as File;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 class ThemeActivateCommand extends Command
 {
 
     use ThemeTrait;
+
+    /**
+     * @var ThemeService
+     */
+    public $themeService;
 
     /**
      * The console command name.
@@ -30,43 +35,20 @@ class ThemeActivateCommand extends Command
     protected $description = 'Activate a theme';
 
     /**
-     * @var File
+     * ThemeActivateCommand constructor.
+     * @param ThemeService $themeService
      */
-    protected $files;
-
-    /**
-     * @var SettingStore
-     */
-    protected $settingStore;
-
-    /**
-     * @var ThemeAssetsPublishCommand
-     */
-    protected $themeAssetsPublishCommand;
-
-    /**
-     * Create a new command instance.
-     *
-     * @param File $files
-     * @param SettingStore $settingStore
-     * @param ThemeAssetsPublishCommand $themeAssetsPublishCommand
-     */
-    public function __construct(
-        File $files,
-        SettingStore $settingStore,
-        ThemeAssetsPublishCommand $themeAssetsPublishCommand
-    ) {
-        $this->files = $files;
-        $this->settingStore = $settingStore;
-        $this->themeAssetsPublishCommand = $themeAssetsPublishCommand;
-
+    public function __construct(ThemeService $themeService)
+    {
         parent::__construct();
+        $this->themeService = $themeService;
     }
 
     /**
      * Execute the console command.
      *
      * @return bool
+     * @throws FileNotFoundException
      */
     public function handle()
     {
@@ -75,18 +57,14 @@ class ThemeActivateCommand extends Command
             return false;
         }
 
-        if (!$this->files->isDirectory($this->getPath(null))) {
-            $this->error('Theme "' . $this->getTheme() . '" is not exists.');
+        $result = $this->themeService->activate($this->argument('name'));
+
+        if ($result['error']) {
+            $this->error($result['message']);
             return false;
         }
 
-        $this->settingStore
-            ->set('theme', $this->getTheme())
-            ->save();
-
-        $this->call($this->themeAssetsPublishCommand->getName(), ['--name' => $this->getTheme()]);
-        $this->info('Activate theme ' . $this->argument('name') . ' successfully!');
-        $this->call('cache:clear');
+        $this->info($result['message']);
 
         return true;
     }

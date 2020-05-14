@@ -3,7 +3,6 @@
 namespace Botble\Api\Providers;
 
 use Botble\Api\Http\Middleware\ForceJsonResponseMiddleware;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 use Botble\Base\Traits\LoadAndPublishDataTrait;
 
@@ -11,14 +10,9 @@ class ApiServiceProvider extends ServiceProvider
 {
     use LoadAndPublishDataTrait;
 
-    /**
-     * @throws BindingResolutionException
-     */
     public function register()
     {
-        $router = $this->app->make('router');
-
-        $router->pushMiddlewareToGroup('api', ForceJsonResponseMiddleware::class);
+        $this->app->make('router')->pushMiddlewareToGroup('api', ForceJsonResponseMiddleware::class);
     }
 
     public function boot()

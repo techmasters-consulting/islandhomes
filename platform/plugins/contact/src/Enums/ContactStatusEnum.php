@@ -32,7 +32,7 @@ class ContactStatusEnum extends Enum
                 return Html::tag('span', self::READ()->label(), ['class' => 'label-success status-label'])
                     ->toHtml();
             default:
-                return null;
+                return parent::toHtml();
         }
     }
 }

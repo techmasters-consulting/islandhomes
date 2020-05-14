@@ -6,14 +6,12 @@ use Botble\Base\Forms\FormAbstract;
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Location\Http\Requests\CountryRequest;
 use Botble\Location\Models\Country;
-use Throwable;
 
 class CountryForm extends FormAbstract
 {
 
     /**
-     * @return mixed|void
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function buildForm()
     {

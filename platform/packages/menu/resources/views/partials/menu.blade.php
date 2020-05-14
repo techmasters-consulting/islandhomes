@@ -57,11 +57,11 @@
             @if ($row->has_child)
                 {!!
                     Menu::generateMenu([
-                        'slug' => $menu->slug,
-                        'view' => 'packages/menu::partials.menu',
+                        'slug'      => $menu->slug,
+                        'view'      => 'packages/menu::partials.menu',
                         'parent_id' => $row->id,
-                        'theme' => false,
-                        'active' => false
+                        'theme'     => false,
+                        'active'    => false
                     ])
                 !!}
             @endif

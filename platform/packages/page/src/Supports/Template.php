@@ -5,7 +5,7 @@ namespace Botble\Page\Supports;
 class Template
 {
     /**
-     * @param $templates
+     * @param array $templates
      * @return void
      * @since 16-09-2016
      */

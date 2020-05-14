@@ -75,4 +75,7 @@ return [
     'select_role'                => 'Select role',
     'create_new_user'            => 'Create a new user',
     'cannot_delete_super_user'   => 'Permission denied. Cannot delete a super user!',
+    'assigned_role'              => 'Assigned Role',
+    'no_role_assigned'           => 'No role assigned',
+    'view_user_profile'          => 'View user\'s profile',
 ];

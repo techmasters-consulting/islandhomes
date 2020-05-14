@@ -41,11 +41,6 @@ class LanguageServiceProvider extends ServiceProvider
 {
     use LoadAndPublishDataTrait;
 
-    /**
-     * @var mixed
-     */
-    protected $currentLanguage;
-
     public function register()
     {
         $this->setNamespace('plugins/language')
@@ -88,15 +83,25 @@ class LanguageServiceProvider extends ServiceProvider
             $this->app->register(EventServiceProvider::class);
 
             Event::listen(RouteMatched::class, function () {
-                dashboard_menu()->registerItem([
-                    'id'          => 'cms-plugins-language',
-                    'priority'    => 2,
-                    'parent_id'   => 'cms-core-settings',
-                    'name'        => 'plugins/language::language.menu',
-                    'icon'        => null,
-                    'url'         => route('languages.index'),
-                    'permissions' => ['languages.index'],
-                ]);
+                dashboard_menu()
+                    ->registerItem([
+                            'id'          => 'cms-plugins-language',
+                            'priority'    => 2,
+                            'parent_id'   => 'cms-core-settings',
+                            'name'        => 'plugins/language::language.name',
+                            'icon'        => null,
+                            'url'         => route('languages.index'),
+                            'permissions' => ['languages.index'],
+                        ])
+                    ->registerItem([
+                        'id'          => 'cms-core-theme-translations',
+                        'priority'    => 4,
+                        'parent_id'   => 'cms-core-appearance',
+                        'name'        => 'plugins/language::language.theme-translations',
+                        'icon'        => null,
+                        'url'         => route('languages.theme-translations'),
+                        'permissions' => ['languages.index'],
+                    ]);
 
                 Assets::addScriptsDirectly('vendor/core/plugins/language/js/language-global.js')
                     ->addStylesDirectly(['vendor/core/plugins/language/css/language.css']);

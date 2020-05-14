@@ -131,19 +131,18 @@ abstract class AbstractWidget
     }
 
     /**
-     * @param null $sidebar_id
+     * @param null $sidebarId
      * @param int $position
      * @return Factory|View|mixed
-     *
      * @throws FileNotFoundException
      */
-    public function form($sidebar_id = null, $position = 0)
+    public function form($sidebarId = null, $position = 0)
     {
         Theme::uses(setting('theme'));
-        if (!empty($sidebar_id)) {
+        if (!empty($sidebarId)) {
             $data = $this->widgetRepository->getFirstBy([
                 'widget_id'  => $this->getId(),
-                'sidebar_id' => $sidebar_id,
+                'sidebar_id' => $sidebarId,
                 'position'   => $position,
                 'theme'      => $this->theme,
             ]);
@@ -162,15 +161,5 @@ abstract class AbstractWidget
         return view($this->backendTemplate, [
             'config' => $this->config,
         ]);
-    }
-
-    /**
-     * Add defaults to configuration array.
-     *
-     * @param array $defaults
-     */
-    protected function addConfigDefaults(array $defaults)
-    {
-        $this->config = array_merge($this->config, $defaults);
     }
 }

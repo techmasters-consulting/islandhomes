@@ -2,8 +2,8 @@
     "name": "Location",
     "namespace": "Botble\\Location\\",
     "provider": "Botble\\Location\\Providers\\LocationServiceProvider",
-    "author": "Sang Nguyen",
-    "url": "https://sangnguyen.info",
+    "author": "Botble Technologies",
+    "url": "https://botble.com",
     "version": "1.0",
     "description": "The description for module location"
 }

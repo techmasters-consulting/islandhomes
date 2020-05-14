@@ -9,7 +9,7 @@ interface WebmastersContract extends RenderableContract
     /**
      * Make Webmaster instance.
      *
-     * @param  array $webmasters
+     * @param array $webmasters
      *
      * @return self
      */
@@ -18,8 +18,8 @@ interface WebmastersContract extends RenderableContract
     /**
      * Add a webmaster to collection.
      *
-     * @param  string $webmaster
-     * @param  string $content
+     * @param string $webmaster
+     * @param string $content
      *
      * @return self
      */

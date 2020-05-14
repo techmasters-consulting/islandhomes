@@ -29,7 +29,6 @@ class VendorController extends BaseController
 
     /**
      * @param VendorInterface $vendorRepository
-     *
      */
     public function __construct(VendorInterface $vendorRepository)
     {
@@ -39,7 +38,6 @@ class VendorController extends BaseController
     /**
      * @param VendorTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
      * @throws \Throwable
      */
     public function index(VendorTable $dataTable)
@@ -50,10 +48,8 @@ class VendorController extends BaseController
     }
 
     /**
-     * Show create form
      * @param FormBuilder $formBuilder
      * @return string
-     *
      */
     public function create(FormBuilder $formBuilder)
     {
@@ -66,12 +62,9 @@ class VendorController extends BaseController
     }
 
     /**
-     * Insert new Gallery into database
-     *
      * @param VendorCreateRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      */
     public function store(VendorCreateRequest $request, BaseHttpResponse $response)
     {
@@ -87,12 +80,9 @@ class VendorController extends BaseController
     }
 
     /**
-     * Show edit form
-     *
      * @param $id
      * @param FormBuilder $formBuilder
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
-     *
      */
     public function edit($id, FormBuilder $formBuilder)
     {
@@ -111,7 +101,6 @@ class VendorController extends BaseController
      * @param VendorEditRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      */
     public function update($id, VendorEditRequest $request, BaseHttpResponse $response)
     {
@@ -135,7 +124,6 @@ class VendorController extends BaseController
      * @param $id
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      */
     public function destroy(Request $request, $id, BaseHttpResponse $response)
     {
@@ -156,7 +144,6 @@ class VendorController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      * @throws Exception
      */
     public function deletes(Request $request, BaseHttpResponse $response)

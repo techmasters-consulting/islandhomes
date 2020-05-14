@@ -87,7 +87,7 @@ class HookServiceProvider extends ServiceProvider
                 'status' => BaseStatusEnum::PUBLISHED,
             ];
 
-            if (Auth::check() && request('preview')) {
+            if (Auth::check() && request()->input('preview')) {
                 Arr::forget($condition, 'status');
             }
 
@@ -142,7 +142,7 @@ class HookServiceProvider extends ServiceProvider
      * @return string
      * @throws Throwable
      */
-    public function addSetting($data = null)
+    public function addSetting($data = null): string
     {
         $pages = $this->app->make(PageInterface::class)
             ->allBy(['pages.status' => BaseStatusEnum::PUBLISHED], [], ['pages.id', 'pages.name']);

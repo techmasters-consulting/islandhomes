@@ -42,9 +42,9 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
     /**
      * Set meta prefix name.
      *
-     * @param  string $prefix
+     * @param string $prefix
      *
-     * @return \Botble\SeoHelper\Bases\MetaCollection
+     * @return MetaCollection
      */
     public function setPrefix($prefix)
     {
@@ -56,9 +56,9 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
     /**
      * Add many meta tags.
      *
-     * @param  array $meta
+     * @param array $meta
      *
-     * @return \Botble\SeoHelper\Bases\MetaCollection
+     * @return MetaCollection
      */
     public function addMany(array $meta)
     {
@@ -72,19 +72,15 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
     /**
      * Add a meta to collection.
      *
-     * @param  string $name
-     * @param  string $content
+     * @param string $name
+     * @param string $content
      *
-     * @return \Botble\SeoHelper\Bases\MetaCollection
+     * @return MetaCollection
      */
     public function add($item)
     {
         if (empty($item)) {
             return $this;
-        }
-
-        if (!is_array($item)) {
-            dd($item);
         }
 
         return $this->addMeta($item);
@@ -93,10 +89,10 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
     /**
      * Make a meta and add it to collection.
      *
-     * @param  string $name
-     * @param  string $content
+     * @param string $name
+     * @param string $content
      *
-     * @return \Botble\SeoHelper\Bases\MetaCollection
+     * @return MetaCollection
      */
     protected function addMeta(array $meta)
     {
@@ -110,9 +106,9 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
     /**
      * Remove a meta from the collection by key.
      *
-     * @param  array|string $names
+     * @param array|string $names
      *
-     * @return \Botble\SeoHelper\Bases\MetaCollection
+     * @return MetaCollection
      */
     public function remove($names)
     {
@@ -148,7 +144,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
     /**
      * Check if meta is ignored.
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return bool
      */
@@ -160,9 +156,9 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
     /**
      * Remove an item from the collection by key.
      *
-     * @param  string|array $keys
+     * @param string|array $keys
      *
-     * @return \Botble\SeoHelper\Bases\MetaCollection
+     * @return MetaCollection
      */
     public function forget($keys)
     {
@@ -176,7 +172,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
     /**
      * Refresh meta collection items.
      *
-     * @return \Botble\SeoHelper\Bases\MetaCollection
+     * @return MetaCollection
      */
     protected function refresh()
     {
@@ -188,7 +184,7 @@ abstract class MetaCollection extends Collection implements MetaCollectionContra
     /**
      * Prepare names.
      *
-     * @param  array|string $names
+     * @param array|string $names
      *
      * @return array
      */

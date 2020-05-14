@@ -2,8 +2,8 @@
 
 return [
     'name'            => 'Menu',
-    'cancel'          => 'Hủy bỏ',
-    'add_link'        => 'Thêm liên kết',
+    'cancel'          => 'Jeter ̉',
+    'add_link'        => 'Ajouter un lien',
     'add_to_menu'     => 'Thêm vào trình đơn',
     'basic_info'      => 'Thông tin cơ bản',
     'blank_open_link' => 'Mở liên kết trong tab mới',

@@ -47,7 +47,7 @@ class Title implements TitleContract
     /**
      * Make the Title instance.
      *
-     * @param  array $configs
+     * @param array $configs
      * @throws InvalidArgumentException
      */
     public function __construct()
@@ -87,9 +87,9 @@ class Title implements TitleContract
     /**
      * Set title.
      *
-     * @param  string $title
+     * @param string $title
      *
-     * @return \Botble\SeoHelper\Entities\Title
+     * @return Title
      */
     public function set($title)
     {
@@ -111,9 +111,9 @@ class Title implements TitleContract
     /**
      * Set site name.
      *
-     * @param  string $siteName
+     * @param string $siteName
      *
-     * @return \Botble\SeoHelper\Entities\Title
+     * @return Title
      */
     public function setSiteName($siteName)
     {
@@ -135,9 +135,9 @@ class Title implements TitleContract
     /**
      * Set title separator.
      *
-     * @param  string $separator
+     * @param string $separator
      *
-     * @return \Botble\SeoHelper\Entities\Title
+     * @return Title
      */
     public function setSeparator($separator)
     {
@@ -149,7 +149,7 @@ class Title implements TitleContract
     /**
      * Set title first.
      *
-     * @return \Botble\SeoHelper\Entities\Title
+     * @return Title
      */
     public function setFirst()
     {
@@ -159,7 +159,7 @@ class Title implements TitleContract
     /**
      * Set title last.
      *
-     * @return \Botble\SeoHelper\Entities\Title
+     * @return Title
      */
     public function setLast()
     {
@@ -169,9 +169,9 @@ class Title implements TitleContract
     /**
      * Switch title position.
      *
-     * @param  bool $first
+     * @param bool $first
      *
-     * @return \Botble\SeoHelper\Entities\Title
+     * @return Title
      */
     protected function switchPosition($first)
     {
@@ -203,9 +203,9 @@ class Title implements TitleContract
     /**
      * Set title max length.
      *
-     * @param  int $max
+     * @param int $max
      *
-     * @return \Botble\SeoHelper\Entities\Title
+     * @return Title
      * @throws InvalidArgumentException
      */
     public function setMax($max)
@@ -220,11 +220,11 @@ class Title implements TitleContract
     /**
      * Make a Title instance.
      *
-     * @param  string $title
-     * @param  string $siteName
-     * @param  string $separator
+     * @param string $title
+     * @param string $siteName
+     * @param string $separator
      *
-     * @return \Botble\SeoHelper\Entities\Title
+     * @return Title
      * @throws InvalidArgumentException
      */
     public static function make($title, $siteName = '', $separator = '-')
@@ -283,9 +283,9 @@ class Title implements TitleContract
     /**
      * Check title max length.
      *
-     * @param  int $max
+     * @param int $max
      *
-     * @throws \Botble\SeoHelper\Exceptions\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function checkMax($max)
     {
@@ -301,7 +301,7 @@ class Title implements TitleContract
     /**
      * Render title first.
      *
-     * @param  string $separator
+     * @param string $separator
      *
      * @return string
      */
@@ -321,7 +321,7 @@ class Title implements TitleContract
     /**
      * Render title last.
      *
-     * @param  string $separator
+     * @param string $separator
      *
      * @return string
      */

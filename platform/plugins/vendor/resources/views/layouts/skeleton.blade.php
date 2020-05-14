@@ -53,8 +53,7 @@
     </main>
       @if (count(Assets::getAdminLocales()) > 1)
           <footer>
-
-          <p> {{ trans('core/acl::auth.languages') }}:
+              <p> {{ trans('core/acl::auth.languages') }}:
                   @foreach (Assets::getAdminLocales() as $key => $value)
                       <span @if (app()->getLocale() == $key) class="active" @endif>
                 <a href="{{ route('settings.language', $key) }}">

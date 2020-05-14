@@ -5,6 +5,7 @@ namespace Botble\Menu\Models;
 use Botble\Base\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class MenuNode extends BaseModel
 {
@@ -57,7 +58,7 @@ class MenuNode extends BaseModel
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @return string
      */
     public function getUrlAttribute($value)
@@ -70,14 +71,23 @@ class MenuNode extends BaseModel
             return url('');
         }
 
-        $prefix = $this->reference->slugable ? $this->reference->slugable->prefix : null;
-        $prefix = apply_filters(FILTER_SLUG_PREFIX, $prefix);
-
-        return url($prefix ? $prefix . '/' . $this->reference->slug : $this->reference->slug);
+        return $this->reference->url;
     }
 
     /**
-     * @param $value
+     * @param string $value
+     */
+    public function setUrlAttribute($value)
+    {
+        if (Str::contains(url(''), $value)) {
+            $value = str_replace(url(''), '', $value);
+        }
+
+        $this->attributes['url'] = $value;
+    }
+
+    /**
+     * @param string $value
      * @return string
      */
     public function getTitleAttribute($value)

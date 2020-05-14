@@ -1,26 +1,20 @@
 <?php
 
 return [
-    /* ------------------------------------------------------------------------------------------------
-     |  Credentials
-     | ------------------------------------------------------------------------------------------------
+    // Secret key and Site key get on https://www.google.com/recaptcha
+    'secret'         => env('CAPTCHA_SECRET', 'no-captcha-secret'),
+    'site_key'       => env('CAPTCHA_SITE_KEY', 'no-captcha-site-key'),
+    /**
+     * @var string|null Default ``null``.
+     * Custom with function name (example customRequestCaptcha) or class@method (example \App\CustomRequestCaptcha@custom).
+     * Function must be return instance, read more in repo ``https://github.com/thinhbuzz/laravel-google-captcha-examples``
      */
-    'secret'     => env('CAPTCHA_SECRET', 'no-captcha-secret'),
-    'site_key'   => env('CAPTCHA_SITE_KEY', 'no-captcha-site-key'),
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Localization
-     | ------------------------------------------------------------------------------------------------
-     */
-    'lang'       => app()->getLocale(),
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Attributes
-     | ------------------------------------------------------------------------------------------------
-     */
-    'attributes' => [
-        'data-theme' => null, // 'light', 'dark'
-        'data-type'  => null, // 'image', 'audio'
-        'data-size'  => null, // 'normal', 'compact'
+    'request_method' => null,
+    'options'        => [
+        'multiple' => false,
+        'lang'     => app()->getLocale(),
+    ],
+    'attributes'     => [
+        'theme' => 'light',
     ],
 ];

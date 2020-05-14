@@ -36,7 +36,6 @@ class AuditLogController extends BaseController
     /**
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      * @throws Throwable
      */
     public function getWidgetActivities(BaseHttpResponse $response)
@@ -55,7 +54,6 @@ class AuditLogController extends BaseController
     /**
      * @param AuditLogTable $dataTable
      * @return Factory|View
-     *
      * @throws Throwable
      */
     public function index(AuditLogTable $dataTable)
@@ -91,7 +89,6 @@ class AuditLogController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      * @throws Exception
      */
     public function deletes(Request $request, BaseHttpResponse $response)

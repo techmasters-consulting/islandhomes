@@ -9,7 +9,7 @@ use Illuminate\Database\Query\JoinClause;
 class MenuNodeRepository extends RepositoriesAbstract implements MenuNodeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getByMenuId($menuId, $parentId, $select = ['*'])
     {

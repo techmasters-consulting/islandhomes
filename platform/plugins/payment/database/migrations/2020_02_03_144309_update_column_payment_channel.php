@@ -13,9 +13,11 @@ class UpdateColumnPaymentChannel extends Migration
      */
     public function up()
     {
-        Schema::table('payments', function (Blueprint $table) {
-            $table->renameColumn('payment_chanel', 'payment_channel');
-        });
+        if (Schema::hasColumn('payments', 'payment_chanel')) {
+            Schema::table('payments', function (Blueprint $table) {
+                $table->renameColumn('payment_chanel', 'payment_channel');
+            });
+        }
     }
 
     /**

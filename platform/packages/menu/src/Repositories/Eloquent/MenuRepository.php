@@ -10,13 +10,13 @@ use Illuminate\Support\Str;
 class MenuRepository extends RepositoriesAbstract implements MenuInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function findBySlug($slug, $active, $selects = [])
     {
-        $data = $this->model->where('menus.slug', '=', $slug);
+        $data = $this->model->where('menus.slug', $slug);
         if ($active) {
-            $data = $data->where('menus.status', '=', BaseStatusEnum::PUBLISHED)->select($selects);
+            $data = $data->where('menus.status', BaseStatusEnum::PUBLISHED)->select($selects);
         }
         $data = $this->applyBeforeExecuteQuery($data, true)->first();
 
@@ -26,7 +26,7 @@ class MenuRepository extends RepositoriesAbstract implements MenuInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createSlug($name)
     {

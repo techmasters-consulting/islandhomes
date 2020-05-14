@@ -23,4 +23,5 @@ return [
     'cache'                     => [
         'store' => 'file',
     ],
+    'enabled_dashboard_widgets' => env('ANALYTICS_ENABLE_DASHBOARD_WIDGETS', true),
 ];

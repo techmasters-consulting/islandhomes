@@ -8,7 +8,7 @@ use Botble\Contact\Repositories\Interfaces\ContactInterface;
 class ContactCacheDecorator extends CacheAbstractDecorator implements ContactInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getUnread($select = ['*'])
     {
@@ -16,7 +16,7 @@ class ContactCacheDecorator extends CacheAbstractDecorator implements ContactInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function countUnread()
     {

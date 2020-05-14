@@ -7,7 +7,7 @@ interface ApplicationWrapperContract
     /**
      * Wrapper around app()->call().
      *
-     * @param $method
+     * @param string $method
      * @param array $params
      * @return mixed
      */

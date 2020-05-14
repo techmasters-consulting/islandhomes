@@ -64,7 +64,7 @@ class Description implements DescriptionContract
     /**
      * Set description content.
      *
-     * @param  string $content
+     * @param string $content
      *
      * @return self
      */
@@ -88,7 +88,7 @@ class Description implements DescriptionContract
     /**
      * Set description max length.
      *
-     * @param  int $max
+     * @param int $max
      *
      * @return self
      * @throws InvalidArgumentException
@@ -105,8 +105,8 @@ class Description implements DescriptionContract
     /**
      * Make a description instance.
      *
-     * @param  string $content
-     * @param  int $max
+     * @param string $content
+     * @param int $max
      *
      * @return self
      * @throws InvalidArgumentException
@@ -153,9 +153,9 @@ class Description implements DescriptionContract
     /**
      * Check title max length.
      *
-     * @param  int $max
+     * @param int $max
      *
-     * @throws \Botble\SeoHelper\Exceptions\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function checkMax($max)
     {

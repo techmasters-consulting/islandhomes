@@ -7,13 +7,12 @@ class FieldFormatter
     /**
      * Format the value according to the provided formats.
      *
-     * @param  $key
-     * @param  $value
-     * @param  $formats
-     *
+     * @param string $key
+     * @param string $value
+     * @param array $formats
      * @return string formatted value
      */
-    public static function format($key, $value, $formats)
+    public static function format($key, $value, array $formats)
     {
         foreach ($formats as $pkey => $format) {
             $parts = explode(':', $format);

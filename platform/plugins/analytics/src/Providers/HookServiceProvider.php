@@ -11,12 +11,9 @@ use Throwable;
 
 class HookServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap the application events.
-     */
     public function boot()
     {
-        if (env('ANALYTICS_ENABLE_DASHBOARD_WIDGETS', true)) {
+        if (config('plugins.analytics.general.enabled_dashboard_widgets')) {
             add_action(DASHBOARD_ACTION_REGISTER_SCRIPTS, [$this, 'registerScripts'], 18);
             add_filter(DASHBOARD_FILTER_ADMIN_LIST, [$this, 'addGeneralWidget'], 18, 2);
             add_filter(DASHBOARD_FILTER_ADMIN_LIST, [$this, 'addPageWidget'], 19, 2);
@@ -28,7 +25,6 @@ class HookServiceProvider extends ServiceProvider
 
     /**
      * @return void
-     *
      */
     public function registerScripts()
     {
@@ -38,10 +34,15 @@ class HookServiceProvider extends ServiceProvider
             'analytics.browser',
             'analytics.referrer',
         ])) {
-            Assets::addScripts(['jvectormap', 'raphael', 'morris'])
-                ->addStyles(['jvectormap', 'morris'])
+            Assets::addScripts(['raphael', 'morris'])
+                ->addStyles(['morris'])
+                ->addStylesDirectly([
+                    'vendor/core/plugins/analytics/libraries/jvectormap/jquery-jvectormap-1.2.2.css',
+                ])
                 ->addScriptsDirectly([
-                    '/vendor/core/plugins/analytics/js/analytics.js',
+                    'vendor/core/plugins/analytics/libraries/jvectormap/jquery-jvectormap-1.2.2.min.js',
+                    'vendor/core/plugins/analytics/libraries/jvectormap/jquery-jvectormap-world-mill-en.js',
+                    'vendor/core/plugins/analytics/js/analytics.js',
                 ]);
         }
     }
@@ -128,11 +129,11 @@ class HookServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param null $data
+     * @param null|string $data
      * @return string
      * @throws Throwable
      */
-    public function addAnalyticsSetting($data = null)
+    public function addAnalyticsSetting($data = null): string
     {
         return $data . view('plugins/analytics::setting')->render();
     }

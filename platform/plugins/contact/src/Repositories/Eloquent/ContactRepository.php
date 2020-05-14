@@ -9,7 +9,7 @@ use Botble\Support\Repositories\Eloquent\RepositoriesAbstract;
 class ContactRepository extends RepositoriesAbstract implements ContactInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getUnread($select = ['*'])
     {
@@ -19,7 +19,7 @@ class ContactRepository extends RepositoriesAbstract implements ContactInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function countUnread()
     {

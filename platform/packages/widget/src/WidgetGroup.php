@@ -245,7 +245,7 @@ class WidgetGroup
     }
 
     /**
-     * @param $name
+     * @param string $name
      */
     public function setName($name)
     {

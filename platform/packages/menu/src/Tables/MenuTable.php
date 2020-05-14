@@ -3,15 +3,13 @@
 namespace Botble\Menu\Tables;
 
 use Botble\Menu\Models\Menu;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\JsonResponse;
+use Html;
 use Illuminate\Support\Facades\Auth;
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Menu\Repositories\Interfaces\MenuInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Validation\Rule;
-use Throwable;
 use Yajra\DataTables\DataTables;
 
 class MenuTable extends TableAbstract
@@ -45,11 +43,7 @@ class MenuTable extends TableAbstract
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return JsonResponse
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function ajax()
     {
@@ -60,7 +54,7 @@ class MenuTable extends TableAbstract
                     return $item->name;
                 }
 
-                return anchor_link(route('menus.edit', $item->id), $item->name);
+                return Html::link(route('menus.edit', $item->id), $item->name);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
@@ -81,11 +75,7 @@ class MenuTable extends TableAbstract
     }
 
     /**
-     * Get the query object to be processed by the table.
-     *
-     * @return \Illuminate\Database\Query\Builder|Builder
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function query()
     {
@@ -103,9 +93,7 @@ class MenuTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function columns()
     {
@@ -134,10 +122,7 @@ class MenuTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @throws Throwable
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function buttons()
     {
@@ -147,8 +132,7 @@ class MenuTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function bulkActions(): array
     {
@@ -156,7 +140,7 @@ class MenuTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getBulkChanges(): array
     {

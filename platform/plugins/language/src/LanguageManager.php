@@ -166,6 +166,7 @@ class LanguageManager
             if (!in_array($language->lang_id, json_decode(setting('language_hide_languages', '[]'), true))) {
                 $locales[$language->lang_locale] = [
                     'lang_name'       => $language->lang_name,
+                    'lang_locale'     => $language->lang_locale,
                     'lang_code'       => $language->lang_code,
                     'lang_flag'       => $language->lang_flag,
                     'lang_is_rtl'     => $language->lang_is_rtl,
@@ -294,7 +295,7 @@ class LanguageManager
 
         if (array_key_exists($locale, $this->supportedLocales)) {
             if ($locale != $this->currentLocale) {
-                Helper::executeCommand('cache:clear');
+                Helper::clearCache();
             }
             $this->currentLocale = $locale;
         } else {
@@ -795,6 +796,23 @@ class LanguageManager
      *
      * @return string current locale code
      */
+    public function getCurrentAdminLocale()
+    {
+        $adminLocale = $this->getCurrentAdminLocaleCode();
+        foreach ($this->supportedLocales as $locale => $supportedLocale) {
+            if ($supportedLocale['lang_code'] == $adminLocale) {
+                return $locale;
+            }
+        }
+
+        return $adminLocale;
+    }
+
+    /**
+     * Returns current admin locale code
+     *
+     * @return string current locale code
+     */
     public function getCurrentAdminLocaleCode()
     {
         if (empty($this->supportedLocales)) {
@@ -810,23 +828,6 @@ class LanguageManager
         }
 
         return Arr::get($this->supportedLocales, $this->getCurrentLocale() . '.lang_code');
-    }
-
-    /**
-     * Returns current admin locale code
-     *
-     * @return string current locale code
-     */
-    public function getCurrentAdminLocale()
-    {
-        $adminLocale = $this->getCurrentAdminLocaleCode();
-        foreach ($this->supportedLocales as $locale => $supportedLocale) {
-            if ($supportedLocale['lang_code'] == $adminLocale) {
-                return $locale;
-            }
-        }
-
-        return $adminLocale;
     }
 
     /**

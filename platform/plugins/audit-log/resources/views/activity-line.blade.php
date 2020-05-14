@@ -2,6 +2,8 @@
 <span>
     @if ($history->user->id)
         <a href="{{ route('user.profile.view', $history->user->id) }}">{{ $history->user->getFullName() }}</a>
+    @else
+        <span>{{ trans('plugins/audit-log::history.system') }}</span>
     @endif
     @if (Lang::has('plugins/audit-log::history.' . $history->action)) {{ trans('plugins/audit-log::history.' . $history->action) }} @else {{ $history->action }} @endif
     @if ($history->module)

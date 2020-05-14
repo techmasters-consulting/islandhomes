@@ -24,20 +24,20 @@
                                 </div>
                             </div>
                         </div>
-                    <div class="col-md-6">
-                        <form action="{{ route('public.send.contact') }}" method="post" class="generic-form">
-                            <div class="wrapper">
-                                <h2 class="h2">{{ __('HOW CAN WE HELP YOU?') }}</h2>
-                                @csrf
-                                <div class="form-group">
-                                    <input class="form-control" type="text" name="name" placeholder="{{ __('Name') }} *"
-                                           required="">
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" type="text" name="email"
-                                           placeholder="{{ __('Email') }} *" required="">
-                                </div>
-                                <div class="form-group">
+                        <div class="col-md-6">
+                            <form action="{{ route('public.send.contact') }}" method="post" class="generic-form">
+                                <div class="wrapper">
+                                    <h2 class="h2">{{ __('HOW WE CAN HELP YOU?') }}</h2>
+                                    @csrf
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" name="name" placeholder="{{ __('Name') }} *"
+                                               required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" name="email"
+                                               placeholder="{{ __('Email') }} *" required="">
+                                    </div>
+                                    <div class="form-group">
                                         <input class="form-control" type="text" name="phone"
                                                placeholder="{{ __('Phone') }}">
                                     </div>
@@ -48,8 +48,7 @@
                                     @if (setting('enable_captcha') && is_plugin_active('captcha'))
                                         <div class="form-group">
                                             <label for="contact_robot" class="control-label required">{{ trans('plugins/contact::contact.confirm_not_robot') }}</label>
-                                            {!! Captcha::display('captcha') !!}
-                                            {!! Captcha::script() !!}
+                                            {!! Captcha::display([], ['lang' => app()->getLocale()]) !!}
                                         </div>
                                     @endif
                                     <div class="alert alert-success text-success text-left" style="display: none;">

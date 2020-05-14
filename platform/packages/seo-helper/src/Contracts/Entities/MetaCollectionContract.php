@@ -9,7 +9,7 @@ interface MetaCollectionContract extends RenderableContract
     /**
      * Add a meta to collection.
      *
-     * @param  array $item
+     * @param array $item
      *
      * @return self
      */
@@ -18,7 +18,7 @@ interface MetaCollectionContract extends RenderableContract
     /**
      * Add many meta tags.
      *
-     * @param  array $meta
+     * @param array $meta
      *
      * @return self
      */
@@ -27,7 +27,7 @@ interface MetaCollectionContract extends RenderableContract
     /**
      * Remove a meta from the meta collection by key.
      *
-     * @param  array|string $names
+     * @param array|string $names
      *
      * @return self
      */

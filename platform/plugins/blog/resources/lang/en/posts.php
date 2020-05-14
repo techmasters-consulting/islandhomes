@@ -26,5 +26,6 @@ return [
     'menu_name'           => 'Posts',
     'widget_posts_recent' => 'Recent Posts',
     'categories'          => 'Categories',
+    'category'            => 'Category',
     'author'              => 'Author',
 ];

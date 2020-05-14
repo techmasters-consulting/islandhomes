@@ -11,9 +11,9 @@ let mix = require('laravel-mix');
  |
  */
 
-const resourcePath = 'platform/packages/widget';
-const publicPath = 'public/vendor/core/packages/widget';
+const source = 'platform/packages/widget';
+const dist = 'public/vendor/core/packages/widget';
 
 mix
-    .js(resourcePath + '/resources/assets/js/widget.js', publicPath + '/js')
-    .copy(publicPath + '/js/widget.js', resourcePath + '/public/js');
+    .js(source + '/resources/assets/js/widget.js', dist + '/js')
+    .copy(dist + '/js', source + '/public/js');

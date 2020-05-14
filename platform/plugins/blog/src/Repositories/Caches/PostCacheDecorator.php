@@ -8,7 +8,7 @@ use Botble\Blog\Repositories\Interfaces\PostInterface;
 class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFeatured($limit = 5)
     {
@@ -16,7 +16,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getListPostNonInList(array $selected = [], $limit = 12)
     {
@@ -24,7 +24,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getByUserId($authorId, $limit = 6)
     {
@@ -32,7 +32,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getDataSiteMap()
     {
@@ -40,7 +40,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getByTag($tag, $paginate = 12)
     {
@@ -48,7 +48,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getRelated($slug, $limit = 3)
     {
@@ -56,7 +56,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getRecentPosts($limit = 5, $categoryId = 0)
     {
@@ -64,7 +64,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getSearch($query, $limit = 10, $paginate = 10)
     {
@@ -72,7 +72,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getByCategory($categoryId, $paginate = 12, $limit = 0)
     {
@@ -80,7 +80,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAllPosts($perPage = 12, $active = true)
     {
@@ -88,7 +88,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getPopularPosts($limit, array $args = [])
     {
@@ -96,7 +96,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getRelatedCategoryIds($model)
     {
@@ -104,7 +104,7 @@ class PostCacheDecorator extends CacheAbstractDecorator implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFilters(array $filters)
     {

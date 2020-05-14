@@ -7,14 +7,14 @@ interface SeoHelperContract extends RenderableContract
     /**
      * Get SeoMeta instance.
      *
-     * @return \Botble\SeoHelper\Contracts\SeoMetaContract
+     * @return SeoMetaContract
      */
     public function meta();
 
     /**
      * Set SeoMeta instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\SeoMetaContract $seoMeta
+     * @param SeoMetaContract $seoMeta
      *
      * @return self
      */
@@ -23,14 +23,14 @@ interface SeoHelperContract extends RenderableContract
     /**
      * Get SeoOpenGraph instance.
      *
-     * @return \Botble\SeoHelper\Contracts\SeoOpenGraphContract
+     * @return SeoOpenGraphContract
      */
     public function openGraph();
 
     /**
      * Get SeoOpenGraph instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\SeoOpenGraphContract $seoOpenGraph
+     * @param SeoOpenGraphContract $seoOpenGraph
      *
      * @return self
      */
@@ -39,14 +39,14 @@ interface SeoHelperContract extends RenderableContract
     /**
      * Get SeoTwitter instance.
      *
-     * @return \Botble\SeoHelper\Contracts\SeoTwitterContract
+     * @return SeoTwitterContract
      */
     public function twitter();
 
     /**
      * Set SeoTwitter instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\SeoTwitterContract $seoTwitter
+     * @param SeoTwitterContract $seoTwitter
      *
      * @return self
      */
@@ -55,9 +55,9 @@ interface SeoHelperContract extends RenderableContract
     /**
      * Set title.
      *
-     * @param  string $title
-     * @param  string|null $siteName
-     * @param  string|null $separator
+     * @param string $title
+     * @param string|null $siteName
+     * @param string|null $separator
      *
      * @return self
      */
@@ -71,7 +71,7 @@ interface SeoHelperContract extends RenderableContract
     /**
      * Set description.
      *
-     * @param  string $description
+     * @param string $description
      *
      * @return self
      */

@@ -34,4 +34,17 @@ class Country extends BaseModel
     protected $casts = [
         'status' => BaseStatusEnum::class,
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(function (Country $country) {
+            $states = State::get();
+            foreach ($states as $state) {
+                State::where('id', $state->id)->delete();
+            }
+
+            City::where('country_id', $country->id)->delete();
+        });
+    }
 }

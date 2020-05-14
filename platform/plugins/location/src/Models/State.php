@@ -44,4 +44,12 @@ class State extends BaseModel
     {
         return $this->belongsTo(Country::class)->withDefault();
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(function (State $state) {
+            City::where('state_id', $state->id)->delete();
+        });
+    }
 }

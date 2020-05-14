@@ -27,9 +27,9 @@ class CategoryController extends Controller
     protected $slugRepository;
 
     /**
-     * AuthenticationController constructor.
-     *
+     * CategoryController constructor.
      * @param CategoryInterface $categoryRepository
+     * @param SlugInterface $slugRepository
      */
     public function __construct(CategoryInterface $categoryRepository, SlugInterface $slugRepository)
     {

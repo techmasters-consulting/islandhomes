@@ -6,14 +6,12 @@ use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Base\Forms\FormAbstract;
 use Botble\Blog\Http\Requests\TagRequest;
 use Botble\Blog\Models\Tag;
-use Throwable;
 
 class TagForm extends FormAbstract
 {
 
     /**
-     * @return mixed|void
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function buildForm()
     {

@@ -19,7 +19,6 @@ class InvalidConfiguration extends Exception
 
     /**
      * @return static
-     *
      * @throws FileNotFoundException
      */
     public static function credentialsIsNotValid()

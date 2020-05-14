@@ -64,7 +64,7 @@ class Category extends BaseModel
     /**
      * @return BelongsToMany
      */
-    public function posts()
+    public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class, 'post_categories')->with('slugable');
     }
@@ -72,7 +72,7 @@ class Category extends BaseModel
     /**
      * @return BelongsTo
      */
-    public function parent()
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'parent_id')->withDefault();
     }
@@ -80,7 +80,7 @@ class Category extends BaseModel
     /**
      * @return HasMany
      */
-    public function children()
+    public function children(): HasMany
     {
         return $this->hasMany(Category::class, 'parent_id');
     }

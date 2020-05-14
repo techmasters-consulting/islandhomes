@@ -2,12 +2,13 @@
 
 namespace Botble\Slug;
 
+use Botble\Base\Models\BaseModel;
 use Illuminate\Support\Arr;
 
 class SlugHelper
 {
     /**
-     * @param string | array $model
+     * @param string|array $model
      * @return $this
      */
     public function registerModule($model): self
@@ -47,15 +48,7 @@ class SlugHelper
     }
 
     /**
-     * @return array
-     */
-    public function supportedModels()
-    {
-        return config('packages.slug.general.supported', []);
-    }
-
-    /**
-     * @return array
+     * @return bool
      */
     public function isSupportedModel(string $model): bool
     {
@@ -63,22 +56,35 @@ class SlugHelper
     }
 
     /**
-     * @param $model
+     * @return array
+     */
+    public function supportedModels(): array
+    {
+        return config('packages.slug.general.supported', []);
+    }
+
+    /**
+     * @param BaseModel $model
      * @return $this
      */
-    public function disablePreview($model)
+    public function disablePreview($model): self
     {
         if (!is_array($model)) {
             $model = [$model];
         }
         config([
-            'packages.slug.general.disable_preview' => array_merge(config('packages.slug.general.disable_preview', []), $model),
+            'packages.slug.general.disable_preview' => array_merge(config('packages.slug.general.disable_preview', []),
+                $model),
         ]);
 
         return $this;
     }
 
-    public function canPreview(string $model)
+    /**
+     * @param string $model
+     * @return bool
+     */
+    public function canPreview(string $model): bool
     {
         return !in_array($model, config('packages.slug.general.disable_preview', []));
     }

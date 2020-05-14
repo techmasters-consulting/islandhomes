@@ -3,27 +3,26 @@
 namespace Botble\Language\Models;
 
 use Botble\Base\Models\BaseModel;
+use Exception;
+use PDOException;
 
 class Language extends BaseModel
 {
 
     /**
+     * @var bool
+     */
+    public $timestamps = false;
+    /**
      * @var string
      */
     protected $primaryKey = 'lang_id';
-
     /**
      * The database table used by the model.
      *
      * @var string
      */
     protected $table = 'languages';
-
-    /**
-     * @var bool
-     */
-    public $timestamps = false;
-
     /**
      * @var array
      */
@@ -43,20 +42,27 @@ class Language extends BaseModel
 
         self::deleted(function (Language $language) {
             $defaultLanguage = self::where('lang_is_default', 1)->first();
-            if (empty($defaultLanguage) && self::count() == 0) {
-                LanguageMeta::truncate();
-            } else {
-                if (empty($defaultLanguage)) {
-                    $defaultLanguage = self::first();
-                    $defaultLanguage->lang_is_default = 1;
-                    $defaultLanguage->save();
-                }
-
-                if (!empty($defaultLanguage)) {
-                    LanguageMeta::where('lang_meta_code',
-                        $language->lang_code)->update(['lang_meta_code' => $defaultLanguage->lang_code]);
-                }
+            if (empty($defaultLanguage) && self::count() > 0) {
+                $defaultLanguage = self::first();
+                $defaultLanguage->lang_is_default = 1;
+                $defaultLanguage->save();
             }
+
+            $metas = LanguageMeta::where('lang_meta_code', $language->lang_code)->get();
+
+            try {
+                foreach ($metas as $meta) {
+                    if (!class_exists($meta->reference_type)) {
+                        continue;
+                    }
+
+                    $meta->reference()->delete();
+                }
+            } catch (Exception $exception) {
+                info($exception->getMessage());
+            }
+
+            LanguageMeta::where('lang_meta_code', $language->lang_code)->delete();
         });
     }
 }

@@ -2,11 +2,10 @@
 
 namespace Botble\Vendor\Models;
 
+use Botble\Base\Supports\Avatar;
 use Botble\Media\Models\MediaFile;
-use Botble\Payment\Models\Payment;
 use Botble\RealEstate\Models\Property;
 use Botble\Vendor\Notifications\ResetPasswordNotification;
-use Botble\Base\Supports\Gravatar;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -89,7 +88,7 @@ class Vendor extends Authenticatable
      */
     public function getAvatarUrlAttribute()
     {
-        return $this->avatar->url ? Storage::url($this->avatar->url) : Gravatar::image($this->email);
+        return $this->avatar->url ? Storage::url($this->avatar->url) : (new Avatar)->create($this->getFullName())->toBase64();
     }
 
     /**
@@ -159,11 +158,5 @@ class Vendor extends Authenticatable
     public function packages(): BelongsToMany
     {
         return $this->belongsToMany(Package::class, 'vendor_packages', 'vendor_id', 'package_id');
-    }
-
-    public function payments()
-    {
-        return $this->hasMany(Vendor::class, 'id');
-        // return $this->belongTo(Package::class, 'vendor_packages', 'vendor_id', 'package_id');
     }
 }

@@ -64,31 +64,31 @@ class HookServiceProvider extends ServiceProvider
 
         theme_option()
             ->setSection([
-                'title' => 'Blog',
-                'desc' => 'Theme options for Blog',
-                'id' => 'opt-text-subsection-blog',
+                'title'      => 'Blog',
+                'desc'       => 'Theme options for Blog',
+                'id'         => 'opt-text-subsection-blog',
                 'subsection' => true,
-                'icon' => 'fa fa-edit',
-                'fields' => [
+                'icon'       => 'fa fa-edit',
+                'fields'     => [
                     [
-                        'id' => 'number_of_posts_in_a_category',
-                        'type' => 'number',
-                        'label' => __('Number of posts in a category'),
+                        'id'         => 'number_of_posts_in_a_category',
+                        'type'       => 'number',
+                        'label'      => __('Number of posts in a category'),
                         'attributes' => [
-                            'name' => 'number_of_posts_in_a_category',
-                            'value' => 12,
+                            'name'    => 'number_of_posts_in_a_category',
+                            'value'   => 12,
                             'options' => [
                                 'class' => 'form-control',
                             ],
                         ],
                     ],
                     [
-                        'id' => 'number_of_posts_in_a_tag',
-                        'type' => 'number',
-                        'label' => __('Number of posts in a tag'),
+                        'id'         => 'number_of_posts_in_a_tag',
+                        'type'       => 'number',
+                        'label'      => __('Number of posts in a tag'),
                         'attributes' => [
-                            'name' => 'number_of_posts_in_a_tag',
-                            'value' => 12,
+                            'name'    => 'number_of_posts_in_a_tag',
+                            'value'   => 12,
                             'options' => [
                                 'class' => 'form-control',
                             ],
@@ -158,7 +158,6 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param Eloquent $slug
      * @return array|Eloquent
-     *
      * @throws FileNotFoundException
      * @throws BindingResolutionException
      */
@@ -171,7 +170,7 @@ class HookServiceProvider extends ServiceProvider
                 'status' => BaseStatusEnum::PUBLISHED,
             ];
 
-            if (Auth::check() && request('preview')) {
+            if (Auth::check() && request()->input('preview')) {
                 Arr::forget($condition, 'status');
             }
 
@@ -250,9 +249,9 @@ class HookServiceProvider extends ServiceProvider
                         do_action(BASE_ACTION_PUBLIC_RENDER_SINGLE, CATEGORY_MODULE_SCREEN_NAME, $category);
 
                         return [
-                            'view' => 'category',
+                            'view'         => 'category',
                             'default_view' => 'plugins/blog::themes.category',
-                            'data' => compact('category', 'posts'),
+                            'data'         => compact('category', 'posts'),
                             'slug'         => $category->slug,
                         ];
                     }

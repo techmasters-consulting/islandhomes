@@ -26,7 +26,7 @@
                 </div>
                 @if ($user->dob)
                   <div class="light-gray-text mb2">
-                    <i class="fas fa-child mr2"></i>{{ trans('plugins/vendor::dashboard.dob', ['date' => $user->dob]) }}
+                    <i class="fas fa-child mr2"></i>{{ trans('plugins/vendor::dashboard.dob', ['date' => $user->dob->format('F d, Y')]) }}
                   </div>
                 @endif
               </div>
@@ -34,15 +34,14 @@
           </div>
         </div>
           <div class="col-md-9 mb-3">
-              {!! apply_filters(VENDOR_TOP_STATISTIC_FILTER, null) !!}
+            {!! apply_filters(VENDOR_TOP_STATISTIC_FILTER, null) !!}
               <div class="row">
                   <div class="col-md-4">
                       <div class="white">
                           <div class="br2 pa3 bg-light-blue mb3" style="box-shadow: 0 1px 1px #ccc;">
                               <div class="media-body">
                                   <div class="f3">
-                                      <span
-                                          class="fw6">{{ $user->properties()->where('moderation_status', \Botble\RealEstate\Enums\ModerationStatusEnum::APPROVED)->count() }}</span>
+                                      <span class="fw6">{{ $user->properties()->where('moderation_status', \Botble\RealEstate\Enums\ModerationStatusEnum::APPROVED)->count() }}</span>
                                       <span class="fr"><i class="far fa-check-circle"></i></span>
                                   </div>
                                   <p>{{ trans('plugins/vendor::dashboard.approved_properties') }}</p>
@@ -55,8 +54,7 @@
                           <div class="br2 pa3 bg-light-red mb3" style="box-shadow: 0 1px 1px #ccc;">
                               <div class="media-body">
                                   <div class="f3">
-                                      <span
-                                          class="fw6">{{ $user->properties()->where('moderation_status', \Botble\RealEstate\Enums\ModerationStatusEnum::PENDING)->count() }}</span>
+                                      <span class="fw6">{{ $user->properties()->where('moderation_status', \Botble\RealEstate\Enums\ModerationStatusEnum::PENDING)->count() }}</span>
                                       <span class="fr"><i class="fas fa-user-clock"></i></span>
                                   </div>
                                   <p>{{ trans('plugins/vendor::dashboard.pending_approve_properties') }}</p>
@@ -69,8 +67,7 @@
                           <div class="br2 pa3 bg-light-silver mb3" style="box-shadow: 0 1px 1px #ccc;">
                               <div class="media-body">
                                   <div class="f3">
-                                      <span
-                                          class="fw6">{{ $user->properties()->where('moderation_status', \Botble\RealEstate\Enums\ModerationStatusEnum::REJECTED)->count() }}</span>
+                                      <span class="fw6">{{ $user->properties()->where('moderation_status', \Botble\RealEstate\Enums\ModerationStatusEnum::REJECTED)->count() }}</span>
                                       <span class="fr"><i class="far fa-edit"></i></span>
                                   </div>
                                   <p>{{ trans('plugins/vendor::dashboard.rejected_properties') }}</p>
@@ -79,10 +76,10 @@
                       </div>
                   </div>
               </div>
-              <activity-log-component default-active-tab="activity-logs"></activity-log-component>
+            <activity-log-component default-active-tab="activity-logs"></activity-log-component>
           </div>
       </div>
     </div>
-      @include('plugins/vendor::modals.avatar')
+    @include('plugins/vendor::modals.avatar')
   </div>
 @endsection

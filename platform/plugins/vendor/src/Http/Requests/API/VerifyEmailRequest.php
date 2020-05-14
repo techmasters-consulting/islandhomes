@@ -17,5 +17,6 @@ class VerifyEmailRequest extends Request
             'email' => 'required|email|string',
             'token' => 'required',
         ];
+
     }
 }

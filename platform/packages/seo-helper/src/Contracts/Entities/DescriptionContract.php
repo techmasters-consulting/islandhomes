@@ -23,7 +23,7 @@ interface DescriptionContract extends RenderableContract
     /**
      * Set description content.
      *
-     * @param  string $content
+     * @param string $content
      *
      * @return self
      */
@@ -39,7 +39,7 @@ interface DescriptionContract extends RenderableContract
     /**
      * Set description max length.
      *
-     * @param  int $max
+     * @param int $max
      *
      * @return self
      */
@@ -48,8 +48,8 @@ interface DescriptionContract extends RenderableContract
     /**
      * Make a description instance.
      *
-     * @param  string $content
-     * @param  int $max
+     * @param string $content
+     * @param int $max
      *
      * @return self
      */

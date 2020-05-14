@@ -3,18 +3,18 @@ class LanguageGlobalManagement {
         let language_choice_select = $('#post_lang_choice');
         language_choice_select.data('prev', language_choice_select.val());
 
-        language_choice_select.on('change', (event) => {
+        language_choice_select.on('change', event =>  {
             $('.change_to_language_text').text($(event.currentTarget).find('option:selected').text());
             $('#confirm-change-language-modal').modal('show');
         });
 
-        $('#confirm-change-language-modal .btn-warning.float-left').on('click', (event) => {
+        $('#confirm-change-language-modal .btn-warning.float-left').on('click', event =>  {
             event.preventDefault();
             language_choice_select.val(language_choice_select.data('prev')).trigger('change');
             $('#confirm-change-language-modal').modal('hide');
         });
 
-        $('#confirm-change-language-button').on('click', (event) => {
+        $('#confirm-change-language-button').on('click', event =>  {
             event.preventDefault();
             let _self = $(event.currentTarget);
             let flag_path = $('#language_flag_path').val();
@@ -30,7 +30,7 @@ class LanguageGlobalManagement {
                     lang_meta_created_from: $('#lang_meta_created_from').val()
                 },
                 type: 'POST',
-                success: (data) => {
+                success: data =>  {
                     $('.active-language').html('<img src="' + flag_path + language_choice_select.find('option:selected').data('flag') + '.svg" width="16" title="' + language_choice_select.find('option:selected').text() + '" alt="' + language_choice_select.find('option:selected').text() + '" />');
                     if (!data.error) {
                         $('.current_language_text').text(language_choice_select.find('option:selected').text());
@@ -50,14 +50,14 @@ class LanguageGlobalManagement {
                     }
                     _self.removeClass('button-loading');
                 },
-                error: (data) => {
+                error: data =>  {
                     Botble.showError(data.message);
                     _self.removeClass('button-loading');
                 }
             });
         });
 
-        $(document).on('click', '.change-data-language-item', (event) => {
+        $(document).on('click', '.change-data-language-item', event =>  {
             event.preventDefault();
             window.location.href = $(event.currentTarget).find('span[data-href]').data('href');
         });

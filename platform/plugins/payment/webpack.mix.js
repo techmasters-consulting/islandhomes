@@ -1,17 +1,14 @@
 let mix = require('laravel-mix');
 
-const publicPath = 'public/vendor/core/plugins/payment';
-const resourcePath = './platform/plugins/payment';
+const dist = 'public/vendor/core/plugins/payment';
+const source = './platform/plugins/payment';
 
 mix
-    .js(resourcePath + '/resources/assets/js/payment.js', publicPath + '/js/payment.js')
-    .copy(publicPath + '/js/payment.js', resourcePath + '/public/js')
+    .js(source + '/resources/assets/js/payment.js', dist + '/js/payment.js')
+    .js(source + '/resources/assets/js/payment-methods.js', dist + '/js/payment-methods.js')
 
-    .js(resourcePath + '/resources/assets/js/payment-methods.js', publicPath + '/js/payment-methods.js')
-    .copy(publicPath + '/js/payment-methods.js', resourcePath + '/public/js')
+    .sass(source + '/resources/assets/sass/payment.scss', dist + '/css')
+    .sass(source + '/resources/assets/sass/payment-methods.scss', dist + '/css')
 
-    .sass(resourcePath + '/resources/assets/sass/payment.scss', publicPath + '/css')
-    .copy(publicPath + '/css/payment.css', resourcePath + '/public/css')
-
-    .sass(resourcePath + '/resources/assets/sass/payment-methods.scss', publicPath + '/css')
-    .copy(publicPath + '/css/payment-methods.css', resourcePath + '/public/css');
+    .copy(dist + '/js', source + '/public/js')
+    .copy(dist + '/css', source + '/public/css');

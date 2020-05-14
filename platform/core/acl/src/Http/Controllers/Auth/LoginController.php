@@ -63,6 +63,7 @@ class LoginController extends BaseController
 
         Assets::addScripts(['jquery-validation'])
             ->addScriptsDirectly('vendor/core/js/login.js')
+            ->addStylesDirectly('vendor/core/css/login.css')
             ->removeStyles([
                 'select2',
                 'fancybox',

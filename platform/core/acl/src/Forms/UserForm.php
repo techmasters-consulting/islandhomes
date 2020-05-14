@@ -6,7 +6,6 @@ use Botble\ACL\Http\Requests\CreateUserRequest;
 use Botble\ACL\Models\User;
 use Botble\ACL\Repositories\Interfaces\RoleInterface;
 use Botble\Base\Forms\FormAbstract;
-use Throwable;
 
 class UserForm extends FormAbstract
 {
@@ -18,7 +17,6 @@ class UserForm extends FormAbstract
     /**
      * UserForm constructor.
      * @param RoleInterface $roleRepository
-     * @throws Throwable
      */
     public function __construct(RoleInterface $roleRepository)
     {
@@ -27,8 +25,7 @@ class UserForm extends FormAbstract
     }
 
     /**
-     * @return mixed|void
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function buildForm()
     {
@@ -39,8 +36,10 @@ class UserForm extends FormAbstract
         $this
             ->setupModel(new User)
             ->setValidatorClass(CreateUserRequest::class)
-            ->setWrapperClass('form-body row')
             ->withCustomFields()
+            ->add('rowOpen1', 'html', [
+                'html' => '<div class="row">',
+            ])
             ->add('first_name', 'text', [
                 'label'      => trans('core/acl::users.info.first_name'),
                 'label_attr' => ['class' => 'control-label required'],
@@ -60,6 +59,12 @@ class UserForm extends FormAbstract
                 'wrapper'    => [
                     'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-6',
                 ],
+            ])
+            ->add('rowClose1', 'html', [
+                'html' => '</div>',
+            ])
+            ->add('rowOpen2', 'html', [
+                'html' => '<div class="row">',
             ])
             ->add('username', 'text', [
                 'label'      => trans('core/acl::users.username'),
@@ -82,6 +87,12 @@ class UserForm extends FormAbstract
                     'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-6',
                 ],
             ])
+            ->add('rowClose2', 'html', [
+                'html' => '</div>',
+            ])
+            ->add('rowOpen3', 'html', [
+                'html' => '<div class="row">',
+            ])
             ->add('password', 'password', [
                 'label'      => trans('core/acl::users.password'),
                 'label_attr' => ['class' => 'control-label required'],
@@ -102,6 +113,9 @@ class UserForm extends FormAbstract
                     'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-6',
                 ],
             ])
+            ->add('rowClose3', 'html', [
+                'html' => '</div>',
+            ])
             ->add('role_id', 'customSelect', [
                 'label'         => trans('core/acl::users.role'),
                 'label_attr'    => ['class' => 'control-label'],
@@ -110,9 +124,7 @@ class UserForm extends FormAbstract
                 ],
                 'choices'       => ['' => trans('core/acl::users.select_role')] + $roles,
                 'default_value' => $defaultRole ? $defaultRole->id : null,
-                'wrapper'       => [
-                    'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-12',
-                ],
-            ]);
+            ])
+            ->setBreakFieldPoint('role_id');
     }
 }

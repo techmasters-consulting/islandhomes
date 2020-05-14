@@ -2,13 +2,17 @@
 
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Career\Repositories\Interfaces\CareerInterface;
+use Botble\Location\Models\City;
 use Botble\RealEstate\Enums\ProjectStatusEnum;
 use Botble\RealEstate\Enums\PropertyStatusEnum;
 use Botble\RealEstate\Repositories\Interfaces\ProjectInterface;
 use Botble\RealEstate\Repositories\Interfaces\PropertyInterface;
 use Botble\Theme\Events\RenderingSiteMapEvent;
+use Theme\FlexHome\Http\Requests\CityRequest;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+app()->booted(function () {
+    app('migrator')->path(__DIR__ . '/../database/migrations');
+});
 
 register_page_template([
     'default'  => 'Default',
@@ -63,32 +67,32 @@ theme_option()
         'helper'     => __('Copyright on footer of site'),
     ])
     ->setField([
-        'id' => 'primary_font',
+        'id'         => 'primary_font',
         'section_id' => 'opt-text-subsection-general',
-        'type' => 'googleFonts',
-        'label' => __('Primary font'),
+        'type'       => 'googleFonts',
+        'label'      => __('Primary font'),
         'attributes' => [
-            'name' => 'primary_font',
+            'name'  => 'primary_font',
             'value' => 'Nunito Sans',
         ],
     ])
     ->setField([
-        'id' => 'primary_color',
+        'id'         => 'primary_color',
         'section_id' => 'opt-text-subsection-general',
-        'type' => 'customColor',
-        'label' => __('Primary color'),
+        'type'       => 'customColor',
+        'label'      => __('Primary color'),
         'attributes' => [
-            'name' => 'primary_color',
+            'name'  => 'primary_color',
             'value' => '#1d5f6f',
         ],
     ])
     ->setField([
-        'id' => 'primary_color_hover',
+        'id'         => 'primary_color_hover',
         'section_id' => 'opt-text-subsection-general',
-        'type' => 'customColor',
-        'label' => __('Hover primary color'),
+        'type'       => 'customColor',
+        'label'      => __('Hover primary color'),
         'attributes' => [
-            'name' => 'primary_color_hover',
+            'name'  => 'primary_color_hover',
             'value' => '#063a5d',
         ],
     ])
@@ -289,26 +293,35 @@ theme_option()
             ],
             [
                 'id'         => 'number_of_related_properties',
-                'type' => 'number',
-                'label' => 'Number of related properties',
+                'type'       => 'number',
+                'label'      => 'Number of related properties',
                 'attributes' => [
-                    'name' => 'number_of_related_properties',
-                    'value' => 8,
+                    'name'    => 'number_of_related_properties',
+                    'value'   => 8,
                     'options' => [
                         'class' => 'form-control',
                     ],
                 ],
             ],
             [
-                'id' => 'home_banner_description',
-                'type' => 'text',
-                'label' => 'The description for banner search block',
+                'id'         => 'home_banner_description',
+                'type'       => 'text',
+                'label'      => 'The description for banner search block',
                 'attributes' => [
-                    'name' => 'home_banner_description',
-                    'value' => null,
+                    'name'    => 'home_banner_description',
+                    'value'   => null,
                     'options' => [
                         'class' => 'form-control',
                     ],
+                ],
+            ],
+            [
+                'id'         => 'home_banner',
+                'type'       => 'mediaImage',
+                'label'      => __('Top banner homepage'),
+                'attributes' => [
+                    'name'  => 'home_banner',
+                    'value' => null,
                 ],
             ],
             [
@@ -398,53 +411,101 @@ theme_option()
         ],
     ]);
 
-RvMedia::addSize('small', 410, 270);
-
 Event::listen(RenderingSiteMapEvent::class, function () {
 
-    $projects = app(ProjectInterface::class)->advancedGet([
-        'condition' => [
-            're_projects.status' => ProjectStatusEnum::SELLING,
-        ],
-        'with'      => ['slugable'],
-    ]);
+    if (is_plugin_active('real-estate')) {
+        $projects = app(ProjectInterface::class)->advancedGet([
+            'condition' => [
+                're_projects.status' => ProjectStatusEnum::SELLING,
+            ],
+            'with'      => ['slugable'],
+        ]);
 
-    SiteMapManager::add(route('public.projects'), '2019-12-09 00:00:00', '0.4', 'monthly');
+        SiteMapManager::add(route('public.projects'), '2019-12-09 00:00:00', '0.4', 'monthly');
 
-    foreach ($projects as $project) {
-        SiteMapManager::add($project->url, $project->updated_at, '0.8', 'daily');
+        foreach ($projects as $project) {
+            SiteMapManager::add($project->url, $project->updated_at, '0.8', 'daily');
+        }
+
+        $properties = app(PropertyInterface::class)->advancedGet([
+            'condition' => [
+                ['re_properties.status', 'IN', [PropertyStatusEnum::RENTING, PropertyStatusEnum::SELLING()]],
+            ],
+            'with'      => ['slugable'],
+        ]);
+
+        SiteMapManager::add(route('public.properties'), '2019-12-09 00:00:00', '0.4', 'monthly');
+
+        foreach ($properties as $property) {
+            SiteMapManager::add($property->url, $property->updated_at, '0.8', 'daily');
+        }
     }
 
-    $properties = app(PropertyInterface::class)->advancedGet([
-        'condition' => [
-            ['re_properties.status', 'IN', [PropertyStatusEnum::RENTING, PropertyStatusEnum::SELLING()]],
-        ],
-        'with'      => ['slugable'],
-    ]);
+    if (is_plugin_active('career')) {
+        $careers = app(CareerInterface::class)->allBy(['status' => BaseStatusEnum::PUBLISHED]);
 
-    SiteMapManager::add(route('public.properties'), '2019-12-09 00:00:00', '0.4', 'monthly');
+        SiteMapManager::add(route('public.careers'), '2019-12-09 00:00:00', '0.4', 'monthly');
 
-    foreach ($properties as $property) {
-        SiteMapManager::add($property->url, $property->updated_at, '0.8', 'daily');
-    }
-
-    $careers = app(CareerInterface::class)->allBy(['status' => BaseStatusEnum::PUBLISHED]);
-
-    SiteMapManager::add(route('public.careers'), '2019-12-09 00:00:00', '0.4', 'monthly');
-
-    foreach ($careers as $career) {
-        SiteMapManager::add($career->url, $career->updated_at, '0.6', 'daily');
+        foreach ($careers as $career) {
+            SiteMapManager::add($career->url, $career->updated_at, '0.6', 'daily');
+        }
     }
 
 });
 
-add_action('init', 'change_media_config', 124);
+add_action('init', function () {
+    config(['filesystems.disks.public.root' => public_path('storage')]);
+}, 124);
 
-if (!function_exists('change_media_config')) {
-    function change_media_config() {
-        config([
-            'filesystems.default'           => 'public',
-            'filesystems.disks.public.root' => public_path('storage'),
-        ]);
+RvMedia::addSize('small', 410, 270);
+
+add_filter(BASE_FILTER_BEFORE_RENDER_FORM, 'add_addition_fields_into_form', 127, 2);
+
+/**
+ * @param \Botble\Base\Forms\FormAbstract $form
+ * @param $data
+ * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+ */
+function add_addition_fields_into_form($form, $data)
+{
+    if (get_class($data) == City::class) {
+        $form
+            ->setValidatorClass(CityRequest::class)
+            ->addAfter('name', 'slug', 'text', [
+                'label'      => __('Slug'),
+                'label_attr' => ['class' => 'control-label required'],
+                'attr'       => [
+                    'placeholder'  => __('Slug'),
+                    'data-counter' => 120,
+                ],
+            ])
+            ->addAfter('country_id', 'is_featured', 'onOff', [
+                'label'         => trans('core/base::forms.is_featured'),
+                'label_attr'    => ['class' => 'control-label'],
+                'default_value' => false,
+            ])
+            ->addAfter('status', 'image', 'mediaImage', [
+                'label'      => trans('core/base::forms.image'),
+                'label_attr' => ['class' => 'control-label'],
+            ]);
+    }
+}
+
+add_action(BASE_ACTION_AFTER_CREATE_CONTENT, 'save_addition_city_fields', 230, 3);
+add_action(BASE_ACTION_AFTER_UPDATE_CONTENT, 'save_addition_city_fields', 230, 3);
+
+/**
+ * @param string $type
+ * @param Request $request
+ * @param City $object
+ * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+ */
+function save_addition_city_fields($type, $request, $object)
+{
+    if (is_plugin_active('location') && in_array($type, [CITY_MODULE_SCREEN_NAME])) {
+        $object->slug = $request->input('slug');
+        $object->is_featured = $request->input('is_featured');
+        $object->image = $request->input('image');
+        $object->save();
     }
 }

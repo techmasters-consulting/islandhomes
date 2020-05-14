@@ -3,8 +3,10 @@
 namespace Botble\Payment\Tables;
 
 use Auth;
+use Botble\Payment\Enums\PaymentStatusEnum;
 use Botble\Payment\Repositories\Interfaces\PaymentInterface;
 use Botble\Table\Abstracts\TableAbstract;
+use Html;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
 use Botble\Payment\Models\Payment;
@@ -25,14 +27,14 @@ class PaymentTable extends TableAbstract
     /**
      * PaymentTable constructor.
      * @param DataTables $table
-     * @param UrlGenerator $urlDevTool
+     * @param UrlGenerator $urlGenerator
      * @param PaymentInterface $paymentRepository
      */
-    public function __construct(DataTables $table, UrlGenerator $urlDevTool, PaymentInterface $paymentRepository)
+    public function __construct(DataTables $table, UrlGenerator $urlGenerator, PaymentInterface $paymentRepository)
     {
         $this->repository = $paymentRepository;
         $this->setOption('id', 'table-plugins-payment');
-        parent::__construct($table, $urlDevTool);
+        parent::__construct($table, $urlGenerator);
 
         if (!Auth::user()->hasAnyPermission(['payment.show', 'payment.destroy'])) {
             $this->hasOperations = false;
@@ -41,35 +43,29 @@ class PaymentTable extends TableAbstract
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function ajax()
     {
         $data = $this->table
             ->eloquent($this->query())
             ->editColumn('charge_id', function ($item) {
-                return anchor_link(route('payment.show', $item->id), $item->charge_id);
+                return Html::link(route('payment.show', $item->id), $item->charge_id);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
             })
             ->editColumn('payment_channel', function ($item) {
-
-                if ($item->payment_channel->label() == 'Direct') {
-                    return $item->payment_channel->label() . ' ' . 'Bank Transfer';
-                } else {
-                    return $item->payment_channel->label();
-                }
-
+                return $item->payment_channel->label();
             })
             ->editColumn('amount', function ($item) {
                 return $item->amount . ' ' . $item->currency;
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
+            })
+            ->editColumn('status', function ($item) {
+                return $item->status->toHtml();
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
@@ -81,10 +77,7 @@ class PaymentTable extends TableAbstract
     }
 
     /**
-     * Get the query object to be processed by table.
-     *
-     * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function query()
     {
@@ -96,50 +89,53 @@ class PaymentTable extends TableAbstract
             'payments.currency',
             'payments.payment_channel',
             'payments.created_at',
+            'payments.status',
         ]);
 
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model));
     }
 
     /**
-     * @return array
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function columns()
     {
         return [
-            'id' => [
+            'id'              => [
                 'name'  => 'payments.id',
                 'title' => trans('core/base::tables.id'),
                 'width' => '20px',
             ],
-            'charge_id' => [
+            'charge_id'       => [
                 'name'  => 'payments.charge_id',
-                'title' => __('Charge ID'),
+                'title' => trans('plugins/payment::payment.charge_id'),
                 'class' => 'text-left',
             ],
-            'amount' => [
+            'amount'          => [
                 'name'  => 'payments.amount',
-                'title' => __('Amount'),
+                'title' => trans('plugins/payment::payment.amount'),
                 'class' => 'text-left',
             ],
             'payment_channel' => [
                 'name'  => 'payments.payment_channel',
-                'title' => __('Payment channel'),
+                'title' => trans('plugins/payment::payment.payment_channel'),
                 'class' => 'text-left',
             ],
-            'created_at' => [
+            'created_at'      => [
                 'name'  => 'payments.created_at',
                 'title' => trans('core/base::tables.created_at'),
+                'width' => '100px',
+            ],
+            'status'          => [
+                'name'  => 'payments.status',
+                'title' => trans('core/base::tables.status'),
                 'width' => '100px',
             ],
         ];
     }
 
     /**
-     * @return array
-     * @since 2.1
-     * @throws \Throwable
+     * {@inheritDoc}
      */
     public function buttons()
     {
@@ -147,8 +143,7 @@ class PaymentTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws \Throwable
+     * {@inheritDoc}
      */
     public function bulkActions(): array
     {
@@ -156,13 +151,19 @@ class PaymentTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getBulkChanges(): array
     {
         return [
-            'payments.charge_id' => [
-                'title'    => __('Charge ID'),
+            'payments.status'     => [
+                'title'    => trans('core/base::tables.status'),
+                'type'     => 'select',
+                'choices'  => PaymentStatusEnum::labels(),
+                'validate' => 'required|in:' . implode(',', PaymentStatusEnum::values()),
+            ],
+            'payments.charge_id'  => [
+                'title'    => trans('plugins/payment::payment.charge_id'),
                 'type'     => 'text',
                 'validate' => 'required|max:120',
             ],

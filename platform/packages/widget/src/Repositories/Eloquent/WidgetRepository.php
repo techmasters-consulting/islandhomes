@@ -8,11 +8,11 @@ use Botble\Widget\Repositories\Interfaces\WidgetInterface;
 class WidgetRepository extends RepositoriesAbstract implements WidgetInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getByTheme($theme)
     {
-        $data = $this->model->where('theme', '=', $theme)->get();
+        $data = $this->model->where('theme', $theme)->get();
         $this->resetModel();
 
         return $data;

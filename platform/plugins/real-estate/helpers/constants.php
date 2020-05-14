@@ -27,3 +27,6 @@ if (!defined('CONSULT_MODULE_SCREEN_NAME')) {
 if (!defined('CATEGORY_MODULE_SCREEN_NAME')) {
     define('CATEGORY_MODULE_SCREEN_NAME', 'category');
 }
+if (!defined('NEWSLETTERS_MODULE_SCREEN_NAME')) {
+    define('NEWSLETTERS_MODULE_SCREEN_NAME', 'newsletters');
+}

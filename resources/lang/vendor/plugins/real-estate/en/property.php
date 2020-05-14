@@ -1,5 +1,6 @@
 <?php
 
+use Botble\RealEstate\Enums\ModerationStatusEnum;
 use Botble\RealEstate\Enums\PropertyPeriodEnum;
 use Botble\RealEstate\Enums\PropertyStatusEnum;
 use Botble\RealEstate\Enums\PropertyTypeEnum;
@@ -46,5 +47,11 @@ return [
         PropertyPeriodEnum::DAY   => 'Day',
         PropertyPeriodEnum::MONTH => 'Month',
         PropertyPeriodEnum::YEAR  => 'Year',
+    ],
+    'moderation_status'   => 'Moderation status',
+    'moderation-statuses' => [
+        ModerationStatusEnum::PENDING  => 'Pending',
+        ModerationStatusEnum::APPROVED => 'Approved',
+        ModerationStatusEnum::REJECTED => 'Rejected',
     ],
 ];

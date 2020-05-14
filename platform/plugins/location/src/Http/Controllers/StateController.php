@@ -38,7 +38,6 @@ class StateController extends BaseController
     }
 
     /**
-     * Display all states
      * @param StateTable $dataTable
      * @return Factory|View
      * @throws Throwable
@@ -63,8 +62,6 @@ class StateController extends BaseController
     }
 
     /**
-     * Insert new State into database
-     *
      * @param StateRequest $request
      * @return BaseHttpResponse
      */
@@ -81,8 +78,6 @@ class StateController extends BaseController
     }
 
     /**
-     * Show edit form
-     *
      * @param $id
      * @param Request $request
      * @param FormBuilder $formBuilder
@@ -181,8 +176,8 @@ class StateController extends BaseController
             'condition' => [
                 ['states.name', 'LIKE', '%' . $keyword . '%'],
             ],
-            'select' => ['states.id', 'states.name'],
-            'take' => 10,
+            'select'    => ['states.id', 'states.name'],
+            'take'      => 10,
 
         ]);
 

@@ -11,21 +11,17 @@ let mix = require('laravel-mix');
  |
  */
 
-const resourcePath = 'platform/packages/theme';
-const publicPath = 'public/vendor/core/packages/theme';
+const source = 'platform/packages/theme';
+const dist = 'public/vendor/core/packages/theme';
 
 mix
-    .js(resourcePath + '/resources/assets/js/custom-css.js', publicPath + '/js')
-    .copy(publicPath + '/js/custom-css.js', resourcePath + '/public/js')
+    .js(source + '/resources/assets/js/custom-css.js', dist + '/js')
+    .js(source + '/resources/assets/js/theme-options.js', dist + '/js')
+    .js(source + '/resources/assets/js/theme.js', dist + '/js')
 
-    .js(resourcePath + '/resources/assets/js/theme-options.js', publicPath + '/js')
-    .copy(publicPath + '/js/theme-options.js', resourcePath + '/public/js')
+    .sass(source + '/resources/assets/sass/custom-css.scss', dist + '/css')
+    .sass(source + '/resources/assets/sass/theme-options.scss', dist + '/css')
+    .sass(source + '/resources/assets/sass/admin-bar.scss', dist + '/css')
 
-    .js(resourcePath + '/resources/assets/js/theme.js', publicPath + '/js')
-    .copy(publicPath + '/js/theme.js', resourcePath + '/public/js')
-
-    .sass(resourcePath + '/resources/assets/sass/custom-css.scss', publicPath + '/css')
-    .copy(publicPath + '/css/custom-css.css', resourcePath + '/public/css')
-
-    .sass(resourcePath + '/resources/assets/sass/admin-bar.scss', publicPath + '/css')
-    .copy(publicPath + '/css/admin-bar.css', resourcePath + '/public/css');
+    .copy(dist + '/js', source + '/public/js')
+    .copy(dist + '/css', source + '/public/css');

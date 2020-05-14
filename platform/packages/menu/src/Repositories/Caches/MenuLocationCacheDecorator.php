@@ -7,5 +7,4 @@ use Botble\Support\Repositories\Caches\CacheAbstractDecorator;
 
 class MenuLocationCacheDecorator extends CacheAbstractDecorator implements MenuLocationInterface
 {
-
 }

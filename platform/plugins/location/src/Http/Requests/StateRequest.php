@@ -17,8 +17,9 @@ class StateRequest extends Request
     public function rules()
     {
         return [
-            'name'   => 'required',
-            'status' => Rule::in(BaseStatusEnum::values()),
+            'name'       => 'required',
+            'country_id' => 'required',
+            'status'     => Rule::in(BaseStatusEnum::values()),
         ];
     }
 }

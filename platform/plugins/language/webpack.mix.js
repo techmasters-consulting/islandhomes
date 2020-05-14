@@ -1,20 +1,17 @@
 let mix = require('laravel-mix');
 
-const publicPath = 'public/vendor/core/plugins/language';
-const resourcePath = './platform/plugins/language';
+const dist = 'public/vendor/core/plugins/language';
+const source = './platform/plugins/language';
 
 mix
-    .js(resourcePath + '/resources/assets/js/language.js', publicPath + '/js/language.js')
-    .copy(publicPath + '/js/language.js', resourcePath + '/public/js')
+    .js(source + '/resources/assets/js/language.js', dist + '/js/language.js')
+    .js(source + '/resources/assets/js/language-global.js', dist + '/js/language-global.js')
+    .js(source + '/resources/assets/js/language-public.js', dist + '/js')
+    .js(source + '/resources/assets/js/theme-translations.js', dist + '/js')
 
-    .js(resourcePath + '/resources/assets/js/language-global.js', publicPath + '/js/language-global.js')
-    .copy(publicPath + '/js/language-global.js', resourcePath + '/public/js')
+    .sass(source + '/resources/assets/sass/language.scss', dist + '/css')
+    .sass(source + '/resources/assets/sass/language-public.scss', dist + '/css')
+    .sass(source + '/resources/assets/sass/theme-translations.scss', dist + '/css')
 
-    .js(resourcePath + '/resources/assets/js/language-public.js', publicPath + '/js')
-    .copy(publicPath + '/js/language-public.js', resourcePath + '/public/js')
-
-    .sass(resourcePath + '/resources/assets/sass/language.scss', publicPath + '/css')
-    .copy(publicPath + '/css/language.css', resourcePath + '/public/css')
-
-    .sass(resourcePath + '/resources/assets/sass/language-public.scss', publicPath + '/css')
-    .copy(publicPath + '/css/language-public.css', resourcePath + '/public/css');
+    .copy(dist + '/js', source + '/public/js')
+    .copy(dist + '/css', source + '/public/css');

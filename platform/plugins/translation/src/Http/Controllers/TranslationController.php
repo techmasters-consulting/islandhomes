@@ -4,6 +4,8 @@ namespace Botble\Translation\Http\Controllers;
 
 use Assets;
 use Botble\Base\Http\Controllers\BaseController;
+use Botble\Base\Http\Responses\BaseHttpResponse;
+use Botble\Translation\Http\Requests\TranslationRequest;
 use Botble\Translation\Manager;
 use Illuminate\Http\Request;
 use Botble\Translation\Models\Translation;
@@ -31,12 +33,12 @@ class TranslationController extends BaseController
      */
     public function getIndex(Request $request)
     {
-        page_title()->setTitle(trans('plugins/translation::translation.menu_name'));
+        page_title()->setTitle(trans('plugins/translation::translation.translations'));
 
         Assets::addScripts(['bootstrap-editable'])
             ->addStyles(['bootstrap-editable'])
-            ->addScriptsDirectly($this->manager->getConfig('assets_dir') . '/js/translation.js')
-            ->addStylesDirectly(['/vendor/core/plugins/translation/css/translation.css']);
+            ->addScriptsDirectly('vendor/core/plugins/translation/js/translation.js')
+            ->addStylesDirectly('vendor/core/plugins/translation/css/translation.css');
 
         $group = $request->input('group');
 
@@ -78,7 +80,7 @@ class TranslationController extends BaseController
      */
     protected function loadLocales()
     {
-        //Set the default locale as the first one.
+        // Set the default locale as the first one.
         $locales = Translation::groupBy('locale')
             ->select('locale')
             ->get()
@@ -94,32 +96,16 @@ class TranslationController extends BaseController
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
      */
-    public function postAdd(Request $request)
-    {
-        $keys = explode("\n", $request->get('keys'));
-
-        foreach ($keys as $key) {
-            $key = trim($key);
-            if ($request->input('group') && $key) {
-                $this->manager->missingKey('*', $request->input('group'), $key);
-            }
-        }
-        return redirect()->back();
-    }
-
-    /**
-     * @param Request $request
-     * @return array
-     */
-    public function update(Request $request)
+    public function update(TranslationRequest $request, BaseHttpResponse $response)
     {
         $group = $request->input('group');
 
         if (!in_array($group, $this->manager->getConfig('exclude_groups'))) {
-            $name = request()->get('name');
-            $value = request()->get('value');
+            $name = $request->input('name');
+            $value = $request->input('value');
 
             [$locale, $key] = explode('|', $name, 2);
             $translation = Translation::firstOrNew([
@@ -130,72 +116,35 @@ class TranslationController extends BaseController
             $translation->value = (string)$value ?: null;
             $translation->status = Translation::STATUS_CHANGED;
             $translation->save();
-            return ['status' => 'ok'];
         }
+
+        return $response;
     }
 
     /**
      * @param Request $request
-     * @param $key
-     * @return array
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
      */
-    public function postDelete(Request $request)
+    public function postImport(Request $request, BaseHttpResponse $response)
+    {
+        $counter = $this->manager->importTranslations($request->get('replace', false));
+
+        return $response->setMessage(trans('plugins/translation::translation.import_done', compact('counter')));
+    }
+
+    /**
+     * @param Request $request
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     * @throws \Symfony\Component\VarExporter\Exception\ExceptionInterface
+     */
+    public function postPublish(Request $request, BaseHttpResponse $response)
     {
         $group = $request->input('group');
 
-        if (!in_array($group,
-                $this->manager->getConfig('exclude_groups')) && $this->manager->getConfig('delete_enabled')) {
-            Translation::where('group', $group)->where('key', $request->input('key'))->delete();
-            return ['status' => 'ok'];
-        }
-    }
+        $this->manager->exportTranslations($group, $group === '_json');
 
-    /**
-     * @param Request $request
-     * @return array
-     */
-    public function postImport(Request $request)
-    {
-        $replace = $request->get('replace', false);
-        $counter = $this->manager->importTranslations($replace);
-
-        return [
-            'status'  => 'ok',
-            'counter' => $counter,
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function postFind()
-    {
-        $numFound = $this->manager->findTranslations();
-
-        return [
-            'status'  => 'ok',
-            'counter' => (int)$numFound,
-        ];
-    }
-
-    /**
-     * @param Request $request
-     * @return array
-     */
-    public function postPublish(Request $request)
-    {
-        $json = false;
-
-        $group = $request->input('group');
-
-        if ($group === '_json') {
-            $json = true;
-        }
-
-        $this->manager->exportTranslations($group, $json);
-
-        return [
-            'status' => 'ok',
-        ];
+        return $response->setMessage(trans('plugins/translation::translation.done_publishing'));
     }
 }

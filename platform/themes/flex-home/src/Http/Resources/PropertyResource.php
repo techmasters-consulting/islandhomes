@@ -26,17 +26,17 @@ class PropertyResource extends JsonResource
         return [
             'id'              => $this->id,
             'name'            => $this->name,
-            'url' => $this->url,
-            'description' => $this->description,
-            'image' => $this->image ? get_object_image($this->image, 'small') : null,
-            'price' => $price,
-            'location' => $this->location,
-            'number_bedroom' => $this->number_bedroom,
+            'url'             => $this->url,
+            'description'     => $this->description,
+            'image'           => $this->image ? get_object_image($this->image, 'small') : null,
+            'price'           => $price,
+            'location'        => $this->location,
+            'number_bedroom'  => $this->number_bedroom,
             'number_bathroom' => $this->number_bathroom,
-            'square' => $this->square,
-            'type' => $this->type,
-            'period' => $this->period,
-            'status_html' => $this->status->toHtml(),
+            'square'          => $this->square,
+            'type'            => $this->type,
+            'period'          => $this->period,
+            'status_html'     => $this->status->toHtml(),
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Botble\SeoHelper\Entities;
 
+use Botble\SeoHelper\Contracts\Entities\MetaCollectionContract;
 use Botble\SeoHelper\Contracts\Entities\MiscTagsContract;
 
 class MiscTags implements MiscTagsContract
@@ -17,7 +18,7 @@ class MiscTags implements MiscTagsContract
     /**
      * Meta collection.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\MetaCollectionContract
+     * @var MetaCollectionContract
      */
     protected $meta;
 
@@ -44,9 +45,9 @@ class MiscTags implements MiscTagsContract
     /**
      * Set the current URL.
      *
-     * @param  string $url
+     * @param string $url
      *
-     * @return \Botble\SeoHelper\Entities\MiscTags
+     * @return MiscTags
      */
     public function setUrl($url)
     {
@@ -59,9 +60,9 @@ class MiscTags implements MiscTagsContract
     /**
      * Make MiscTags instance.
      *
-     * @param  array $defaults
+     * @param array $defaults
      *
-     * @return \Botble\SeoHelper\Entities\MiscTags
+     * @return MiscTags
      */
     public static function make(array $defaults = [])
     {
@@ -71,10 +72,10 @@ class MiscTags implements MiscTagsContract
     /**
      * Add a meta tag.
      *
-     * @param  string $name
-     * @param  string $content
+     * @param string $name
+     * @param string $content
      *
-     * @return \Botble\SeoHelper\Entities\MiscTags
+     * @return MiscTags
      */
     public function add($name, $content)
     {
@@ -86,9 +87,9 @@ class MiscTags implements MiscTagsContract
     /**
      * Add many meta tags.
      *
-     * @param  array $meta
+     * @param array $meta
      *
-     * @return \Botble\SeoHelper\Entities\MiscTags
+     * @return MiscTags
      */
     public function addMany(array $meta)
     {
@@ -100,9 +101,9 @@ class MiscTags implements MiscTagsContract
     /**
      * Remove a meta from the meta collection by key.
      *
-     * @param  array|string $names
+     * @param array|string $names
      *
-     * @return \Botble\SeoHelper\Entities\MiscTags
+     * @return MiscTags
      */
     public function remove($names)
     {
@@ -114,7 +115,7 @@ class MiscTags implements MiscTagsContract
     /**
      * Reset the meta collection.
      *
-     * @return \Botble\SeoHelper\Entities\MiscTags
+     * @return MiscTags
      */
     public function reset()
     {
@@ -156,7 +157,7 @@ class MiscTags implements MiscTagsContract
     /**
      * Add the canonical link.
      *
-     * @return \Botble\SeoHelper\Entities\MiscTags
+     * @return MiscTags
      */
     protected function addCanonical()
     {

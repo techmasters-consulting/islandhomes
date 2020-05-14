@@ -6,7 +6,6 @@ use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Base\Forms\FormAbstract;
 use Botble\Page\Http\Requests\PageRequest;
 use Botble\Page\Models\Page;
-use Throwable;
 
 class PageForm extends FormAbstract
 {
@@ -17,8 +16,7 @@ class PageForm extends FormAbstract
     protected $template = 'core/base::forms.form-tabs';
 
     /**
-     * @return mixed|void
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function buildForm()
     {

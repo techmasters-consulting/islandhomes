@@ -2,6 +2,7 @@
 
 namespace Botble\SeoHelper\Entities\OpenGraph;
 
+use Botble\SeoHelper\Contracts\Entities\MetaCollectionContract;
 use Botble\SeoHelper\Contracts\Entities\OpenGraphContract;
 
 class Graph implements OpenGraphContract
@@ -9,7 +10,7 @@ class Graph implements OpenGraphContract
     /**
      * The Open Graph meta collection.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\MetaCollectionContract
+     * @var MetaCollectionContract
      */
     protected $meta;
 
@@ -24,9 +25,9 @@ class Graph implements OpenGraphContract
     /**
      * Set the open graph prefix.
      *
-     * @param  string $prefix
+     * @param string $prefix
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
+     * @return Graph
      */
     public function setPrefix($prefix)
     {
@@ -38,9 +39,9 @@ class Graph implements OpenGraphContract
     /**
      * Set type property.
      *
-     * @param  string $type
+     * @param string $type
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
+     * @return Graph
      */
     public function setType($type)
     {
@@ -50,9 +51,9 @@ class Graph implements OpenGraphContract
     /**
      * Set title property.
      *
-     * @param  string $title
+     * @param string $title
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
+     * @return Graph
      */
     public function setTitle($title)
     {
@@ -62,9 +63,9 @@ class Graph implements OpenGraphContract
     /**
      * Set description property.
      *
-     * @param  string $description
+     * @param string $description
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
+     * @return Graph
      */
     public function setDescription($description)
     {
@@ -74,9 +75,9 @@ class Graph implements OpenGraphContract
     /**
      * Set url property.
      *
-     * @param  string $url
+     * @param string $url
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
+     * @return Graph
      */
     public function setUrl($url)
     {
@@ -86,9 +87,9 @@ class Graph implements OpenGraphContract
     /**
      * Set image property.
      *
-     * @param  string $image
+     * @param string $image
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
+     * @return Graph
      */
     public function setImage($image)
     {
@@ -98,9 +99,9 @@ class Graph implements OpenGraphContract
     /**
      * Set site name property.
      *
-     * @param  string $siteName
+     * @param string $siteName
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
+     * @return Graph
      */
     public function setSiteName($siteName)
     {
@@ -110,9 +111,9 @@ class Graph implements OpenGraphContract
     /**
      * Add many open graph properties.
      *
-     * @param  array $properties
+     * @param array $properties
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
+     * @return Graph
      */
     public function addProperties(array $properties)
     {
@@ -124,10 +125,10 @@ class Graph implements OpenGraphContract
     /**
      * Add an open graph property.
      *
-     * @param  string $name
-     * @param  string $content
+     * @param string $name
+     * @param string $content
      *
-     * @return \Botble\SeoHelper\Entities\OpenGraph\Graph
+     * @return Graph
      */
     public function addProperty($name, $content)
     {

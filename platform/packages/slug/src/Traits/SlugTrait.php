@@ -28,7 +28,6 @@ trait SlugTrait
     }
 
     /**
-     * @param $value
      * @return int
      */
     public function getSlugIdAttribute()
@@ -43,6 +42,10 @@ trait SlugTrait
     {
         $prefix = $this->slugable ? $this->slugable->prefix : null;
         $prefix = apply_filters(FILTER_SLUG_PREFIX, $prefix);
+
+        if (!$this->slug) {
+            return url('');
+        }
 
         return url($prefix ? $prefix . '/' . $this->slug : $this->slug);
     }

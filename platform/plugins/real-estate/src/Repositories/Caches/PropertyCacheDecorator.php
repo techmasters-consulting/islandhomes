@@ -22,4 +22,20 @@ class PropertyCacheDecorator extends CacheAbstractDecorator implements PropertyI
     {
         return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProperty(int $propertyId, array $with = [])
+    {
+        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPropertiesByConditions(array $condition, $limit, array $with = [])
+    {
+        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
+    }
 }

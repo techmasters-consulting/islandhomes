@@ -15,7 +15,6 @@ Route::group(['namespace' => 'Botble\RealEstate\Http\Controllers', 'middleware' 
         ]);
 
         Route::group(['prefix' => 'properties', 'as' => 'property.'], function () {
-
             Route::resource('', 'PropertyController')->parameters(['' => 'property']);
 
             Route::delete('items/destroy', [
@@ -62,7 +61,14 @@ Route::group(['namespace' => 'Botble\RealEstate\Http\Controllers', 'middleware' 
                 'permission' => 'consult.destroy',
             ]);
         });
-
+        Route::group(['prefix' => 'newsletters', 'as' => 'newsletters.'], function () {
+            Route::resource('', 'NewslettersController')->parameters(['' => 'newsletters'])->except(['create', 'store']);
+            Route::delete('items/destroy', [
+                'as'         => 'deletes',
+                'uses'       => 'NewslettersController@deletes',
+                'permission' => 'newsletters.destroy',
+            ]);
+        });
         Route::group(['prefix' => 'categories', 'as' => 'category.'], function () {
             Route::resource('', 'CategoryController')->parameters(['' => 'category']);
             Route::delete('items/destroy', [

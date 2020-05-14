@@ -10,7 +10,7 @@ mix
     .sass(resourcePath + '/resources/assets/sass/real-estate.scss', publicPath + '/css')
     .copy(publicPath + '/css/real-estate.css', resourcePath + '/public/css')
 
-.js(resourcePath + '/resources/assets/js/currencies.js', publicPath + '/js')
+    .js(resourcePath + '/resources/assets/js/currencies.js', publicPath + '/js')
     .copy(publicPath + '/js/currencies.js', resourcePath + '/public/js')
 
     .sass(resourcePath + '/resources/assets/sass/currencies.scss', publicPath + '/css')

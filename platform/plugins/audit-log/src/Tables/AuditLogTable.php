@@ -3,14 +3,11 @@
 namespace Botble\AuditLog\Tables;
 
 use Botble\AuditLog\Models\AuditHistory;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Botble\AuditLog\Repositories\Interfaces\AuditLogInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Html;
 use Illuminate\Contracts\Routing\UrlGenerator;
-use Throwable;
 use Yajra\DataTables\DataTables;
 
 class AuditLogTable extends TableAbstract
@@ -44,9 +41,7 @@ class AuditLogTable extends TableAbstract
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return JsonResponse
+     * {@inheritDoc}
      */
     public function ajax()
     {
@@ -68,11 +63,7 @@ class AuditLogTable extends TableAbstract
     }
 
     /**
-     * Get the query object to be processed by table.
-     *
-     * @return \Illuminate\Database\Query\Builder|Builder
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function query()
     {
@@ -85,7 +76,7 @@ class AuditLogTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function columns()
     {
@@ -109,16 +100,14 @@ class AuditLogTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function buttons()
     {
         $buttons = [
             'empty' => [
                 'link' => route('audit-log.empty'),
-                'text' => Html::tag('i', '', ['class' => 'fa fa-trash'])->toHtml() . ' ' . __('Delete all records'),
+                'text' => Html::tag('i', '', ['class' => 'fa fa-trash'])->toHtml() . ' ' . trans('plugins/audit-log::history.delete_all'),
             ],
         ];
 
@@ -126,8 +115,7 @@ class AuditLogTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function bulkActions(): array
     {

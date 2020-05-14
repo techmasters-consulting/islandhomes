@@ -5,15 +5,17 @@ namespace Botble\Payment\Enums;
 use Botble\Base\Supports\Enum;
 
 /**
- * @method static PaymentMethodEnum PAYPAL()
  * @method static PaymentMethodEnum STRIPE()
- * @method static PaymentMethodEnum DIRECT()
+ * @method static PaymentMethodEnum PAYPAL()
+ * @method static PaymentMethodEnum COD()
+ * @method static PaymentMethodEnum BANK_TRANSFER()
  */
 class PaymentMethodEnum extends Enum
 {
-    public const PAYPAL = 'paypal';
     public const STRIPE = 'stripe';
-    public const DIRECT = 'direct';
+    public const PAYPAL = 'paypal';
+    public const COD = 'cod';
+    public const BANK_TRANSFER = 'bank_transfer';
 
     /**
      * @var string

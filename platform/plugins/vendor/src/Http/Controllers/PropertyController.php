@@ -107,7 +107,7 @@ class PropertyController extends Controller
          * @var Property $property
          */
         $property = $this->propertyRepository->createOrUpdate(array_merge($request->input(), [
-            'author_id' => auth()->guard('vendor')->user()->getKey(),
+            'author_id'   => auth()->guard('vendor')->user()->getKey(),
             'author_type' => Vendor::class,
         ]));
 
@@ -228,5 +228,29 @@ class PropertyController extends Controller
         ]);
 
         return $response->setMessage(__('Delete property successfully!'));
+    }
+
+    /**
+     * @param $id
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     */
+    public function renew($id, BaseHttpResponse $response)
+    {
+        $job = $this->propertyRepository->findOrFail($id);
+
+        $account = auth('vendor')->user();
+
+        if ($account->credits < 1) {
+            return $response->setError(true)->setMessage(__('You don\'t have enough credit to renew this property!'));
+        }
+
+        $job->expire_date = $job->expire_date->addDays(config('plugins.real-estate.real-estate.property_expired_after_x_days'));
+        $job->save();
+
+        $account->credits--;
+        $account->save();
+
+        return $response->setMessage(__('Renew property successfully'));
     }
 }

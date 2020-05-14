@@ -58,7 +58,6 @@
 .topmenu {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     border-bottom: none;
-
     .navbar-collapse {
         text-align: center;
     }
@@ -810,19 +809,15 @@ p:empty {
     color: #fff;
     padding: 3px 7px;
     background-color: $primaryColor;
-
     &.label-success {
         background-color: #36c6d3;
     }
-
     &.label-danger {
         background-color: #ed6b75;
     }
-
     &.label-warning {
         background-color: #f1c40f;
     }
-
     &.label-info {
         background-color: #659be0;
     }
@@ -835,7 +830,6 @@ p:empty {
     background-size: cover;
     background-position: 50%;
     font-weight: 600;
-
     .topsearch {
         position: absolute;
         width: 50%;

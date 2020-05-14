@@ -16,7 +16,7 @@ interface MiscTagsContract extends RenderableContract
     /**
      * Set the current URL.
      *
-     * @param  string $url
+     * @param string $url
      *
      * @return self
      */
@@ -25,7 +25,7 @@ interface MiscTagsContract extends RenderableContract
     /**
      * Make MiscTags instance.
      *
-     * @param  array $defaults
+     * @param array $defaults
      *
      * @return self
      */
@@ -34,8 +34,8 @@ interface MiscTagsContract extends RenderableContract
     /**
      * Add a meta tag.
      *
-     * @param  string $name
-     * @param  string $content
+     * @param string $name
+     * @param string $content
      *
      * @return self
      */
@@ -44,7 +44,7 @@ interface MiscTagsContract extends RenderableContract
     /**
      * Add many meta tags.
      *
-     * @param  array $meta
+     * @param array $meta
      *
      * @return self
      */
@@ -53,7 +53,7 @@ interface MiscTagsContract extends RenderableContract
     /**
      * Remove a meta from the meta collection by key.
      *
-     * @param  array|string $names
+     * @param array|string $names
      *
      * @return self
      */

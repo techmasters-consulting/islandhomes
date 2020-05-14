@@ -10,5 +10,4 @@ use Botble\Support\Repositories\Caches\CacheAbstractDecorator;
  */
 class AuditLogCacheDecorator extends CacheAbstractDecorator implements AuditLogInterface
 {
-
 }

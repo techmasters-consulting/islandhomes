@@ -15,35 +15,35 @@ class SeoMeta implements SeoMetaContract
     /**
      * The Title instance.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\TitleContract
+     * @var TitleContract
      */
     protected $title;
 
     /**
      * The Description instance.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\DescriptionContract
+     * @var DescriptionContract
      */
     protected $description;
 
     /**
      * The MiscTags instance.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\MiscTagsContract
+     * @var MiscTagsContract
      */
     protected $misc;
 
     /**
      * The Webmasters instance.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\WebmastersContract
+     * @var WebmastersContract
      */
     protected $webmasters;
 
     /**
      * The Analytics instance.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\AnalyticsContract
+     * @var AnalyticsContract
      */
     protected $analytics;
 
@@ -68,7 +68,7 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the Title instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\TitleContract $title
+     * @param TitleContract $title
      *
      * @return $this
      */
@@ -82,7 +82,7 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the Description instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\DescriptionContract $description
+     * @param DescriptionContract $description
      *
      * @return $this
      */
@@ -96,7 +96,7 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the MiscTags instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\MiscTagsContract $misc
+     * @param MiscTagsContract $misc
      *
      * @return $this
      */
@@ -110,7 +110,7 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the Webmasters instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\WebmastersContract $webmasters
+     * @param WebmastersContract $webmasters
      *
      * @return $this
      */
@@ -124,7 +124,7 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the Analytics instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\AnalyticsContract $analytics
+     * @param AnalyticsContract $analytics
      *
      * @return $this
      */
@@ -148,9 +148,9 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the title.
      *
-     * @param  string $title
-     * @param  string $siteName
-     * @param  string $separator
+     * @param string $title
+     * @param string $siteName
+     * @param string $separator
      *
      * @return $this
      */
@@ -190,7 +190,7 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the description content.
      *
-     * @param  string $content
+     * @param string $content
      *
      * @return $this
      */
@@ -204,8 +204,8 @@ class SeoMeta implements SeoMetaContract
     /**
      * Add a webmaster tool site verifier.
      *
-     * @param  string $webmaster
-     * @param  string $content
+     * @param string $webmaster
+     * @param string $content
      *
      * @return $this
      */
@@ -219,7 +219,7 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the current URL.
      *
-     * @param  string $url
+     * @param string $url
      *
      * @return $this
      */
@@ -234,7 +234,7 @@ class SeoMeta implements SeoMetaContract
     /**
      * Set the Google Analytics code.
      *
-     * @param  string $code
+     * @param string $code
      *
      * @return $this
      */
@@ -248,8 +248,8 @@ class SeoMeta implements SeoMetaContract
     /**
      * Add a meta tag.
      *
-     * @param  string $name
-     * @param  string $content
+     * @param string $name
+     * @param string $content
      *
      * @return $this
      */
@@ -263,7 +263,7 @@ class SeoMeta implements SeoMetaContract
     /**
      * Add many meta tags.
      *
-     * @param  array $meta
+     * @param array $meta
      *
      * @return $this
      */

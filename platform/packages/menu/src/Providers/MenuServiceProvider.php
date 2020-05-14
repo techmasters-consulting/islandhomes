@@ -24,11 +24,6 @@ class MenuServiceProvider extends ServiceProvider
 {
     use LoadAndPublishDataTrait;
 
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
     public function register()
     {
         Helper::autoload(__DIR__ . '/../../helpers');

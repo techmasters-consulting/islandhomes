@@ -8,5 +8,4 @@ return [
     'select_state'   => 'Select a state...',
     'country'        => 'Country',
     'select_country' => 'Select a country...',
-    'slug'           => 'Slug',
 ];

@@ -7,7 +7,7 @@ use DateTimeInterface;
 use Exception;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Cache\Store;
-use Madewithlove\IlluminatePsrCacheBridge\Exceptions\InvalidArgumentException;
+use InvalidArgumentException;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
@@ -16,12 +16,12 @@ class CacheItemPool implements CacheItemPoolInterface
     /**
      * @var Repository
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @var CacheItemInterface[]
      */
-    private $deferred = [];
+    protected $deferred = [];
 
     /**
      * @param Repository $repository
@@ -40,7 +40,7 @@ class CacheItemPool implements CacheItemPoolInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getItem($key)
     {
@@ -56,7 +56,7 @@ class CacheItemPool implements CacheItemPoolInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getItems(array $keys = [])
     {
@@ -66,7 +66,7 @@ class CacheItemPool implements CacheItemPoolInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function hasItem($key)
     {
@@ -80,14 +80,14 @@ class CacheItemPool implements CacheItemPoolInterface
                 return true;
             }
 
-            return $expiresAt > new DateTimeImmutable();
+            return $expiresAt > new DateTimeImmutable;
         }
 
         return $this->repository->has($key);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function clear()
     {
@@ -104,7 +104,7 @@ class CacheItemPool implements CacheItemPoolInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function deleteItem($key)
     {
@@ -120,7 +120,7 @@ class CacheItemPool implements CacheItemPoolInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function deleteItems(array $keys)
     {
@@ -139,8 +139,7 @@ class CacheItemPool implements CacheItemPoolInterface
     }
 
     /**
-     * {@inheritdoc}
-     * @throws Exception
+     * {@inheritDoc}
      */
     public function save(CacheItemInterface $item)
     {
@@ -174,13 +173,13 @@ class CacheItemPool implements CacheItemPoolInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function saveDeferred(CacheItemInterface $item)
     {
         $expiresAt = $this->getExpiresAt($item);
 
-        if ($expiresAt && ($expiresAt < new DateTimeImmutable())) {
+        if ($expiresAt && ($expiresAt < new DateTimeImmutable)) {
             return false;
         }
 
@@ -192,7 +191,7 @@ class CacheItemPool implements CacheItemPoolInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function commit()
     {
@@ -209,22 +208,20 @@ class CacheItemPool implements CacheItemPoolInterface
 
     /**
      * @param string $key
-     *
      * @throws \Psr\Cache\InvalidArgumentException
      */
-    private function validateKey($key)
+    protected function validateKey($key)
     {
         if (!is_string($key) || preg_match('#[{}\(\)/\\\\@:]#', $key)) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException;
         }
     }
 
     /**
      * @param CacheItem $item
-     *
      * @return DateTimeInterface
      */
-    private function getExpiresAt(CacheItem $item)
+    protected function getExpiresAt(CacheItem $item)
     {
         return $item->getExpiresAt();
     }

@@ -2,11 +2,20 @@
 
 namespace Botble\Theme\Commands;
 
+use Botble\Theme\Commands\Traits\ThemeTrait;
+use Botble\Theme\Services\ThemeService;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem as File;
 
 class ThemeAssetsPublishCommand extends Command
 {
+    use ThemeTrait;
+
+    /**
+     * @var ThemeService
+     */
+    public $themeService;
+
     /**
      * The console command name.
      *
@@ -26,27 +35,19 @@ class ThemeAssetsPublishCommand extends Command
     protected $description = 'Publish assets for a theme';
 
     /**
-     * @var File
+     * ThemeAssetsPublishCommand constructor.
+     * @param ThemeService $themeService
      */
-    protected $files;
-
-    /**
-     * Create a new command instance.
-     *
-     * @param File $files
-     */
-    public function __construct(File $files)
+    public function __construct(ThemeService $themeService)
     {
-        $this->files = $files;
-
         parent::__construct();
+        $this->themeService = $themeService;
     }
 
     /**
      * Execute the console command.
      *
      * @return bool
-     *
      */
     public function handle()
     {
@@ -55,57 +56,20 @@ class ThemeAssetsPublishCommand extends Command
             return false;
         }
 
-        if ($this->option('name') && !$this->files->isDirectory($this->getPath(null, $this->getTheme()))) {
+        if ($this->option('name') && !File::isDirectory($this->getPath())) {
             $this->error('Theme "' . $this->getTheme() . '" is not exists.');
             return false;
         }
 
-        if ($this->option('name')) {
-            $themes = [$this->getTheme()];
-        } else {
-            $themes = scan_folder(theme_path());
+        $result = $this->themeService->publishAssets($this->option('name'));
+
+        if ($result['error']) {
+            $this->error($result['message']);
+            return false;
         }
 
-        foreach ($themes as $theme) {
-            $resourcePath = $this->getPath('public', $theme);
-            $publishPath = public_path('themes/' . $theme);
+        $this->info($result['message']);
 
-            if (!$this->files->isDirectory($publishPath)) {
-                $this->files->makeDirectory($publishPath, 0755, true);
-            }
-
-            $this->files->copyDirectory($resourcePath, $publishPath);
-            $this->files->copy($this->getPath('screenshot.png', $theme), $publishPath . '/screenshot.png');
-
-            $this->info('Publish assets for theme ' . $theme . ' successfully!');
-        }
         return true;
-    }
-
-    /**
-     * Get the theme name.
-     *
-     * @return string
-     */
-    protected function getTheme()
-    {
-        return strtolower($this->option('name'));
-    }
-
-    /**
-     * Get root writable path.
-     *
-     * @param string $path
-     * @param string $theme
-     * @return string
-     */
-    protected function getPath($path, string $theme)
-    {
-        $rootPath = theme_path();
-        if ($this->option('path')) {
-            $rootPath = $this->option('path');
-        }
-
-        return rtrim($rootPath, '/') . '/' . rtrim(ltrim(strtolower($theme), '/'), '/') . '/' . $path;
     }
 }

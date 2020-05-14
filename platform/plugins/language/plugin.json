@@ -2,8 +2,8 @@
     "name": "Language",
     "namespace": "Botble\\Language\\",
     "provider": "Botble\\Language\\Providers\\LanguageServiceProvider",
-    "author": "Sang Nguyen",
-    "url": "https://sangnguyen.info",
-    "version": "5.2",
+    "author": "Botble Technologies",
+    "url": "https://botble.com",
+    "version": "5.4",
     "description": "Multilingual for Botble CMS"
 }

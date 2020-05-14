@@ -54,15 +54,14 @@ class Revision extends BaseModel
      *
      * Allow overrides for field names.
      *
-     * @param $key
-     *
+     * @param string $key
      * @return bool
      */
     protected function formatFieldName($key)
     {
-        $related_model = $this->revisionable_type;
-        $related_model = new $related_model;
-        $revisionFormattedFieldNames = $related_model->getRevisionFormattedFieldNames();
+        $relatedModel = $this->revisionable_type;
+        $relatedModel = new $relatedModel;
+        $revisionFormattedFieldNames = $relatedModel->getRevisionFormattedFieldNames();
 
         if (isset($revisionFormattedFieldNames[$key])) {
             return $revisionFormattedFieldNames[$key];
@@ -94,38 +93,38 @@ class Revision extends BaseModel
      */
     protected function getValue($which = 'new')
     {
-        $which_value = $which . '_value';
+        $whichValue = $which . '_value';
 
         // First find the main model that was updated
-        $main_model = $this->revisionable_type;
+        $mainModel = $this->revisionable_type;
         // Load it, WITH the related model
-        if (class_exists($main_model)) {
-            $main_model = new $main_model;
+        if (class_exists($mainModel)) {
+            $mainModel = new $mainModel;
 
             try {
                 if ($this->isRelated()) {
-                    $related_model = $this->getRelatedModel();
+                    $relatedModel = $this->getRelatedModel();
 
                     // Now we can find out the namespace of of related model
-                    if (!method_exists($main_model, $related_model)) {
-                        $related_model = Str::camel($related_model); // for cases like published_status_id
-                        if (!method_exists($main_model, $related_model)) {
-                            throw new Exception('Relation ' . $related_model . ' does not exist for ' . $main_model);
+                    if (!method_exists($mainModel, $relatedModel)) {
+                        $relatedModel = Str::camel($relatedModel); // for cases like published_status_id
+                        if (!method_exists($mainModel, $relatedModel)) {
+                            throw new Exception('Relation ' . $relatedModel . ' does not exist for ' . $mainModel);
                         }
                     }
-                    $related_class = $main_model->$related_model()->getRelated();
+                    $relatedClass = $mainModel->$relatedModel()->getRelated();
 
                     // Finally, now that we know the namespace of the related model
                     // we can load it, to find the information we so desire
-                    $item = $related_class::find($this->$which_value);
+                    $item = $relatedClass::find($this->$whichValue);
 
-                    if (is_null($this->$which_value) || $this->$which_value == '') {
-                        $item = new $related_class;
+                    if ($this->$whichValue === null || $this->$whichValue == '') {
+                        $item = new $relatedClass;
 
                         return $item->getRevisionNullString();
                     }
                     if (!$item) {
-                        $item = new $related_class;
+                        $item = new $relatedClass;
 
                         return $this->format($this->key, $item->getRevisionUnknownString());
                     }
@@ -141,22 +140,22 @@ class Revision extends BaseModel
                         return $this->format($this->key, $item->identifiableName());
                     }
                 }
-            } catch (Exception $e) {
+            } catch (Exception $exception) {
                 // Just a fail-safe, in the case the data setup isn't as expected
                 // Nothing to do here.
-                info('Revisionable: ' . $e);
+                info('Revisionable: ' . $exception);
             }
 
             // if there was an issue
             // or, if it's a normal value
 
             $mutator = 'get' . Str::studly($this->key) . 'Attribute';
-            if (method_exists($main_model, $mutator)) {
-                return $this->format($this->key, $main_model->$mutator($this->$which_value));
+            if (method_exists($mainModel, $mutator)) {
+                return $this->format($this->key, $mainModel->$mutator($this->$whichValue));
             }
         }
 
-        return $this->format($this->key, $this->$which_value);
+        return $this->format($this->key, $this->$whichValue);
     }
 
     /**
@@ -192,16 +191,16 @@ class Revision extends BaseModel
     /**
      * Format the value according to the $revisionFormattedFields array.
      *
-     * @param  $key
-     * @param  $value
+     * @param string $key
+     * @param string $value
      *
      * @return string formatted value
      */
     public function format($key, $value)
     {
-        $related_model = $this->revisionable_type;
-        $related_model = new $related_model;
-        $revisionFormattedFields = $related_model->getRevisionFormattedFields();
+        $relatedModel = $this->revisionable_type;
+        $relatedModel = new $relatedModel;
+        $revisionFormattedFields = $relatedModel->getRevisionFormattedFields();
 
         if (isset($revisionFormattedFields[$key])) {
             return FieldFormatter::format($key, $value, $revisionFormattedFields);
@@ -249,14 +248,6 @@ class Revision extends BaseModel
 
         return $userModel::find($this->user_id);
     }
-
-    /*
-     * Examples:
-        [
-            'public' => 'boolean:Yes|No',
-            'minimum'  => 'string:Min: %s'
-        ]
-     */
 
     /**
      * Returns the object we have the history of

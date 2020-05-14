@@ -17,7 +17,7 @@ interface TwitterCardContract extends RenderableContract
     /**
      * Set the card type.
      *
-     * @param  string $type
+     * @param string $type
      *
      * @return self
      */
@@ -26,7 +26,7 @@ interface TwitterCardContract extends RenderableContract
     /**
      * Set card site.
      *
-     * @param  string $site
+     * @param string $site
      *
      * @return self
      */
@@ -35,7 +35,7 @@ interface TwitterCardContract extends RenderableContract
     /**
      * Set card title.
      *
-     * @param  string $title
+     * @param string $title
      *
      * @return self
      */
@@ -44,7 +44,7 @@ interface TwitterCardContract extends RenderableContract
     /**
      * Set card description.
      *
-     * @param  string $description
+     * @param string $description
      *
      * @return self
      */
@@ -53,7 +53,7 @@ interface TwitterCardContract extends RenderableContract
     /**
      * Add image to the card.
      *
-     * @param  string $url
+     * @param string $url
      *
      * @return self
      */
@@ -62,7 +62,7 @@ interface TwitterCardContract extends RenderableContract
     /**
      * Add many meta to the card.
      *
-     * @param  array $meta
+     * @param array $meta
      *
      * @return self
      */
@@ -71,8 +71,8 @@ interface TwitterCardContract extends RenderableContract
     /**
      * Add a meta to the card.
      *
-     * @param  string $name
-     * @param  string $content
+     * @param string $name
+     * @param string $content
      *
      * @return self
      */

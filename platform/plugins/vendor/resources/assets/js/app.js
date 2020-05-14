@@ -53,7 +53,44 @@ require('./avatar');
 $(document).ready(() => {
     if (window.noticeMessages) {
         window.noticeMessages.forEach(message => {
-           Botble.showNotice(message.type, message.message, message.type === 'error' ? _.get(window.trans, 'notices.error') : _.get(window.trans, 'notices.success'));
+            Botble.showNotice(message.type, message.message, message.type === 'error' ? _.get(window.trans, 'notices.error') : _.get(window.trans, 'notices.success'));
         });
     }
+
+    $(document).on('click', '.button-renew', event => {
+        event.preventDefault();
+        let _self = $(event.currentTarget);
+
+        $('.button-confirm-renew').data('section', _self.data('section')).data('parent-table', _self.closest('.table').prop('id'));
+        $('.modal-confirm-renew').modal('show');
+    });
+
+    $('.button-confirm-renew').on('click', (event) => {
+        event.preventDefault();
+        let _self = $(event.currentTarget);
+
+        let url = _self.data('section');
+
+        _self.addClass('button-loading');
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            success: (data) => {
+                if (data.error) {
+                    Botble.showError(data.message);
+                } else {
+                    window.LaravelDataTables[_self.data('parent-table')].row($('a[data-section="' + url + '"]').closest('tr')).remove().draw();
+                    Botble.showSuccess(data.message);
+                }
+
+                _self.closest('.modal').modal('hide');
+                _self.removeClass('button-loading');
+            },
+            error: (data) => {
+                Botble.handleError(data);
+                _self.removeClass('button-loading');
+            }
+        });
+    });
 });

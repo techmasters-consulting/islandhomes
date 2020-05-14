@@ -3,6 +3,7 @@
 namespace Botble\Contact\Tables;
 
 use Botble\Contact\Models\Contact;
+use Html;
 use Illuminate\Support\Facades\Auth;
 use Botble\Contact\Enums\ContactStatusEnum;
 use Botble\Contact\Repositories\Interfaces\ContactInterface;
@@ -43,11 +44,7 @@ class ContactTable extends TableAbstract
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function ajax()
     {
@@ -58,7 +55,7 @@ class ContactTable extends TableAbstract
                     return $item->name;
                 }
 
-                return anchor_link(route('contacts.edit', $item->id), $item->name);
+                return Html::link(route('contacts.edit', $item->id), $item->name);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
@@ -79,11 +76,7 @@ class ContactTable extends TableAbstract
     }
 
     /**
-     * Get the query object to be processed by the table.
-     *
-     * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function query()
     {
@@ -102,9 +95,7 @@ class ContactTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function columns()
     {
@@ -142,9 +133,7 @@ class ContactTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function buttons()
     {
@@ -152,8 +141,7 @@ class ContactTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws \Throwable
+     * {@inheritDoc}
      */
     public function bulkActions(): array
     {
@@ -161,7 +149,7 @@ class ContactTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getBulkChanges(): array
     {
@@ -195,7 +183,7 @@ class ContactTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getDefaultButtons(): array
     {

@@ -117,11 +117,12 @@ if (!function_exists('get_featured_categories')) {
 if (!function_exists('get_all_categories')) {
     /**
      * @param array $condition
+     * @param array $with
      * @return array
      */
-    function get_all_categories(array $condition = [])
+    function get_all_categories(array $condition = [], $with = [])
     {
-        return app(CategoryInterface::class)->getAllCategories($condition);
+        return app(CategoryInterface::class)->getAllCategories($condition, $with);
     }
 }
 

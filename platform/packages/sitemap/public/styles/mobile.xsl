@@ -10,7 +10,7 @@
 <script	type="text/javascript"><![CDATA[
 $(document).ready(function() {
 $("#sitemap").tablesorter({sortList:[[0,1]],widgets:['zebra']});
-$('.url').click(function(){
+$('.url').on('click', function(){
   window.open($(this).html());
   return false;
 });

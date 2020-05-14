@@ -1,5 +1,8 @@
 <?php
 
+use Botble\Payment\Enums\PaymentMethodEnum;
+use Botble\Payment\Enums\PaymentStatusEnum;
+
 return [
     'payments'                              => 'Thanh toán',
     'checkout_success'                      => 'Thanh toán thành công!',
@@ -53,4 +56,31 @@ return [
     'deactivate_payment_method'             => 'Huỷ kích hoạt phương thức',
     'deactivate_payment_method_description' => 'Bạn có chắc chắn muốn huỷ phương thức thành toán này?',
     'agree'                                 => 'Đồng ý',
+    'name'                                  => 'Thanh toán',
+    'create'                                => 'Thêm thanh toán mới',
+    'go_back'                               => 'Trở lại',
+    'information'                           => 'Thông tin',
+    'methods'                               => [
+        PaymentMethodEnum::PAYPAL        => 'PayPal',
+        PaymentMethodEnum::STRIPE        => 'Stripe',
+        PaymentMethodEnum::COD           => 'Thanh toán khi giao hàng (COD)',
+        PaymentMethodEnum::BANK_TRANSFER => 'Chuyển khoản qua ngân hàng',
+    ],
+    'statuses'                              => [
+        PaymentStatusEnum::PENDING   => 'Chưa hoàn tất',
+        PaymentStatusEnum::COMPLETED => 'Đã hoàn thành',
+        PaymentStatusEnum::REFUNDING => 'Đang hoàn tiền',
+        PaymentStatusEnum::REFUNDED  => 'Đã hoàn tiền',
+        PaymentStatusEnum::FRAUD     => 'Gian lận',
+    ],
+    'payment_methods_instruction'           => 'Hướng dẫn khách hàng thanh toán trực tiếp. Có thể chọn thanh toán khi giao hàng hoặc chuyển khoản',
+    'payment_method_description'            => 'Hướng dẫn thanh toán – (Hiển thị ở trang thông báo mua hàng thành công và trang thanh toán)',
+    'payment_via_cod'                       => 'Thanh toán khi nhận hàng (COD)',
+    'payment_via_bank_transfer'             => 'Chuyển khoản qua ngân hàng',
+    'payment_pending'                       => 'Thực hiện thành công. Thanh toán của bạn đang được xử lý và sẽ được xác nhận bởi nhân viên.',
+    'created_at'                            => 'Ngày tạo',
+    'payment_channel'                       => 'Phương thức thanh toán',
+    'total'                                 => 'Tổng cộng',
+    'status'                                => 'Trạng thái',
+    'default_payment_method'                => 'Phương thức thanh toán mặc định',
 ];

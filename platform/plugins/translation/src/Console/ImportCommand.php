@@ -41,7 +41,7 @@ class ImportCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return int
      */
     public function handle()
     {
@@ -49,6 +49,8 @@ class ImportCommand extends Command
         $replace = $this->option('replace');
         $counter = $this->manager->importTranslations($replace);
         $this->info('Done importing, processed ' . $counter . ' items!');
+
+        return $counter;
     }
 
     /**

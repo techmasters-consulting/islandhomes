@@ -32,7 +32,7 @@ return [
     |            "postmark", "log", "array"
     |
     */
-
+    'driver' => env('MAIL_MAILER', 'sendinblue'),
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
@@ -42,8 +42,11 @@ return [
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
+            'auth_mode' => null,
         ],
-
+        'sendinblue' => [
+            'transport' => 'sendinblue.v3'
+        ],
         'ses' => [
             'transport' => 'ses',
         ],

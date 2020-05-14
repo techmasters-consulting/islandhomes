@@ -37,7 +37,6 @@ class CountryController extends BaseController
     }
 
     /**
-     * Display all countries
      * @param CountryTable $dataTable
      * @return Factory|View
      * @throws Throwable
@@ -62,8 +61,6 @@ class CountryController extends BaseController
     }
 
     /**
-     * Insert new Country into database
-     *
      * @param CountryRequest $request
      * @return BaseHttpResponse
      */
@@ -80,8 +77,6 @@ class CountryController extends BaseController
     }
 
     /**
-     * Show edit form
-     *
      * @param $id
      * @param Request $request
      * @param FormBuilder $formBuilder

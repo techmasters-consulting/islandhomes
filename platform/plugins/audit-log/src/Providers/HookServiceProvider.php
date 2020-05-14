@@ -4,6 +4,7 @@ namespace Botble\AuditLog\Providers;
 
 use Assets;
 use AuditLog;
+use Botble\ACL\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Botble\Dashboard\Supports\DashboardWidgetInstance;
 use Illuminate\Support\Collection;
@@ -32,7 +33,7 @@ class HookServiceProvider extends ServiceProvider
 
     /**
      * @param Request $request
-     * @param stdClass $data
+     * @param User $data
      */
     public function handleLogin(Request $request, $data)
     {
@@ -48,7 +49,7 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param string $screen
      * @param Request $request
-     * @param stdClass $data
+     * @param User $data
      */
     public function handleLogout(Request $request, $data)
     {
@@ -98,7 +99,7 @@ class HookServiceProvider extends ServiceProvider
      */
     public function handleBackup($screen)
     {
-        event(new AuditHandlerEvent($screen, 'backup', 0, '', 'info'));
+        event(new AuditHandlerEvent($screen, 'created', 0, '', 'info'));
     }
 
     /**
@@ -121,7 +122,7 @@ class HookServiceProvider extends ServiceProvider
             return $widgets;
         }
 
-        Assets::addScriptsDirectly(['/vendor/core/plugins/audit-log/js/audit-log.js']);
+        Assets::addScriptsDirectly('vendor/core/plugins/audit-log/js/audit-log.js');
 
         return (new DashboardWidgetInstance)
             ->setPermission('audit-log.index')

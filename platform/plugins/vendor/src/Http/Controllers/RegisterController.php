@@ -46,7 +46,6 @@ class RegisterController extends Controller
      * Create a new controller instance.
      *
      * @param VendorInterface $vendorRepository
-     *
      */
     public function __construct(VendorInterface $vendorRepository)
     {
@@ -59,7 +58,6 @@ class RegisterController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     *
      */
     public function showRegistrationForm()
     {
@@ -76,7 +74,6 @@ class RegisterController extends Controller
      * @param BaseHttpResponse $response
      * @param VendorInterface $vendorRepository
      * @return BaseHttpResponse
-     *
      */
     public function confirm($email, Request $request, BaseHttpResponse $response, VendorInterface $vendorRepository)
     {
@@ -104,7 +101,6 @@ class RegisterController extends Controller
      * Get the guard to be used during registration.
      *
      * @return \Illuminate\Contracts\Auth\StatefulGuard
-     *
      */
     protected function guard()
     {
@@ -114,11 +110,10 @@ class RegisterController extends Controller
     /**
      * Resend a confirmation code to a user.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @param VendorInterface $vendorRepository
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      */
     public function resendConfirmation(Request $request, VendorInterface $vendorRepository, BaseHttpResponse $response)
     {
@@ -139,7 +134,6 @@ class RegisterController extends Controller
      * Send the confirmation code to a user.
      *
      * @param Vendor $vendor
-     *
      */
     protected function sendConfirmationToUser($vendor)
     {
@@ -157,7 +151,6 @@ class RegisterController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      */
     public function register(Request $request, BaseHttpResponse $response)
     {
@@ -165,25 +158,24 @@ class RegisterController extends Controller
 
         event(new Registered($vendor = $this->create($request->input())));
 
-        if (config('plugins.vendor.general.verify_email', true)) {
+        if (setting('verify_account_email', config('plugins.vendor.general.verify_email'))) {
             $this->sendConfirmationToUser($vendor);
             return $this->registered($request, $vendor)
                 ?: $response->setNextUrl($this->redirectPath())->setMessage(trans('plugins/vendor::vendor.confirmation_info'));
         }
 
-        $vendor->confirmed_at = Carbon::now(config('app.timezone'));
+        $vendor->confirmed_at = now(config('app.timezone'));
         $this->vendorRepository->createOrUpdate($vendor);
         $this->guard()->login($vendor);
-        return $this->registered($request, $vendor)
-            ?: $response->setNextUrl($this->redirectPath());
+
+        return $this->registered($request, $vendor) ?: $response->setNextUrl($this->redirectPath());
     }
 
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
-     *
      */
     protected function validator(array $data)
     {
@@ -198,9 +190,8 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array $data
+     * @param array $data
      * @return Vendor
-     *
      */
     protected function create(array $data)
     {

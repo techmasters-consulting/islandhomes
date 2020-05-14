@@ -9,7 +9,7 @@ interface SeoTwitterContract extends RenderableContract
     /**
      * Set the twitter card instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\TwitterCardContract $card
+     * @param TwitterCardContract $card
      *
      * @return self
      */
@@ -18,7 +18,7 @@ interface SeoTwitterContract extends RenderableContract
     /**
      * Set the card type.
      *
-     * @param  string $type
+     * @param string $type
      *
      * @return self
      */
@@ -27,7 +27,7 @@ interface SeoTwitterContract extends RenderableContract
     /**
      * Set the card site.
      *
-     * @param  string $site
+     * @param string $site
      *
      * @return self
      */
@@ -36,7 +36,7 @@ interface SeoTwitterContract extends RenderableContract
     /**
      * Set the card title.
      *
-     * @param  string $title
+     * @param string $title
      *
      * @return self
      */
@@ -45,7 +45,7 @@ interface SeoTwitterContract extends RenderableContract
     /**
      * Set the card description.
      *
-     * @param  string $description
+     * @param string $description
      *
      * @return self
      */
@@ -54,7 +54,7 @@ interface SeoTwitterContract extends RenderableContract
     /**
      * Add image to the card.
      *
-     * @param  string $url
+     * @param string $url
      *
      * @return self
      */
@@ -63,7 +63,7 @@ interface SeoTwitterContract extends RenderableContract
     /**
      * Add many meta to the card.
      *
-     * @param  array $meta
+     * @param array $meta
      *
      * @return self
      */
@@ -72,8 +72,8 @@ interface SeoTwitterContract extends RenderableContract
     /**
      * Add a meta to the twitter card.
      *
-     * @param  string $name
-     * @param  string $content
+     * @param string $name
+     * @param string $content
      *
      * @return self
      */

@@ -22,6 +22,7 @@ class LocationSeeder extends Seeder
         Country::truncate();
 
         $this->createDataForUs();
+        $this->createDataForCanada();
     }
 
     protected function createDataForUs()
@@ -65,6 +66,43 @@ class LocationSeeder extends Seeder
             Artisan::call('cms:language:sync', ['table' => 'countries', 'reference' => Country::class]);
             Artisan::call('cms:language:sync', ['table' => 'states', 'reference' => State::class]);
             Artisan::call('cms:language:sync', ['table' => 'cities', 'reference' => City::class]);
+        }
+    }
+
+    protected function createDataForCanada()
+    {
+        Country::create([
+            'id'          => 2,
+            'name'        => 'Canada',
+            'nationality' => 'Canada',
+            'is_default'  => 0,
+            'status'      => 'published',
+            'order'       => 1,
+        ]);
+
+        $states = file_get_contents(__DIR__ . '/../../database/files/ca/states.json');
+        $states = json_decode($states, true);
+        foreach ($states as $state) {
+            State::create($state);
+        }
+
+        $cities = file_get_contents(__DIR__ . '/../../database/files/ca/cities.json');
+        $cities = json_decode($cities, true);
+        foreach ($cities as $item) {
+
+            $state = State::where('name', $item['name'])->first();
+            if (!$state) {
+                continue;
+            }
+
+            foreach ($item['cities'] as $cityName) {
+                $city = [
+                    'name'       => $cityName,
+                    'state_id'   => $state->id,
+                    'country_id' => 2,
+                ];
+                City::create($city);
+            }
         }
     }
 }

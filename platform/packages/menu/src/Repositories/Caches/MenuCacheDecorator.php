@@ -9,7 +9,7 @@ class MenuCacheDecorator extends CacheAbstractDecorator implements MenuInterface
 {
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function findBySlug($slug, $active, $selects = [])
     {
@@ -17,7 +17,7 @@ class MenuCacheDecorator extends CacheAbstractDecorator implements MenuInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createSlug($name)
     {

@@ -11,9 +11,12 @@ let mix = require('laravel-mix');
  |
  */
 
-const resourcePath = 'platform/packages/slug';
-const publicPath = 'public/vendor/core/packages/slug';
+const source = 'platform/packages/slug';
+const dist = 'public/vendor/core/packages/slug';
 
 mix
-    .js(resourcePath + '/resources/assets/js/slug.js', publicPath + '/js')
-    .copy(publicPath + '/js/slug.js', resourcePath + '/public/js');
+    .js(source + '/resources/assets/js/slug.js', dist + '/js')
+    .sass(source + '/resources/assets/sass/slug.scss', dist + '/css')
+
+    .copy(dist + '/js', source + '/public/js')
+    .copy(dist + '/css', source + '/public/css');

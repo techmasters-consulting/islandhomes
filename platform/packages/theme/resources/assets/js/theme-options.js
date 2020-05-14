@@ -8,7 +8,49 @@ $(document).ready(() => {
             hideOnSelect: true,
         });
     }
-    if ($(document).find('.font-input').length > 0) {
-        $(document).find('.font-input').fontselect();
-    }
+
+    $(document).ready(function () {
+        $(document).on('click', '.button-save-theme-options', event => {
+            event.preventDefault();
+            let _self = $(event.currentTarget);
+            _self.addClass('button-loading');
+
+            if (typeof CKEDITOR != 'undefined') {
+                for (var i in CKEDITOR.instances) {
+                    CKEDITOR.instances[i].updateElement();
+                }
+            }
+
+            if (typeof tinymce != 'undefined') {
+                for (var instance in tinymce.editors) {
+                    if (tinymce.editors[instance].getContent) {
+                        $('#' + instance).html( tinymce.editors[instance].getContent());
+                    }
+                }
+            }
+
+            let $form = _self.closest('form');
+
+            $.ajax({
+                url: $form.prop('action'),
+                type: 'POST',
+                data: $form.serialize(),
+                success: data => {
+                    _self.removeClass('button-loading');
+
+                    if (data.error) {
+                        Botble.showError(data.message);
+                    } else {
+                        Botble.showSuccess(data.message);
+                        $form.removeClass('dirty');
+                    }
+                },
+                error: data => {
+                    _self.removeClass('button-loading');
+                    Botble.handleError(data);
+                }
+            });
+        });
+    });
+
 });

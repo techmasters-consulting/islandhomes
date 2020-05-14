@@ -4,13 +4,11 @@ namespace Botble\Blog\Tables;
 
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Blog\Models\Tag;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\JsonResponse;
+use Html;
 use Illuminate\Support\Facades\Auth;
 use Botble\Blog\Repositories\Interfaces\TagInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
-use Throwable;
 use Yajra\DataTables\DataTables;
 
 class TagTable extends TableAbstract
@@ -45,11 +43,7 @@ class TagTable extends TableAbstract
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return JsonResponse
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function ajax()
     {
@@ -60,7 +54,7 @@ class TagTable extends TableAbstract
                     return $item->name;
                 }
 
-                return anchor_link(route('tags.edit', $item->id), $item->name);
+                return Html::link(route('tags.edit', $item->id), $item->name);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
@@ -84,11 +78,7 @@ class TagTable extends TableAbstract
     }
 
     /**
-     * Get the query object to be processed by table.
-     *
-     * @return \Illuminate\Database\Query\Builder|Builder
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function query()
     {
@@ -105,9 +95,7 @@ class TagTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function columns()
     {
@@ -136,10 +124,7 @@ class TagTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @throws Throwable
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function buttons()
     {
@@ -149,8 +134,7 @@ class TagTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function bulkActions(): array
     {
@@ -158,7 +142,7 @@ class TagTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getBulkChanges(): array
     {
@@ -172,7 +156,7 @@ class TagTable extends TableAbstract
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
                 'choices'  => BaseStatusEnum::labels(),
-                'validate' => 'required|in:0,1',
+                'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
             ],
             'tags.created_at' => [
                 'title' => trans('core/base::tables.created_at'),

@@ -90,7 +90,7 @@ abstract class AbstractWidgetFactory
     /**
      * Set class properties and instantiate a widget object.
      *
-     * @param $params
+     * @param array $params
      *
      * @throws InvalidWidgetClassException
      * @throws Exception
@@ -120,7 +120,7 @@ abstract class AbstractWidgetFactory
     /**
      * Convert stuff like 'profile.feedWidget' to 'Profile\FeedWidget'.
      *
-     * @param $widgetName
+     * @param string $widgetName
      * @return string
      */
     protected function parseFullWidgetNameFromString($widgetName)

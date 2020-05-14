@@ -186,7 +186,7 @@ class Core
             if (config('app.debug')) {
                 $tempDecode = json_decode($result, true);
                 $rs = [
-                    'status' => false,
+                    'status'  => false,
                     'message' => !empty($tempDecode['error']) ? $tempDecode['error'] : $tempDecode['message'],
                 ];
                 return json_encode($rs);
@@ -283,21 +283,21 @@ class Core
     {
         if (!empty($license) && !empty($client)) {
             $dataArray = [
-                'product_id' => $this->productId,
+                'product_id'   => $this->productId,
                 'license_file' => null,
                 'license_code' => $license,
-                'client_name' => $client,
+                'client_name'  => $client,
             ];
         } elseif ($this->checkLocalLicenseExist()) {
             $dataArray = [
-                'product_id' => $this->productId,
+                'product_id'   => $this->productId,
                 'license_file' => file_get_contents($this->licenseFile),
                 'license_code' => null,
-                'client_name' => null,
+                'client_name'  => null,
             ];
         } else {
             $dataArray = [
-                'product_id' => $this->productId,
+                'product_id'   => $this->productId,
                 'license_file' => null,
                 'license_code' => null,
                 'client_name'  => null,

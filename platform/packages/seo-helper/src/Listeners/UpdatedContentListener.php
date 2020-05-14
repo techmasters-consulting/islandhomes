@@ -14,7 +14,6 @@ class UpdatedContentListener
      *
      * @param UpdatedContentEvent $event
      * @return void
-     *
      */
     public function handle(UpdatedContentEvent $event)
     {

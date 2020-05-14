@@ -37,14 +37,8 @@ class LoginListener
         $user = $event->user;
 
         if ($user instanceof User) {
-            if (isset($_SERVER['HTTP_USER_AGENT'])) {
-                $this->auditHistory->user_agent = $_SERVER['HTTP_USER_AGENT'];
-            }
-
-            if (isset($_SERVER['REMOTE_ADDR'])) {
-                $this->auditHistory->ip_address = $_SERVER['REMOTE_ADDR'];
-            }
-
+            $this->auditHistory->user_agent = request()->userAgent();
+            $this->auditHistory->ip_address = request()->ip();
             $this->auditHistory->module = 'to the system';
             $this->auditHistory->action = 'logged in';
             $this->auditHistory->user_id = $user->id;

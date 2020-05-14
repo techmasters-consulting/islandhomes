@@ -18,6 +18,7 @@ class CityRequest extends Request
     {
         return [
             'name'       => 'required',
+            'state_id'   => 'required',
             'country_id' => 'required',
             'status'     => Rule::in(BaseStatusEnum::values()),
         ];

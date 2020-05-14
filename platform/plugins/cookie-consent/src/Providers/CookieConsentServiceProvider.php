@@ -33,7 +33,7 @@ class CookieConsentServiceProvider extends ServiceProvider
             $view->with(compact('alreadyConsentedWithCookies', 'cookieConsentConfig'));
         });
 
-        if (defined('THEME_FRONT_FOOTER') && setting('cookie_consent_enable', false)) {
+        if (defined('THEME_FRONT_FOOTER') && setting('cookie_consent_enable', true)) {
             add_filter(THEME_FRONT_FOOTER, [$this, 'registerCookieConsent'], 1346);
         }
 
@@ -86,7 +86,7 @@ class CookieConsentServiceProvider extends ServiceProvider
      * @return string
      * @throws \Throwable
      */
-    public function registerCookieConsent($html)
+    public function registerCookieConsent($html): string
     {
         return $html . view('plugins/cookie-consent::index')->render();
     }
@@ -96,7 +96,7 @@ class CookieConsentServiceProvider extends ServiceProvider
      * @return string
      * @throws Throwable
      */
-    public function addSettings($data = null)
+    public function addSettings($data = null): string
     {
         return $data . view('plugins/cookie-consent::settings')->render();
     }

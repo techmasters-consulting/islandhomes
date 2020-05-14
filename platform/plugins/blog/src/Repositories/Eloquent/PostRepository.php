@@ -13,7 +13,7 @@ use Illuminate\Support\Arr;
 class PostRepository extends RepositoriesAbstract implements PostInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFeatured($limit = 5)
     {
@@ -30,7 +30,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getListPostNonInList(array $selected = [], $limit = 7)
     {
@@ -45,7 +45,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getRelated($id, $limit = 3)
     {
@@ -60,7 +60,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getByCategory($categoryId, $paginate = 12, $limit = 0)
     {
@@ -86,7 +86,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getByUserId($authorId, $paginate = 6)
     {
@@ -103,7 +103,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getDataSiteMap()
     {
@@ -117,7 +117,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getByTag($tag, $paginate = 12)
     {
@@ -137,7 +137,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getRecentPosts($limit = 5, $categoryId = 0)
     {
@@ -157,7 +157,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getSearch($query, $limit = 10, $paginate = 10)
     {
@@ -181,7 +181,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAllPosts($perPage = 12, $active = true)
     {
@@ -197,7 +197,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getPopularPosts($limit, array $args = [])
     {
@@ -216,7 +216,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getRelatedCategoryIds($model)
     {
@@ -230,7 +230,7 @@ class PostRepository extends RepositoriesAbstract implements PostInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFilters(array $filters)
     {

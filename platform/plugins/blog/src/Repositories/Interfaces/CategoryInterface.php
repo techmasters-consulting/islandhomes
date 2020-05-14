@@ -20,9 +20,10 @@ interface CategoryInterface extends RepositoryInterface
 
     /**
      * @param array $condition
+     * @param array $with
      * @return array
      */
-    public function getAllCategories(array $condition = []);
+    public function getAllCategories(array $condition = [], array $with = []);
 
     /**
      * @param int $id

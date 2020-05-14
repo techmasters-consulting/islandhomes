@@ -6,27 +6,39 @@ use Assets;
 use Botble\Base\Events\DeletedContentEvent;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Payment\Enums\PaymentMethodEnum;
+use Botble\Payment\Enums\PaymentStatusEnum;
 use Botble\Payment\Http\Requests\PaymentMethodRequest;
+use Botble\Payment\Http\Requests\UpdatePaymentRequest;
 use Botble\Payment\Repositories\Interfaces\PaymentInterface;
-use Botble\Payment\Services\Gateways\PayPal\PayPalPaymentService;
-use Botble\Payment\Services\Gateways\Stripe\StripePaymentService;
+use Botble\Payment\Services\Gateways\BankTransferPaymentService;
+use Botble\Payment\Services\Gateways\CodPaymentService;
+use Botble\Payment\Services\Gateways\PayPalPaymentService;
+use Botble\Payment\Services\Gateways\StripePaymentService;
 use Botble\Payment\Tables\PaymentTable;
 use Botble\Setting\Supports\SettingStore;
-use DateTime;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 use Illuminate\View\View;
 use Throwable;
 
 class PaymentController extends Controller
 {
-    /**uuid
+    /**
+     * @var CodPaymentService
+     */
+    protected $codPaymentService;
+
+    /**
+     * @var BankTransferPaymentService
+     */
+    protected $bankTransferPaymentService;
+
+    /**
      * @var PayPalPaymentService
      */
     protected $payPalService;
@@ -50,11 +62,15 @@ class PaymentController extends Controller
      * PaymentController constructor.
      * @param PayPalPaymentService $payPalService
      * @param StripePaymentService $stripePaymentService
+     * @param CodPaymentService $codPaymentService
+     * @param BankTransferPaymentService $bankTransferPaymentService
      * @param PaymentInterface $paymentRepository
      */
     public function __construct(
         PayPalPaymentService $payPalService,
         StripePaymentService $stripePaymentService,
+        CodPaymentService $codPaymentService,
+        BankTransferPaymentService $bankTransferPaymentService,
         PaymentInterface $paymentRepository
     ) {
         $this->payPalService = $payPalService;
@@ -63,12 +79,14 @@ class PaymentController extends Controller
         $this->paymentRepository = $paymentRepository;
 
         $this->returnUrl = config('plugins.payment.payment.return_url_after_payment');
+        $this->codPaymentService = $codPaymentService;
+        $this->bankTransferPaymentService = $bankTransferPaymentService;
     }
 
     /**
      * @param PaymentTable $dataTable
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Throwable
+     * @return Factory|View
+     * @throws Throwable
      */
     public function index(PaymentTable $table)
     {
@@ -79,7 +97,7 @@ class PaymentController extends Controller
 
 
     /**
-     * @param $id
+     * @param int $id
      * @param Request $request
      * @return BaseHttpResponse
      */
@@ -127,17 +145,19 @@ class PaymentController extends Controller
     /**
      * @param Request $request
      * @return RedirectResponse|Redirector
+     * @throws Exception
      */
-    public function postCheckout(Request $request, BaseHttpResponse $response)
+    public function postCheckout(Request $request)
     {
-        $error = false;
-        $errorMessage = null;
+        $returnUrl = $request->input('return_url');
 
         $currency = $request->input('currency', config('plugins.payment.payment.currency'));
         $currency = strtoupper($currency);
 
         $data = [
-            'amount' => $request->input('amount'),
+            'error'    => false,
+            'message'  => false,
+            'amount'   => $request->input('amount'),
             'currency' => $currency,
             'type'     => $request->input('payment_method'),
         ];
@@ -147,63 +167,50 @@ class PaymentController extends Controller
                 $result = $this->stripePaymentService
                     ->execute($request);
                 if (!$result) {
-                    $error = true;
-                    $errorMessage = $this->stripePaymentService->getErrorMessage();
+                    $data['error'] = true;
+                    $data['message'] = $this->stripePaymentService->getErrorMessage();
+                } else {
+                    $data['paymentId'] = $result;
                 }
 
-                $data['paymentId'] = $result;
                 break;
+
             case PaymentMethodEnum::PAYPAL:
                 $checkoutUrl = $this->payPalService->execute($request);
-
                 if ($checkoutUrl) {
                     return redirect($checkoutUrl);
                 } else {
-                    $error = true;
-                    $errorMessage = $this->payPalService->getErrorMessage();
+                    $data['error'] = true;
+                    $data['message'] = $this->payPalService->getErrorMessage();
                 }
-
                 break;
-            case PaymentMethodEnum::DIRECT:
-                $userData = auth()->guard('vendor')->user();
-                $date = new DateTime();
-                $this->paymentRepository->insert(
-                    [
-                        'amount' => $request->amount,
-                        'payment_channel' => 'direct',
-                        'currency' => $request->currency,
-                        'charge_id' => 'Bank_' . mt_rand(1000000, 9999999),
-                        'user_id' => $userData->id,
-                        'description' => $request->name,
-                        'created_at' => $date->format('Y-m-d H:i:s')
-                    ]
-                );
 
+            case PaymentMethodEnum::COD:
+                $chargeId = $this->codPaymentService->execute($request);
+                return redirect()->to($returnUrl . '?chargeId=' . $chargeId)->with('success_msg',
+                    trans('plugins/payment::payment.payment_pending'));
 
-                break;
+            case PaymentMethodEnum::BANK_TRANSFER:
+                $chargeId = $this->bankTransferPaymentService->execute($request);
+                return redirect()->to($returnUrl . '?chargeId=' . $chargeId)->with('success_msg',
+                    trans('plugins/payment::payment.payment_pending'));
+
             default:
+                $data = apply_filters(PAYMENT_FILTER_AFTER_POST_CHECKOUT, $request, $data);
                 break;
         }
 
-        if (PaymentMethodEnum::DIRECT == 'direct') {
-
-            return redirect()->to('/contact')->with('success_msg', 'Your Transaction is been processed');
-        } else {
-            $returnUrl = $request->input('return_url') . '?' . http_build_query($data);
-            if ($error) {
-                return redirect()->back()->with('error_msg', $errorMessage);
-            }
-
-            return redirect()->to($returnUrl)->with('success_msg', trans('plugins/payment::payment.checkout_success'));
+        if ($data['error']) {
+            return redirect()->back()->with('error_msg', $data['message']);
         }
 
+        $callbackUrl = $request->input('callback_url') . '?' . http_build_query($data);
 
+        return redirect()->to($callbackUrl)->with('success_msg', trans('plugins/payment::payment.checkout_success'));
     }
 
     /**
-     * Show edit form
-     *
-     * @param int id
+     * @param int $id
      * @return Factory|View
      * @throws Exception
      * @throws Throwable
@@ -214,17 +221,29 @@ class PaymentController extends Controller
 
         $detail = null;
         switch ($payment->payment_channel) {
-            case 'paypal':
+            case PaymentMethodEnum::PAYPAL:
                 $paymentDetail = $this->payPalService->getPaymentDetails($payment->charge_id);
                 $detail = view('plugins/payment::paypal.detail', ['payment' => $paymentDetail])->render();
                 break;
-            case 'stripe':
+            case PaymentMethodEnum::STRIPE:
                 $paymentDetail = $this->stripePaymentService->getPaymentDetails($payment->charge_id);
                 $detail = view('plugins/payment::stripe.detail', ['payment' => $paymentDetail])->render();
                 break;
-
+            case PaymentMethodEnum::COD:
+            case PaymentMethodEnum::BANK_TRANSFER:
+                break;
+            default:
+                $detail = apply_filters(PAYMENT_FILTER_PAYMENT_INFO_DETAIL, null, $payment);
+                break;
         }
-        return view('plugins/payment::show', compact('payment', 'detail'));
+
+        $paymentStatuses = PaymentStatusEnum::labels();
+
+        if ($payment->status != PaymentStatusEnum::PENDING) {
+            Arr::forget($paymentStatuses, PaymentStatusEnum::PENDING);
+        }
+
+        return view('plugins/payment::show', compact('payment', 'detail', 'paymentStatuses'));
     }
 
     /**
@@ -238,6 +257,25 @@ class PaymentController extends Controller
             ->addScriptsDirectly('vendor/core/plugins/payment/js/payment-methods.js');
 
         return view('plugins/payment::settings.index');
+    }
+
+    /**
+     * @param Request $request
+     * @param BaseHttpResponse $response
+     * @param SettingStore $settingStore
+     * @return BaseHttpResponse
+     */
+    public function updateSettings(Request $request, BaseHttpResponse $response, SettingStore $settingStore)
+    {
+        $data = $request->except(['_token']);
+        foreach ($data as $settingKey => $settingValue) {
+            $settingStore
+                ->set($settingKey, $settingValue);
+        }
+
+        $settingStore->save();
+
+        return $response->setMessage(trans('plugins/payment::payment.saved_payment_settings_success'));
     }
 
     /**
@@ -259,7 +297,7 @@ class PaymentController extends Controller
             ->set('payment_' . $type . '_status', 1)
             ->save();
 
-        return $response->setMessage(__('Saved payment method successfully!'));
+        return $response->setMessage(trans('plugins/payment::payment.saved_payment_method_success'));
     }
 
     /**
@@ -274,6 +312,24 @@ class PaymentController extends Controller
             ->set('payment_' . $request->input('type') . '_status', 0)
             ->save();
 
-        return $response->setMessage(__('Turn off payment method successfully!'));
+        return $response->setMessage(trans('plugins/payment::payment.turn_off_success'));
+    }
+
+    /**
+     * @param $id
+     * @param UpdatePaymentRequest $request
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     */
+    public function update($id, UpdatePaymentRequest $request, BaseHttpResponse $response)
+    {
+        $payment = $this->paymentRepository->findOrFail($id);
+
+        $payment->status = $request->input('status');
+        $this->paymentRepository->createOrUpdate($payment);
+
+        return $response
+            ->setPreviousUrl(route('payment.show', $payment->id))
+            ->setMessage(trans('core/base::notices.update_success_message'));
     }
 }

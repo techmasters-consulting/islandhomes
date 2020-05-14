@@ -16,7 +16,7 @@ class AuditLog
      * @param string $type
      * @return bool
      */
-    public function handleEvent($screen, $data, $action, $type = 'info')
+    public function handleEvent($screen, $data, $action, $type = 'info'): bool
     {
         if (!$data instanceof Eloquent || !$data->id) {
             return false;
@@ -32,7 +32,7 @@ class AuditLog
      * @param stdClass|User|Eloquent $data
      * @return string
      */
-    public function getReferenceName($screen, $data)
+    public function getReferenceName($screen, $data): string
     {
         $name = '';
         switch ($screen) {

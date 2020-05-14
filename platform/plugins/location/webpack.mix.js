@@ -1,8 +1,8 @@
 let mix = require('laravel-mix');
 
-const publicPath = 'public/vendor/core/plugins/location';
-const resourcePath = './platform/plugins/location';
+const dist = 'public/vendor/core/plugins/location';
+const source = './platform/plugins/location';
 
 mix
-    .js(resourcePath + '/resources/assets/js/location.js', publicPath + '/js')
-    .copy(publicPath + '/js/location.js', resourcePath + '/public/js');
+    .js(source + '/resources/assets/js/location.js', dist + '/js')
+    .copy(dist + '/js', source + '/public/js');

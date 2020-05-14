@@ -6,12 +6,10 @@ use Assets;
 use Botble\Base\Forms\FormBuilder;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
-use Botble\Base\Supports\Helper;
 use Botble\Setting\Supports\SettingStore;
-use Botble\Theme\Commands\ThemeActivateCommand;
-use Botble\Theme\Commands\ThemeRemoveCommand;
 use Botble\Theme\Forms\CustomCSSForm;
 use Botble\Theme\Http\Requests\CustomCssRequest;
+use Botble\Theme\Services\ThemeService;
 use Exception;
 use File;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -45,15 +43,12 @@ class ThemeController extends BaseController
     {
         page_title()->setTitle(trans('packages/theme::theme.theme_options'));
 
-        Assets::addScripts(['bootstrap-tagsinput', 'typeahead', 'are-you-sure', 'colorpicker'])
-            ->addStyles(['bootstrap-tagsinput', 'colorpicker'])
+        Assets::addScripts(['are-you-sure', 'colorpicker'])
+            ->addStyles(['colorpicker'])
             ->addStylesDirectly([
-                'vendor/core/libraries/fontawesome-iconpicker/css/fontawesome-iconpicker.min.css',
-                'vendor/core/libraries/fontselect/fontselect-default.css',
+                'vendor/core/packages/theme/css/theme-options.css',
             ])
             ->addScriptsDirectly([
-                'vendor/core/libraries/fontawesome-iconpicker/js/fontawesome-iconpicker.min.js',
-                'vendor/core/libraries/fontselect/jquery.fontselect.min.js',
                 'vendor/core/packages/theme/js/theme-options.js',
             ]);
 
@@ -84,16 +79,16 @@ class ThemeController extends BaseController
     /**
      * @param Request $request
      * @param BaseHttpResponse $response
-     * @param ThemeActivateCommand $themeActivateCommand
+     * @param ThemeService $themeService
      * @return BaseHttpResponse
-     * @throws Exception
      */
-    public function postActivateTheme(
-        Request $request,
-        BaseHttpResponse $response,
-        ThemeActivateCommand $themeActivateCommand
-    ) {
-        Helper::executeCommand($themeActivateCommand->getName(), ['name' => $request->input('theme')]);
+    public function postActivateTheme(Request $request, BaseHttpResponse $response, ThemeService $themeService)
+    {
+        $result = $themeService->activate($request->input('theme'));
+
+        if ($result['error']) {
+            return $response->setError()->setMessage($result['message']);
+        }
 
         return $response
             ->setMessage(trans('packages/theme::theme.active_success'));
@@ -132,7 +127,7 @@ class ThemeController extends BaseController
      */
     public function postCustomCss(CustomCssRequest $request, BaseHttpResponse $response, SettingStore $setting)
     {
-        $file = public_path(config('packages.theme.general.themeDir') . '/' . $setting->get('theme') . '/css/style.integration.css');
+        $file = public_path('themes/' . $setting->get('theme') . '/css/style.integration.css');
         $css = $request->input('custom_css');
         $css = htmlspecialchars(htmlentities(strip_tags($css)));
         save_file_data($file, $css, false);
@@ -145,25 +140,26 @@ class ThemeController extends BaseController
      *
      * @param Request $request
      * @param BaseHttpResponse $response
-     * @param ThemeRemoveCommand $themeRemoveCommand
+     * @param ThemeService $themeService
      * @return mixed
      */
-    public function postRemoveTheme(
-        Request $request,
-        BaseHttpResponse $response,
-        ThemeRemoveCommand $themeRemoveCommand
-    ) {
+    public function postRemoveTheme(Request $request, BaseHttpResponse $response, ThemeService $themeService)
+    {
         $theme = strtolower($request->input('theme'));
 
         if (in_array($theme, scan_folder(theme_path()))) {
             try {
-                Helper::executeCommand($themeRemoveCommand->getName(), ['name' => $theme, '--force' => true]);
+                $result = $themeService->remove($theme);
+
+                if ($result['error']) {
+                    return $response->setError()->setMessage($result['message']);
+                }
+
                 return $response->setMessage(trans('packages/theme::theme.remove_theme_success'));
-            } catch (Exception $ex) {
-                info($ex->getMessage());
+            } catch (Exception $exception) {
                 return $response
                     ->setError()
-                    ->setMessage($ex->getMessage());
+                    ->setMessage($exception->getMessage());
             }
         }
 

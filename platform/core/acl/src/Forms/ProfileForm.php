@@ -5,13 +5,11 @@ namespace Botble\ACL\Forms;
 use Botble\ACL\Http\Requests\UpdateProfileRequest;
 use Botble\ACL\Models\User;
 use Botble\Base\Forms\FormAbstract;
-use Throwable;
 
 class ProfileForm extends FormAbstract
 {
     /**
-     * @return mixed|void
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function buildForm()
     {

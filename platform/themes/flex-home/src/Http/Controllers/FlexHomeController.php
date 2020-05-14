@@ -20,17 +20,18 @@ use Botble\SeoHelper\SeoOpenGraph;
 use Botble\Slug\Repositories\Interfaces\SlugInterface;
 use Botble\Theme\Events\RenderingHomePageEvent;
 use Botble\Theme\Http\Controllers\PublicController;
-use Vansteen\Sendinblue\Facades\Sendinblue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use SeoHelper;
 use SlugHelper;
 use Theme;
 use Theme\FlexHome\Http\Resources\PostResource;
 use Theme\FlexHome\Http\Resources\PropertyResource;
-
+use Juanparati\Sendinblue\Client as Blue;
+use Juanparati\Sendinblue\Facades\Template as MailTemplate;
 class FlexHomeController extends PublicController
 {
     /**
@@ -153,15 +154,7 @@ class FlexHomeController extends PublicController
             abort(404);
         }
 
-        $property = $propertyRepository->advancedGet([
-            'condition' => [
-                're_properties.id' => $slug->reference_id,
-                're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
-                ['re_properties.expire_date', '>=', now(config('app.timezone'))->toDateTimeString()],
-            ],
-            'with' => ['features', 'project', 'currency', 'author', 'category'],
-            'take' => 1,
-        ]);
+        $property = $propertyRepository->getProperty($slug->reference_id, ['features', 'project', 'currency', 'author', 'category']);
 
         if (!$property) {
             abort(404);
@@ -232,7 +225,7 @@ class FlexHomeController extends PublicController
 
         $params = [
             'paginate' => [
-                'per_page' => theme_option('number_of_projects_per_page', 12),
+                'per_page'      => theme_option('number_of_projects_per_page', 12),
                 'current_paged' => $request->input('page', 1),
             ],
             'order_by' => ['re_projects.created_at' => 'DESC'],
@@ -284,7 +277,7 @@ class FlexHomeController extends PublicController
 
         $params = [
             'paginate' => [
-                'per_page' => theme_option('number_of_properties_per_page', 12),
+                'per_page'      => theme_option('number_of_properties_per_page', 12),
                 'current_paged' => $request->input('page', 1),
             ],
             'order_by' => ['re_properties.created_at' => 'DESC'],
@@ -337,11 +330,11 @@ class FlexHomeController extends PublicController
             'condition' => [
                 'careers.status' => BaseStatusEnum::PUBLISHED,
             ],
-            'paginate' => [
-                'per_page' => 10,
+            'paginate'  => [
+                'per_page'      => 10,
                 'current_paged' => $request->input('page', 1),
             ],
-            'order_by' => ['careers.created_at' => 'DESC'],
+            'order_by'  => ['careers.created_at' => 'DESC'],
         ]);
 
         return Theme::scope('careers', compact('careers'))->render();
@@ -402,7 +395,7 @@ class FlexHomeController extends PublicController
 
         $params = [
             'paginate' => [
-                'per_page' => theme_option('number_of_projects_per_page', 12),
+                'per_page'      => theme_option('number_of_projects_per_page', 12),
                 'current_paged' => $request->input('page', 1),
             ],
             'order_by' => ['re_projects.created_at' => 'DESC'],
@@ -436,7 +429,7 @@ class FlexHomeController extends PublicController
 
         $params = [
             'paginate' => [
-                'per_page' => theme_option('number_of_properties_per_page', 12),
+                'per_page'      => theme_option('number_of_properties_per_page', 12),
                 'current_paged' => $request->input('page', 1),
             ],
             'order_by' => ['re_properties.created_at' => 'DESC'],
@@ -464,60 +457,52 @@ class FlexHomeController extends PublicController
                         theme_option('number_of_related_properties', 8));
                 break;
             case 'rent':
-                $properties = app(PropertyInterface::class)->advancedGet([
-                    'condition' => [
-                        're_properties.is_featured' => true,
-                        're_properties.type' => PropertyTypeEnum::RENT,
+                $properties = app(PropertyInterface::class)->getPropertiesByConditions(
+                    [
+                        're_properties.is_featured'       => true,
+                        're_properties.type'              => PropertyTypeEnum::RENT,
                         ['re_properties.status', 'IN', [PropertyStatusEnum::RENTING, PropertyStatusEnum::RENTED]],
-                        ['re_properties.expire_date', '>=', now(config('app.timezone'))->toDateTimeString()],
                         're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
                     ],
-                    'take' => theme_option('number_of_properties_for_sale', 8),
-                    'with' => ['currency'],
-                    'order_by' => ['re_properties.created_at' => 'DESC'],
-                ]);
+                    theme_option('number_of_properties_for_sale', 8),
+                    ['currency']
+                );
                 break;
             case 'sale':
-                $properties = app(PropertyInterface::class)->advancedGet([
-                    'condition' => [
-                        're_properties.is_featured' => true,
-                        're_properties.type' => PropertyTypeEnum::SALE,
+                $properties = app(PropertyInterface::class)->getPropertiesByConditions(
+                    [
+                        're_properties.is_featured'       => true,
+                        're_properties.type'              => PropertyTypeEnum::SALE,
                         ['re_properties.status', 'IN', [PropertyStatusEnum::SELLING, PropertyStatusEnum::SOLD, PropertyStatusEnum::PRE_SALE]],
-                        ['re_properties.expire_date', '>=', now(config('app.timezone'))->toDateTimeString()],
                         're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
                     ],
-                    'take' => theme_option('number_of_properties_for_sale', 8),
-                    'with' => ['currency'],
-                    'order_by' => ['re_properties.created_at' => 'DESC'],
-                ]);
+                    theme_option('number_of_properties_for_sale', 8),
+                    ['currency']
+                );
                 break;
             case 'project-properties-for-sell':
-                $properties = app(PropertyInterface::class)->advancedGet([
-                    'condition' => [
-                        're_properties.project_id' => $request->input('project_id'),
-                        're_properties.type' => PropertyTypeEnum::SALE,
+                $properties = app(PropertyInterface::class)->getPropertiesByConditions(
+                    [
+                        're_properties.project_id'        => $request->input('project_id'),
+                        're_properties.type'              => PropertyTypeEnum::SALE,
                         ['re_properties.status', 'IN', [PropertyStatusEnum::SELLING, PropertyStatusEnum::SOLD, PropertyStatusEnum::PRE_SALE]],
-                        ['re_properties.expire_date', '>=', now(config('app.timezone'))->toDateTimeString()],
                         're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
                     ],
-                    'take' => theme_option('number_of_properties_for_sale', 8),
-                    'with' => ['currency'],
-                    'order_by' => ['re_properties.created_at' => 'DESC'],
-                ]);
+                    theme_option('number_of_properties_for_sale', 8),
+                    ['currency']
+                );
                 break;
             case 'project-properties-for-rent':
-                $properties = app(PropertyInterface::class)->advancedGet([
-                    'condition' => [
-                        're_properties.project_id' => $request->input('project_id'),
-                        're_properties.type' => PropertyTypeEnum::RENT,
+                $properties = app(PropertyInterface::class)->getPropertiesByConditions(
+                    [
+                        're_properties.project_id'        => $request->input('project_id'),
+                        're_properties.type'              => PropertyTypeEnum::RENT,
                         ['re_properties.status', 'IN', [PropertyStatusEnum::RENTING, PropertyStatusEnum::RENTED]],
-                        ['re_properties.expire_date', '>=', now(config('app.timezone'))->toDateTimeString()],
                         're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
                     ],
-                    'take' => theme_option('number_of_properties_for_sale', 8),
-                    'with' => ['currency'],
-                    'order_by' => ['re_properties.created_at' => 'DESC'],
-                ]);
+                    theme_option('number_of_properties_for_sale', 8),
+                    ['currency']
+                );
                 break;
         }
 
@@ -538,6 +523,7 @@ class FlexHomeController extends PublicController
             ->setData(PostResource::collection($posts))
             ->toApiResponse();
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -547,30 +533,28 @@ class FlexHomeController extends PublicController
      */
     public function newsletters(Request $request){
 
+
         DB::table('newsletters')->insert([
             [ 'email' => $request->email,
                 'created_at' => now()
-                ]
+            ]
         ]);
-//        // Configure API keys authorization according to the config file
-//        $config = Sendinblue::getConfiguration();
-//
-//        // Uncomment below to setup prefix (e.g. Bearer) for API keys, if needed
-//        // $config->setApiKeyPrefix('api-key', 'Bearer');
-//        // $config->setApiKeyPrefix('partner-key', 'Bearer');
-//
-//        $api_instance = new SendinBlue\Client\Api\ContactsApi();
-//        $createContact = new \SendinBlue\Client\Model\CreateContact(); // \SendinBlue\Client\Model\CreateContact | Values to create a contact
-//
-//        $createContact['email'] = $request->email;
-//
-//
-//        try {
-//            $result = $api_instance->createContact($createContact);
-//            dd($result);
-//        } catch (Exception $e) {
-//            echo 'Exception when calling ContactsApi->createContact: ', $e->getMessage(), PHP_EOL;
-//        }
+
+        $apiClient = app()->make(Blue::class);
+        $contactsApi = $apiClient->getApi('ContactsApi');
+
+        // Use CreateContact model
+        $contact = $apiClient->getModel('CreateContact', ['email' => $request->email, 'listIds' => [7]]);
+
+        try {
+            MailTemplate::to($request->email);
+            MailTemplate::send(7);
+            $contactsApi->createContact($contact);
+        }
+        catch(\Exception $e){
+            dd($e->getMessage());
+        }
+
         return response()->json([
             'error' => false,
             'success' => true,

@@ -66,7 +66,7 @@ if (defined('THEME_MODULE_SCREEN_NAME')) {
             });
 
             Route::group([
-                'middleware' => [config('plugins.vendor.general.verify_email') ? 'vendor.guest' : 'vendor'],
+                'middleware' => [setting('verify_account_email', config('plugins.vendor.general.verify_email')) ? 'vendor.guest' : 'vendor'],
             ], function () {
                 Route::get('register/confirm/resend',
                     'RegisterController@resendConfirmation')->name('resend_confirmation');
@@ -151,6 +151,11 @@ if (defined('THEME_MODULE_SCREEN_NAME')) {
 
             Route::group(['prefix' => 'account/properties', 'as' => 'properties.'], function () {
                 Route::resource('', 'PropertyController')->parameters(['' => 'property']);
+
+                Route::post('renew/{id}', [
+                    'as'   => 'renew',
+                    'uses' => 'PropertyController@renew',
+                ]);
             });
 
             Route::group(['prefix' => 'ajax/vendor'], function () {

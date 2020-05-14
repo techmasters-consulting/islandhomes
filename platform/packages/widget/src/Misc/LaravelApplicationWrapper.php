@@ -26,7 +26,7 @@ class LaravelApplicationWrapper implements ApplicationWrapperContract
     /**
      * Wrapper around app()->call().
      *
-     * @param $method
+     * @param string|array $method
      * @param array $params
      * @return mixed
      */

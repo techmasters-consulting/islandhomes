@@ -122,7 +122,7 @@ class ThemeOption
      * @param string $id
      * @return bool
      */
-    public function getSection(string $id = '')
+    public function getSection(string $id = ''): bool
     {
         $this->checkOptName();
         if (!empty($this->optName) && !empty($id)) {
@@ -177,7 +177,6 @@ class ThemeOption
 
     /**
      * @param array $sections
-     *
      * @return $this
      */
     public function setSections(array $sections = []): self
@@ -193,7 +192,6 @@ class ThemeOption
 
     /**
      * @param array $section
-     *
      * @return $this
      */
     public function setSection(array $section = []): self
@@ -278,7 +276,6 @@ class ThemeOption
 
     /**
      * @param array $field
-     *
      * @return $this
      */
     public function setField(array $field = []): self
@@ -428,7 +425,6 @@ class ThemeOption
 
     /**
      * @param array $args
-     *
      * @return $this
      */
     public function setArgs(array $args = []): self
@@ -461,7 +457,6 @@ class ThemeOption
      * @param string $key
      * @param string $value
      * @return ThemeOption
-     *
      * @throws FileNotFoundException
      */
     public function setOption(string $key, ?string $value = ''): self
@@ -513,23 +508,18 @@ class ThemeOption
                 $field['attributes']['value'] = $this->getOption($field['attributes']['name']);
             }
 
-            if (isset($field['attributes']['options']['placeholder'])) {
-                $field['attributes']['options']['placeholder'] = __($field['attributes']['options']['placeholder']);
-            }
-
             if ($field['type'] == 'select') {
                 return call_user_func_array([Form::class, $field['type']], $field['attributes']);
             }
             return call_user_func_array([Form::class, $field['type']], $field['attributes']);
-        } catch (Exception $ex) {
-            return $ex->getMessage();
+        } catch (Exception $exception) {
+            return $exception->getMessage();
         }
     }
 
     /**
      * @param string $key
      * @return bool
-     *
      * @throws FileNotFoundException
      */
     public function hasOption(string $key): bool
@@ -541,7 +531,6 @@ class ThemeOption
      * @param string $key
      * @param string $default
      * @return string
-     *
      * @throws FileNotFoundException
      */
     public function getOption(string $key = '', ?string $default = ''): ?string

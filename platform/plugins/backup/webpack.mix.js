@@ -1,11 +1,11 @@
 let mix = require('laravel-mix');
 
-const publicPath = 'public/vendor/core/plugins/backup';
-const resourcePath = './platform/plugins/backup';
+const dist = 'public/vendor/core/plugins/backup';
+const source = './platform/plugins/backup';
 
 mix
-    .js(resourcePath + '/resources/assets/js/backup.js', publicPath + '/js')
-    .copy(publicPath + '/js/backup.js', resourcePath + '/public/js')
+    .js(source + '/resources/assets/js/backup.js', dist + '/js')
+    .sass(source + '/resources/assets/sass/backup.scss', dist + '/css')
 
-    .sass(resourcePath + '/resources/assets/sass/backup.scss', publicPath + '/css')
-    .copy(publicPath + '/css/backup.css', resourcePath + '/public/css');
+    .copy(dist + '/js', source + '/public/js')
+    .copy(dist + '/css', source + '/public/css');

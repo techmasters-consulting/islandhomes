@@ -7,6 +7,9 @@
             "Botble\\Slug\\": "src"
         }
     },
+    "require": {
+        "botble/platform": "*@dev"
+    },
     "extra": {
         "laravel": {
             "providers": [

@@ -16,9 +16,9 @@ class Analytics implements AnalyticsContract
     /**
      * Set Google Analytics code.
      *
-     * @param  string $code
+     * @param string $code
      *
-     * @return \Botble\SeoHelper\Entities\Analytics
+     * @return Analytics
      */
     public function setGoogle($code)
     {

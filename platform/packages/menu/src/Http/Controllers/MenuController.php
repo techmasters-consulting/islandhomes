@@ -2,7 +2,6 @@
 
 namespace Botble\Menu\Http\Controllers;
 
-use Assets;
 use Botble\Base\Events\BeforeEditContentEvent;
 use Botble\Base\Events\CreatedContentEvent;
 use Botble\Base\Events\DeletedContentEvent;
@@ -155,10 +154,6 @@ class MenuController extends BaseController
     {
         page_title()->setTitle(trans('packages/menu::menu.edit'));
 
-        Assets::addScripts(['jquery-nestable'])
-            ->addStyles(['jquery-nestable'])
-            ->addScriptsDirectly('vendor/core/packages/menu/js/menu.js');
-
         $oldInputs = old();
         if ($oldInputs && $id == 0) {
             $oldObject = new stdClass;
@@ -221,10 +216,10 @@ class MenuController extends BaseController
             event(new DeletedContentEvent(MENU_MODULE_SCREEN_NAME, $request, $menu));
 
             return $response->setMessage(trans('core/base::notices.delete_success_message'));
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage($ex->getMessage());
+                ->setMessage($exception->getMessage());
         }
     }
 

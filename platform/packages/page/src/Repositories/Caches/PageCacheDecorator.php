@@ -8,7 +8,7 @@ use Botble\Support\Repositories\Caches\CacheAbstractDecorator;
 class PageCacheDecorator extends CacheAbstractDecorator implements PageInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getDataSiteMap()
     {
@@ -16,7 +16,7 @@ class PageCacheDecorator extends CacheAbstractDecorator implements PageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFeaturedPages($limit)
     {
@@ -24,7 +24,7 @@ class PageCacheDecorator extends CacheAbstractDecorator implements PageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function whereIn($array, $select = [])
     {
@@ -32,7 +32,7 @@ class PageCacheDecorator extends CacheAbstractDecorator implements PageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getSearch($query, $limit = 10)
     {
@@ -40,7 +40,7 @@ class PageCacheDecorator extends CacheAbstractDecorator implements PageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAllPages($active = true)
     {

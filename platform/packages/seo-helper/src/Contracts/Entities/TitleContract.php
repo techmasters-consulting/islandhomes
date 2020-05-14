@@ -16,7 +16,7 @@ interface TitleContract extends RenderableContract
     /**
      * Set title.
      *
-     * @param  string $title
+     * @param string $title
      *
      * @return self
      */
@@ -32,7 +32,7 @@ interface TitleContract extends RenderableContract
     /**
      * Set site name.
      *
-     * @param  string $siteName
+     * @param string $siteName
      *
      * @return self
      */
@@ -48,7 +48,7 @@ interface TitleContract extends RenderableContract
     /**
      * Set title separator.
      *
-     * @param  string $separator
+     * @param string $separator
      *
      * @return self
      */
@@ -85,7 +85,7 @@ interface TitleContract extends RenderableContract
     /**
      * Set title max lenght.
      *
-     * @param  int $max
+     * @param int $max
      *
      * @return self
      */
@@ -94,9 +94,9 @@ interface TitleContract extends RenderableContract
     /**
      * Make a Title instance.
      *
-     * @param  string $title
-     * @param  string $siteName
-     * @param  string $separator
+     * @param string $title
+     * @param string $siteName
+     * @param string $separator
      *
      * @return self
      */

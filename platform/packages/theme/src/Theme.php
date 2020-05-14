@@ -235,11 +235,11 @@ class Theme implements ThemeContract
      * @return boolean
      * @throws FileNotFoundException
      */
-    public function exists(?string $theme)
+    public function exists(?string $theme): bool
     {
         $path = platform_path($this->path($theme)) . '/';
 
-        return is_dir($path);
+        return File::isDirectory($path);
     }
 
     /**
@@ -249,7 +249,7 @@ class Theme implements ThemeContract
      * @return string
      * @throws FileNotFoundException
      */
-    public function path(?string $forceThemeName = null)
+    public function path(?string $forceThemeName = null): string
     {
         $themeDir = $this->getConfig('themeDir');
 
@@ -302,7 +302,7 @@ class Theme implements ThemeContract
      * @param mixed $config
      * @return mixed
      */
-    protected function evaluateConfig(array $config)
+    protected function evaluateConfig(array $config): array
     {
         if (!isset($config['themes'][$this->theme])) {
             return $config;
@@ -358,10 +358,9 @@ class Theme implements ThemeContract
      * Get theme namespace.
      *
      * @param string $path
-     *
      * @return string
      */
-    public function getThemeNamespace(string $path = '')
+    public function getThemeNamespace(string $path = ''): string
     {
         // Namespace relate with the theme name.
         $namespace = static::$namespace . '.' . $this->getThemeName();
@@ -405,7 +404,7 @@ class Theme implements ThemeContract
      *
      * @return Breadcrumb
      */
-    public function breadcrumb()
+    public function breadcrumb(): Breadcrumb
     {
         return $this->breadcrumb;
     }
@@ -417,7 +416,7 @@ class Theme implements ThemeContract
      * @param string $value
      * @return Theme
      */
-    public function append(string $region, $value)
+    public function append(string $region, $value): self
     {
         return $this->appendOrPrepend($region, $value, 'append');
     }
@@ -430,7 +429,7 @@ class Theme implements ThemeContract
      * @param string $type
      * @return Theme
      */
-    protected function appendOrPrepend(string $region, $value, string $type = 'append')
+    protected function appendOrPrepend(string $region, $value, string $type = 'append'): self
     {
         // If region not found, create a new region.
         if (isset($this->regions[$region])) {
@@ -456,7 +455,7 @@ class Theme implements ThemeContract
      * @param string $value
      * @return Theme
      */
-    public function set(string $region, $value)
+    public function set(string $region, $value): self
     {
         // Content is reserve region for render sub-view.
         if ($region != 'content') {
@@ -473,7 +472,7 @@ class Theme implements ThemeContract
      * @param string $value
      * @return Theme
      */
-    public function prepend(string $region, $value)
+    public function prepend(string $region, $value): self
     {
         return $this->appendOrPrepend($region, $value, 'prepend');
     }
@@ -769,7 +768,7 @@ class Theme implements ThemeContract
      * @throws FileNotFoundException
      * @throws Exception
      */
-    public function of($view, $args = [])
+    public function of($view, $args = []): self
     {
         // Fire event global assets.
         $this->fire('asset', $this->asset);
@@ -785,6 +784,7 @@ class Theme implements ThemeContract
         $this->content = $view;
         // Set up a content regional.
         $this->regions['content'] = $content;
+
         return $this;
     }
 
@@ -796,7 +796,7 @@ class Theme implements ThemeContract
      *
      * @param string $view
      * @param array $args
-     * @return Theme
+     * @return Theme|void
      * @throws FileNotFoundException
      */
     public function scope($view, $args = [], $default = null)
@@ -859,9 +859,9 @@ class Theme implements ThemeContract
             dd('Theme is not support this view, please create file ' . theme_path() . '/' . str_replace($this->getThemeNamespace(),
                     $this->getThemeName(),
                     str_replace('::', '/', str_replace('.', '/', $path))) . '.blade.php" to render this page!');
-        } else {
-            abort(404);
         }
+
+        abort(404);
     }
 
     /**
@@ -918,7 +918,7 @@ class Theme implements ThemeContract
      * @param string $key
      * @return boolean
      */
-    public function hasContentArgument($key)
+    public function hasContentArgument($key): bool
     {
         return (bool)isset($this->arguments[$key]);
     }
@@ -932,7 +932,7 @@ class Theme implements ThemeContract
     public function location($realPath = false)
     {
         if ($this->view->exists($this->content)) {
-            return ($realPath) ? $this->view->getFinder()->find($this->content) : $this->content;
+            return $realPath ? $this->view->getFinder()->find($this->content) : $this->content;
         }
         return null;
     }
@@ -973,11 +973,11 @@ class Theme implements ThemeContract
         }
 
         $content->withHeaders([
-            'Author' => 'Sang Nguyen (sangnguyenplus@gmail.com)',
-            'Author-Team' => 'https://botble.com',
-            'CMS' => 'Botble CMS',
-            'CMS-Version' => get_cms_version(),
-            'Authorization-At' => setting('membership_authorization_at'),
+            'Author'            => 'Botble Technologies (contact@botble.com)',
+            'Author-Team'       => 'https://botble.com',
+            'CMS'               => 'Botble CMS',
+            'CMS-Version'       => get_cms_version(),
+            'Authorization-At'  => setting('membership_authorization_at'),
             'Activated-License' => !empty(setting('licensed_to')) ? 'Yes' : 'No',
         ]);
 
@@ -987,7 +987,7 @@ class Theme implements ThemeContract
     /**
      * @return string
      */
-    public function header()
+    public function header(): string
     {
         return $this->view->make('packages/theme::partials.header')->render();
     }
@@ -995,7 +995,7 @@ class Theme implements ThemeContract
     /**
      * @return string
      */
-    public function footer()
+    public function footer(): string
     {
         return $this->view->make('packages/theme::partials.footer')->render();
     }
@@ -1018,8 +1018,7 @@ class Theme implements ThemeContract
             return call_user_func_array([$this, $callable[0]], $parameters);
         }
 
-        trigger_error('Call to undefined method ' . __CLASS__ . '::' . $method . '()', E_USER_ERROR);
-        return false;
+        return trigger_error('Call to undefined method ' . __CLASS__ . '::' . $method . '()', E_USER_ERROR);
     }
 
     /**

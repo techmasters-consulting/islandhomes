@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'name' => 'Districts',
-    'create' => 'New District',
-    'edit' => 'Edit District',
-    'country' => 'Country',
+    'name'           => 'States',
+    'create'         => 'New state',
+    'edit'           => 'Edit state',
+    'country'        => 'Country',
     'select_country' => 'Select a country...',
 ];

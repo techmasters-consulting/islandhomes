@@ -2,18 +2,18 @@
 
     <link rel="stylesheet" href="{{ asset('vendor/core/plugins/cookie-consent/css/cookie-consent.css') }}">
     <div class="js-cookie-consent cookie-consent">
-
-    <span class="cookie-consent__message">
-        {{ theme_option('cookie_consent_message', 'Your experience on this site will be improved by allowing cookies.') }}
-    </span>
+        <span class="cookie-consent__message">
+            {{ theme_option('cookie_consent_message', 'Your experience on this site will be improved by allowing cookies.') }}
+        </span>
 
         <button class="js-cookie-consent-agree cookie-consent__agree">
             {{ theme_option('cookie_consent_button_text', 'Allow cookies') }}
         </button>
-
     </div>
 
     <script>
+
+        'use strict';
 
         window.botbleCookieConsent = (function () {
 
@@ -26,7 +26,7 @@
             }
 
             function cookieExists(name) {
-                return (document.cookie.split('; ').indexOf(name + '=' + COOKIE_VALUE) !== -1);
+                return document.cookie.split('; ').indexOf(name + '=' + COOKIE_VALUE) !== -1;
             }
 
             function hideCookieDialog() {

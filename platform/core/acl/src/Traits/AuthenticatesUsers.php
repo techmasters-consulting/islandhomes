@@ -45,7 +45,7 @@ trait AuthenticatesUsers
             $this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
 
-            return $this->sendLockoutResponse($request);
+            $this->sendLockoutResponse($request);
         }
 
         if ($this->attemptLogin($request)) {
@@ -57,7 +57,7 @@ trait AuthenticatesUsers
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
 
-        return $this->sendFailedLoginResponse($request);
+        return $this->sendFailedLoginResponse();
     }
 
     /**
@@ -77,6 +77,16 @@ trait AuthenticatesUsers
     }
 
     /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'email';
+    }
+
+    /**
      * Attempt to log the user into the application.
      *
      * @param Request $request
@@ -87,6 +97,16 @@ trait AuthenticatesUsers
         return $this->guard()->attempt(
             $this->credentials($request), $request->filled('remember')
         );
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard();
     }
 
     /**
@@ -104,7 +124,7 @@ trait AuthenticatesUsers
      * Send the response after the user was authenticated.
      *
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse|Response
      */
     protected function sendLoginResponse(Request $request)
     {
@@ -136,26 +156,15 @@ trait AuthenticatesUsers
     /**
      * Get the failed login response instance.
      *
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws ValidationException
      */
-    protected function sendFailedLoginResponse(Request $request)
+    protected function sendFailedLoginResponse()
     {
         throw ValidationException::withMessages([
             $this->username() => [trans('auth.failed')],
         ]);
-    }
-
-    /**
-     * Get the login username to be used by the controller.
-     *
-     * @return string
-     */
-    public function username()
-    {
-        return 'email';
     }
 
     /**
@@ -190,15 +199,5 @@ trait AuthenticatesUsers
     protected function loggedOut(Request $request)
     {
         //
-    }
-
-    /**
-     * Get the guard to be used during authentication.
-     *
-     * @return StatefulGuard
-     */
-    protected function guard()
-    {
-        return Auth::guard();
     }
 }

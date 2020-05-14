@@ -26,13 +26,13 @@ class SiteMapManager
         // by default cache is disabled
         $this->siteMap->setCache('public.sitemap', config('core.base.general.cache_siteMap'));
 
-        $this->siteMap->add(url('/'), '2020-25-02 10:00', '1.0', 'daily');
+        $this->siteMap->add(url('/'), '2020-05-05 10:00', '1.0', 'daily');
 
         AdminBar::setIsDisplay(false);
     }
 
     /**
-     * @param string$url
+     * @param string $url
      * @param string $date
      * @param string $priority
      * @param string $sequence

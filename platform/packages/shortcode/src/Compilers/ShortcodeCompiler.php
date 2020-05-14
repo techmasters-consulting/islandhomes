@@ -58,13 +58,13 @@ class ShortcodeCompiler
     /**
      * Add a new shortcode
      *
-     * @param $key
-     * @param $name
+     * @param string $key
+     * @param string $name
      * @param null $description
      * @param callable|string $callback
      * @since 2.1
      */
-    public function add($key, $name, $description = null, $callback)
+    public function add($key, $name, $description = null, $callback = null)
     {
         $this->registered[$key] = compact('key', 'name', 'description', 'callback');
     }
@@ -351,7 +351,6 @@ class ShortcodeCompiler
 
     /**
      * @return array
-     *
      */
     public function getRegistered()
     {
@@ -359,10 +358,10 @@ class ShortcodeCompiler
     }
 
     /**
-     * @param $key
-     * @param $html
+     * @param string $key
+     * @param string $html
      */
-    public function setAdminConfig($key, $html)
+    public function setAdminConfig(string $key, $html)
     {
         $this->registered[$key]['admin_config'] = $html;
     }

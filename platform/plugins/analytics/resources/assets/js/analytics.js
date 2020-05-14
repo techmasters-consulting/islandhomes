@@ -17,7 +17,7 @@ class PluginAnalytics {
             xkey: 'axis',
             ykeys: ['visitors', 'pageViews'],
             labels: [lang_visits, lang_page_views],
-            lineColors: ['#DD4D37', '#3c8dbc'],
+            lineColors: ['#dd4d37', '#3c8dbc'],
             hideHover: 'auto',
             parseTime: false
         });
@@ -43,7 +43,7 @@ class PluginAnalytics {
             series: {
                 regions: [{
                     values: visitorsData,
-                    scale: ['#C64333', '#dd4b39'],
+                    scale: ['#c64333', '#dd4b39'],
                     normalizeFunction: 'polynomial'
                 }]
             },
@@ -61,7 +61,7 @@ $(document).ready(() => {
         PluginAnalytics.initCharts();
     });
 
-    $(document).on('click', '#widget_analytics_general .portlet > .portlet-title .tools > a.reload', (event) => {
+    $(document).on('click', '#widget_analytics_general .portlet > .portlet-title .tools > a.reload', event => {
         event.preventDefault();
         BDashboard.loadWidget($('#widget_analytics_general').find('.widget-content'), route('analytics.general'), null, () => {
             PluginAnalytics.initCharts();

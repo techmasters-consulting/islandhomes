@@ -3,8 +3,6 @@
 namespace Botble\ACL\Tables;
 
 use Botble\ACL\Models\User;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Botble\ACL\Enums\UserStatusEnum;
 use Botble\ACL\Repositories\Interfaces\ActivationInterface;
@@ -16,7 +14,6 @@ use Exception;
 use Html;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Support\Arr;
-use Throwable;
 use Yajra\DataTables\DataTables;
 
 class UserTable extends TableAbstract
@@ -62,11 +59,7 @@ class UserTable extends TableAbstract
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return JsonResponse
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function ajax()
     {
@@ -80,7 +73,7 @@ class UserTable extends TableAbstract
                     return $item->username;
                 }
 
-                return anchor_link(route('user.profile.view', $item->id), $item->username);
+                return Html::link(route('user.profile.view', $item->id), $item->username);
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
@@ -126,11 +119,7 @@ class UserTable extends TableAbstract
     }
 
     /**
-     * Get the query object to be processed by the table.
-     *
-     * @return \Illuminate\Database\Query\Builder|Builder
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function query()
     {
@@ -152,9 +141,7 @@ class UserTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function columns()
     {
@@ -193,9 +180,7 @@ class UserTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws Throwable
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function buttons()
     {
@@ -205,7 +190,7 @@ class UserTable extends TableAbstract
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function htmlDrawCallbackFunction(): ?string
     {
@@ -213,8 +198,7 @@ class UserTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function bulkActions(): array
     {
@@ -222,7 +206,7 @@ class UserTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getFilters(): array
     {
@@ -233,7 +217,7 @@ class UserTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getBulkChanges(): array
     {
@@ -262,7 +246,7 @@ class UserTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getOperationsHeading()
     {
@@ -280,11 +264,7 @@ class UserTable extends TableAbstract
     }
 
     /**
-     * @param array $ids
-     * @param string $inputKey
-     * @param string|null $inputValue
-     * @return bool
-     * @throws Exception
+     * {@inheritDoc}
      */
     public function saveBulkChanges(array $ids, string $inputKey, ?string $inputValue): bool
     {

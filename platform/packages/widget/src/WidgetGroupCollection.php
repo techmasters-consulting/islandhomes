@@ -32,17 +32,16 @@ class WidgetGroupCollection
     /**
      * Get the widget group object.
      *
-     * @param $sidebar_id
-     *
+     * @param string $sidebarId
      * @return WidgetGroup
      */
-    public function group($sidebar_id)
+    public function group($sidebarId)
     {
-        if (isset($this->groups[$sidebar_id])) {
-            return $this->groups[$sidebar_id];
+        if (isset($this->groups[$sidebarId])) {
+            return $this->groups[$sidebarId];
         }
-        $this->groups[$sidebar_id] = new WidgetGroup(['id' => $sidebar_id, 'name' => $sidebar_id], $this->app);
-        return $this->groups[$sidebar_id];
+        $this->groups[$sidebarId] = new WidgetGroup(['id' => $sidebarId, 'name' => $sidebarId], $this->app);
+        return $this->groups[$sidebarId];
     }
 
     /**
@@ -63,13 +62,13 @@ class WidgetGroupCollection
     }
 
     /**
-     * @param $group_id
+     * @param string $groupId
      * @return $this
      */
-    public function removeGroup($group_id)
+    public function removeGroup($groupId)
     {
-        if (isset($this->groups[$group_id])) {
-            unset($this->groups[$group_id]);
+        if (isset($this->groups[$groupId])) {
+            unset($this->groups[$groupId]);
         }
         return $this;
     }

@@ -10,7 +10,7 @@ class TagRepository extends RepositoriesAbstract implements TagInterface
 {
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getDataSiteMap()
     {
@@ -24,7 +24,7 @@ class TagRepository extends RepositoriesAbstract implements TagInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getPopularTags($limit)
     {
@@ -38,7 +38,7 @@ class TagRepository extends RepositoriesAbstract implements TagInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAllTags($active = true)
     {

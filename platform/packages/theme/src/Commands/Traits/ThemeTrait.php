@@ -11,22 +11,31 @@ trait ThemeTrait
      */
     protected function getTheme()
     {
-        return strtolower($this->argument('name'));
+        if ($this->hasArgument('name')) {
+            return strtolower($this->argument('name'));
+        }
+
+        return strtolower($this->option('name'));
     }
 
     /**
      * Get root writable path.
      *
-     * @param string $path
+     * @param string|null $path
+     * @param string|null $theme
      * @return string
      */
-    protected function getPath($path)
+    protected function getPath($path = null, $theme = null)
     {
         $rootPath = theme_path();
         if ($this->option('path')) {
             $rootPath = $this->option('path');
         }
 
-        return rtrim($rootPath, '/') . '/' . rtrim(ltrim(strtolower($this->getTheme()), '/'), '/') . '/' . $path;
+        if (!$theme) {
+            $theme = $this->getTheme();
+        }
+
+        return rtrim($rootPath, '/') . '/' . rtrim(ltrim(strtolower($theme), '/'), '/') . '/' . $path;
     }
 }

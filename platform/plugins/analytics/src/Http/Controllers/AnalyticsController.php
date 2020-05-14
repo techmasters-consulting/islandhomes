@@ -17,7 +17,6 @@ class AnalyticsController extends BaseController
     /**
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      * @throws Throwable
      */
     public function getGeneral(BaseHttpResponse $response)
@@ -63,22 +62,21 @@ class AnalyticsController extends BaseController
 
             return $response->setData(view('plugins/analytics::widgets.general',
                 compact('stats', 'country_stats', 'total'))->render());
-        } catch (InvalidConfiguration $ex) {
+        } catch (InvalidConfiguration $exception) {
             return $response
                 ->setError()
                 ->setMessage(trans('plugins/analytics::analytics.wrong_configuration',
                     ['version' => get_cms_version()]));
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage($ex->getMessage());
+                ->setMessage($exception->getMessage());
         }
     }
 
     /**
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      * @throws Throwable
      */
     public function getTopVisitPages(BaseHttpResponse $response)
@@ -91,22 +89,21 @@ class AnalyticsController extends BaseController
             $pages = Analytics::fetchMostVisitedPages($period, 10);
 
             return $response->setData(view('plugins/analytics::widgets.page', compact('pages'))->render());
-        } catch (InvalidConfiguration $ex) {
+        } catch (InvalidConfiguration $exception) {
             return $response
                 ->setError()
                 ->setMessage(trans('plugins/analytics::analytics.wrong_configuration',
                     ['version' => get_cms_version()]));
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage($ex->getMessage());
+                ->setMessage($exception->getMessage());
         }
     }
 
     /**
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      * @throws Throwable
      */
     public function getTopBrowser(BaseHttpResponse $response)
@@ -119,22 +116,21 @@ class AnalyticsController extends BaseController
             $browsers = Analytics::fetchTopBrowsers($period, 10);
 
             return $response->setData(view('plugins/analytics::widgets.browser', compact('browsers'))->render());
-        } catch (InvalidConfiguration $ex) {
+        } catch (InvalidConfiguration $exception) {
             return $response
                 ->setError()
                 ->setMessage(trans('plugins/analytics::analytics.wrong_configuration',
                     ['version' => get_cms_version()]));
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage($ex->getMessage());
+                ->setMessage($exception->getMessage());
         }
     }
 
     /**
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     *
      * @throws Throwable
      */
     public function getTopReferrer(BaseHttpResponse $response)
@@ -147,15 +143,15 @@ class AnalyticsController extends BaseController
             $referrers = Analytics::fetchTopReferrers($period, 10);
 
             return $response->setData(view('plugins/analytics::widgets.referrer', compact('referrers'))->render());
-        } catch (InvalidConfiguration $ex) {
+        } catch (InvalidConfiguration $exception) {
             return $response
                 ->setError()
                 ->setMessage(trans('plugins/analytics::analytics.wrong_configuration',
                     ['version' => get_cms_version()]));
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage($ex->getMessage());
+                ->setMessage($exception->getMessage());
         }
     }
 }

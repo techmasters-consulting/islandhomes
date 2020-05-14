@@ -2,7 +2,7 @@
 
 if (!function_exists('register_widget')) {
     /**
-     * @param $widgetId $widgetId
+     * @param string $widgetId
      */
     function register_widget($widgetId)
     {

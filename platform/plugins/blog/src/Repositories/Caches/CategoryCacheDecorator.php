@@ -8,7 +8,7 @@ use Botble\Blog\Repositories\Interfaces\CategoryInterface;
 class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getDataSiteMap()
     {
@@ -16,7 +16,7 @@ class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFeaturedCategories($limit)
     {
@@ -24,15 +24,15 @@ class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function getAllCategories(array $condition = [])
+    public function getAllCategories(array $condition = [], array $with = [])
     {
         return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getCategoryById($id)
     {
@@ -40,7 +40,7 @@ class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getCategories(array $select, array $orderBy)
     {
@@ -48,7 +48,7 @@ class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAllRelatedChildrenIds($id)
     {
@@ -56,7 +56,7 @@ class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAllCategoriesWithChildren(array $condition = [], array $with = [], array $select = ['*'])
     {
@@ -64,7 +64,7 @@ class CategoryCacheDecorator extends CacheAbstractDecorator implements CategoryI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFilters($model)
     {

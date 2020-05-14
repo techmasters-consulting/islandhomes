@@ -16,7 +16,6 @@ use Event;
 use File;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Routing\Router;
-use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 
 class ThemeServiceProvider extends ServiceProvider
@@ -97,22 +96,19 @@ class ThemeServiceProvider extends ServiceProvider
             admin_bar()->registerLink('Theme', route('theme.index'), 'appearance');
         });
 
-        if (Helper::isConnectedDatabase()) {
-            $this->app->booted(function () {
-                $file = config('packages.theme.general.themeDir') . '/' . setting('theme') . '/css/style.integration.css';
+        $this->app->booted(function () {
+            $theme = setting('theme');
+            if ($theme) {
+                $file = 'themes/' . $theme . '/css/style.integration.css';
                 if (File::exists(public_path($file))) {
                     ThemeFacade::getFacadeRoot()
                         ->asset()
                         ->container('after_header')
                         ->add('theme-style-integration-css', $file);
                 }
+            }
+        });
 
-                if (!setting('theme')) {
-                    setting()->set('theme', Arr::first(scan_folder(theme_path())));
-                }
-            });
-
-            $this->app->register(ThemeManagementServiceProvider::class);
-        }
+        $this->app->register(ThemeManagementServiceProvider::class);
     }
 }

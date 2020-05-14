@@ -50,9 +50,9 @@ class Webmasters implements WebmastersContract
     /**
      * Make Webmaster instance.
      *
-     * @param  array $webmasters
+     * @param array $webmasters
      *
-     * @return \Botble\SeoHelper\Entities\Webmasters
+     * @return Webmasters
      */
     public static function make(array $webmasters = [])
     {
@@ -62,10 +62,10 @@ class Webmasters implements WebmastersContract
     /**
      * Add a webmaster to collection.
      *
-     * @param  string $webmaster
-     * @param  string $content
+     * @param string $webmaster
+     * @param string $content
      *
-     * @return \Botble\SeoHelper\Entities\Webmasters
+     * @return Webmasters
      */
     public function add($webmaster, $content)
     {
@@ -79,7 +79,7 @@ class Webmasters implements WebmastersContract
     /**
      * Reset the webmaster collection.
      *
-     * @return \Botble\SeoHelper\Entities\Webmasters
+     * @return Webmasters
      */
     public function reset()
     {
@@ -111,7 +111,7 @@ class Webmasters implements WebmastersContract
     /**
      * Check if the webmaster is supported.
      *
-     * @param  string $webmaster
+     * @param string $webmaster
      *
      * @return bool
      */

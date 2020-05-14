@@ -27,7 +27,7 @@ class Botble {
 
         if (options.target) { // element blocking
             let el = $(options.target);
-            if (el.height() <= ($(window).height())) {
+            if (el.height() <= $(window).height()) {
                 options.cenrerY = true;
             }
             el.block({
@@ -259,7 +259,7 @@ class Botble {
             });
         };
 
-        $(document).on('click', 'input[data-counter], textarea[data-counter]', (event) => {
+        $(document).on('click', 'input[data-counter], textarea[data-counter]', event =>  {
             $(event.currentTarget).charCounter($(event.currentTarget).data('counter'), {
                 container: '<small></small>'
             });
@@ -275,7 +275,7 @@ class Botble {
         navigation.find('li').has('ul').children('a').parent('li').addClass('has-ul');
 
 
-        $(document).on('click', '.sidebar-toggle.d-none', (event) => {
+        $(document).on('click', '.sidebar-toggle.d-none', event =>  {
             event.preventDefault();
 
             body.toggleClass('sidebar-narrow');
@@ -589,13 +589,13 @@ class Botble {
                 }
             });
 
-            $(document).on('click', '.btn_remove_image', (event) => {
+            $(document).on('click', '.btn_remove_image', event =>  {
                 event.preventDefault();
                 $(event.currentTarget).closest('.image-box').find('.preview-image-wrapper').hide();
                 $(event.currentTarget).closest('.image-box').find('.image-data').val('');
             });
 
-            $(document).on('click', '.btn_remove_attachment', (event) => {
+            $(document).on('click', '.btn_remove_attachment', event =>  {
                 event.preventDefault();
                 $(event.currentTarget).closest('.attachment-wrapper').find('.attachment-details a').remove();
                 $(event.currentTarget).closest('.attachment-wrapper').find('.attachment-url').val('');
@@ -621,7 +621,7 @@ class Botble {
         // handle portlet remove
 
         // handle portlet fullscreen
-        $('body').on('click', '.portlet > .portlet-title .fullscreen', (event) => {
+        $('body').on('click', '.portlet > .portlet-title .fullscreen', event =>  {
             event.preventDefault();
             let _self = $(event.currentTarget);
             let portlet = _self.closest('.portlet');
@@ -643,7 +643,7 @@ class Botble {
             }
         });
 
-        $('body').on('click', '.portlet > .portlet-title > .tools > .collapse, .portlet .portlet-title > .tools > .expand', (event) => {
+        $('body').on('click', '.portlet > .portlet-title > .tools > .collapse, .portlet .portlet-title > .tools > .expand', event =>  {
             event.preventDefault();
             let _self = $(event.currentTarget);
             let el = _self.closest('.portlet').children('.portlet-body');
@@ -668,7 +668,7 @@ class Botble {
             lineWrapping: true,
         });
 
-        $('.handle-tool-drag').mousedown((event) => {
+        $('.handle-tool-drag').mousedown(event =>  {
             let _self = $(event.currentTarget);
             _self.attr('data-start_h', _self.parent().find('.CodeMirror').height()).attr('data-start_y', event.pageY);
             $('body').attr('data-dragtool', _self.attr('id')).on('mousemove', Botble.onDragTool);

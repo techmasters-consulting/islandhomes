@@ -3,6 +3,7 @@
 namespace Botble\Backup\Supports;
 
 use Exception;
+use File;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use ZipArchive;
@@ -37,13 +38,13 @@ class Backup
      * @return array
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function createBackupFolder($name, $description = null)
+    public function createBackupFolder($name, $description = null): array
     {
-        $backupFolder = $this->createFolder(storage_path('app/backup'));
+        $backupFolder = $this->createFolder($this->getBackupPath());
         $now = now(config('app.timezone'))->format('Y-m-d-H-i-s');
         $this->folder = $this->createFolder($backupFolder . DIRECTORY_SEPARATOR . $now);
 
-        $file = storage_path('app/backup/backup.json');
+        $file = $this->getBackupPath('backup.json');
         $data = [];
 
         if (file_exists($file)) {
@@ -51,9 +52,9 @@ class Backup
         }
 
         $data[$now] = [
-            'name' => $name,
+            'name'        => $name,
             'description' => $description,
-            'date' => now(config('app.timezone'))->toDateTimeString(),
+            'date'        => now(config('app.timezone'))->toDateTimeString(),
         ];
         save_file_data($file, $data);
 
@@ -67,7 +68,7 @@ class Backup
      * @param string $folder
      * @return string
      */
-    public function createFolder($folder)
+    public function createFolder($folder): string
     {
         if (!$this->file->isDirectory($folder)) {
             $this->file->makeDirectory($folder);
@@ -78,12 +79,21 @@ class Backup
     }
 
     /**
+     * @param null $path
+     * @return string
+     */
+    public function getBackupPath($path = null): string
+    {
+        return storage_path('app/backup') . ($path ? '/' . $path : null);
+    }
+
+    /**
      * @return array|bool|mixed
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function getBackupList()
     {
-        $file = storage_path('app/backup/backup.json');
+        $file = $this->getBackupPath('backup.json');
         if (file_exists($file)) {
             return get_file_data($file);
         }
@@ -95,7 +105,7 @@ class Backup
      * @return bool
      * @throws Exception
      */
-    public function backupDb()
+    public function backupDb(): bool
     {
         $file = 'database-' . now(config('app.timezone'))->format('Y-m-d-H-i-s');
         $path = $this->folder . DIRECTORY_SEPARATOR . $file;
@@ -130,7 +140,7 @@ class Backup
      * @param string $name
      * @throws Exception
      */
-    public function compressFileToZip($path, $name)
+    public function compressFileToZip($path, $name): void
     {
         $filename = $path . '.zip';
 
@@ -151,7 +161,7 @@ class Backup
      * @param string $file
      * @throws Exception
      */
-    public function deleteFile($file)
+    protected function deleteFile($file): void
     {
         if ($this->file->exists($file)) {
             $this->file->delete($file);
@@ -161,10 +171,9 @@ class Backup
     /**
      * @param string $source
      * @return bool
-     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function backupFolder($source)
+    public function backupFolder($source): bool
     {
         $file = $this->folder . DIRECTORY_SEPARATOR . 'storage-' . now(config('app.timezone'))->format('Y-m-d-H-i-s') . '.zip';
 
@@ -178,10 +187,10 @@ class Backup
         } else {
             $zip = new Zip($file);
         }
-        $arr_src = explode(DIRECTORY_SEPARATOR, $source);
-        $path_length = strlen(implode(DIRECTORY_SEPARATOR, $arr_src) . DIRECTORY_SEPARATOR);
+        $arrSource = explode(DIRECTORY_SEPARATOR, $source);
+        $pathLength = strlen(implode(DIRECTORY_SEPARATOR, $arrSource) . DIRECTORY_SEPARATOR);
         // add each file in the file list to the archive
-        $this->recurseZip($source, $zip, $path_length);
+        $this->recurseZip($source, $zip, $pathLength);
         if (class_exists('ZipArchive', false)) {
             $zip->close();
         }
@@ -196,20 +205,21 @@ class Backup
      * @param string $path
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function deleteFolderBackup($path)
+    public function deleteFolderBackup($path): void
     {
-        if ($this->file->isDirectory(storage_path('app/backup')) && $this->file->isDirectory($path)) {
+        $backupFolder = $this->getBackupPath();
+        if ($this->file->isDirectory($backupFolder) && $this->file->isDirectory($path)) {
             foreach (scan_folder($path) as $item) {
                 $this->file->delete($path . DIRECTORY_SEPARATOR . $item);
             }
             $this->file->deleteDirectory($path);
 
-            if (empty($this->file->directories(storage_path('app/backup')))) {
-                $this->file->deleteDirectory(storage_path('app/backup'));
+            if (empty($this->file->directories($backupFolder))) {
+                $this->file->deleteDirectory($backupFolder);
             }
         }
 
-        $file = storage_path('app/backup/backup.json');
+        $file = $this->getBackupPath('backup.json');
         $data = [];
         if (file_exists($file)) {
             $data = get_file_data($file);
@@ -225,7 +235,7 @@ class Backup
      * @param ZipArchive $zip
      * @param string $pathLength
      */
-    public function recurseZip($src, &$zip, $pathLength)
+    public function recurseZip($src, &$zip, $pathLength): void
     {
         foreach (scan_folder($src) as $file) {
             if ($this->file->isDirectory($src . DIRECTORY_SEPARATOR . $file)) {
@@ -254,9 +264,9 @@ class Backup
      * @return bool
      * @throws Exception
      */
-    public function restoreDb($file, $path)
+    public function restoreDatabase($file, $path): bool
     {
-        $this->restore($file, $path);
+        $this->extractFileTo($file, $path);
         $file = $path . DIRECTORY_SEPARATOR . $this->file->name($file) . '.sql';
 
         if (!file_exists($file)) {
@@ -278,7 +288,7 @@ class Backup
      * @param string $pathTo
      * @return bool
      */
-    public function restore($fileName, $pathTo)
+    public function extractFileTo(string $fileName, string $pathTo): bool
     {
         if (class_exists('ZipArchive', false)) {
             $zip = new ZipArchive;
@@ -287,12 +297,29 @@ class Backup
                 $zip->close();
                 return true;
             }
-        } else {
-            $archive = new Zip($fileName);
-            $archive->extract(PCLZIP_OPT_PATH, $pathTo, PCLZIP_OPT_REMOVE_ALL_PATH);
-            return true;
+            return false;
         }
 
-        return false;
+        $archive = new Zip($fileName);
+        $archive->extract(PCLZIP_OPT_PATH, $pathTo, PCLZIP_OPT_REMOVE_ALL_PATH);
+
+        return true;
+    }
+
+    /**
+     * @param string $directory
+     * @return bool
+     */
+    public function cleanDirectory(string $directory): bool
+    {
+        foreach (File::glob(rtrim($directory, '/') . '/*') as $item) {
+            if (File::isDirectory($item)) {
+                File::deleteDirectory($item);
+            } elseif (!in_array(File::basename($item), ['.htaccess', '.gitignore'])) {
+                File::delete($item);
+            }
+        }
+
+        return true;
     }
 }

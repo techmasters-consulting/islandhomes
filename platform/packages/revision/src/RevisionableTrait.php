@@ -60,7 +60,6 @@ trait RevisionableTrait
      * Create the event listeners for the saving and saved events
      * This lets us save revisions whenever a save is made, no matter the
      * http method.
-     *
      */
     public static function bootRevisionableTrait()
     {
@@ -80,14 +79,6 @@ trait RevisionableTrait
             $model->preSave();
             $model->postDelete();
         });
-    }
-
-    /**
-     * @return mixed
-     */
-    public function revisionHistory()
-    {
-        return $this->morphMany(Revision::class, 'revisionable');
     }
 
     /**
@@ -146,7 +137,6 @@ trait RevisionableTrait
         return true;
     }
 
-
     /**
      * Called after a model is successfully saved.
      *
@@ -199,6 +189,81 @@ trait RevisionableTrait
                 event('revisionable.saved', ['model' => $this, 'revisions' => $revisions]);
             }
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function revisionHistory()
+    {
+        return $this->morphMany(Revision::class, 'revisionable');
+    }
+
+    /**
+     * Get all of the changes that have been made, that are also supposed
+     * to have their changes recorded
+     *
+     * @return array fields with new data, that should be recorded
+     */
+    protected function changedRevisionableFields()
+    {
+        $changesToRecord = [];
+        foreach ($this->dirtyData as $key => $value) {
+            // check that the field is revisionable, and double check
+            // that it's actually new data in case dirty is, well, clean
+            if ($this->isRevisionable($key) && !is_array($value)) {
+                if (!isset($this->originalData[$key]) || $this->originalData[$key] != $this->updatedData[$key]) {
+                    $changesToRecord[$key] = $value;
+                }
+            } else {
+                // we don't need these any more, and they could
+                // contain a lot of data, so lets trash them.
+                unset($this->updatedData[$key]);
+                unset($this->originalData[$key]);
+            }
+        }
+
+        return $changesToRecord;
+    }
+
+    /**
+     * Check if this field should have a revision kept
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    protected function isRevisionable($key)
+    {
+
+        // If the field is explicitly revisionable, then return true.
+        // If it's explicitly not revisionable, return false.
+        // Otherwise, if neither condition is met, only return true if
+        // we aren't specifying revisionable fields.
+        if (isset($this->doKeep) && in_array($key, $this->doKeep)) {
+            return true;
+        }
+        if (isset($this->dontKeep) && in_array($key, $this->dontKeep)) {
+            return false;
+        }
+
+        return empty($this->doKeep);
+    }
+
+    /**
+     * Attempt to find the user id of the currently logged in user
+     **/
+    public function getSystemUserId()
+    {
+        try {
+            if (Auth::check()) {
+                return Auth::user()->getAuthIdentifier();
+            }
+        } catch (Exception $exception) {
+            return null;
+        }
+
+        return null;
     }
 
     /**
@@ -258,73 +323,6 @@ trait RevisionableTrait
             DB::table($revision->getTable())->insert($revisions);
             event('revisionable.deleted', ['model' => $this, 'revisions' => $revisions]);
         }
-    }
-
-    /**
-     * Attempt to find the user id of the currently logged in user
-     **/
-    public function getSystemUserId()
-    {
-        try {
-            if (Auth::check()) {
-                return Auth::user()->getAuthIdentifier();
-            }
-        } catch (Exception $e) {
-            return null;
-        }
-
-        return null;
-    }
-
-    /**
-     * Get all of the changes that have been made, that are also supposed
-     * to have their changes recorded
-     *
-     * @return array fields with new data, that should be recorded
-     */
-    protected function changedRevisionableFields()
-    {
-        $changes_to_record = [];
-        foreach ($this->dirtyData as $key => $value) {
-            // check that the field is revisionable, and double check
-            // that it's actually new data in case dirty is, well, clean
-            if ($this->isRevisionable($key) && !is_array($value)) {
-                if (!isset($this->originalData[$key]) || $this->originalData[$key] != $this->updatedData[$key]) {
-                    $changes_to_record[$key] = $value;
-                }
-            } else {
-                // we don't need these any more, and they could
-                // contain a lot of data, so lets trash them.
-                unset($this->updatedData[$key]);
-                unset($this->originalData[$key]);
-            }
-        }
-
-        return $changes_to_record;
-    }
-
-    /**
-     * Check if this field should have a revision kept
-     *
-     * @param string $key
-     *
-     * @return bool
-     */
-    protected function isRevisionable($key)
-    {
-
-        // If the field is explicitly revisionable, then return true.
-        // If it's explicitly not revisionable, return false.
-        // Otherwise, if neither condition is met, only return true if
-        // we aren't specifying revisionable fields.
-        if (isset($this->doKeep) && in_array($key, $this->doKeep)) {
-            return true;
-        }
-        if (isset($this->dontKeep) && in_array($key, $this->dontKeep)) {
-            return false;
-        }
-
-        return empty($this->doKeep);
     }
 
     /**
@@ -419,8 +417,8 @@ trait RevisionableTrait
             $this->dontKeepRevisionOf = [];
         }
         if (is_array($field)) {
-            foreach ($field as $one_field) {
-                $this->disableRevisionField($one_field);
+            foreach ($field as $oneField) {
+                $this->disableRevisionField($oneField);
             }
         } else {
             $dont = $this->dontKeepRevisionOf;

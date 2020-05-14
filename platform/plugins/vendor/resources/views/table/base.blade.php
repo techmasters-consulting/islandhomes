@@ -42,6 +42,16 @@
     </div>
 </div>
 @include('core/table::modal')
+@include('core/table::partials.modal-item', [
+    'type' => 'info',
+    'name' => 'modal-confirm-renew',
+    'title' => __('Renew confirmation'),
+    'content' => __('Are you sure you want to renew this property, it will takes 1 credit from your credits'),
+    'action_name' => __('Yes'),
+    'action_button_attributes' => [
+        'class' => 'button-confirm-renew',
+    ],
+])
 @endsection
 @push('scripts')
     {!! $dataTable->scripts() !!}

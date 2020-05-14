@@ -6,13 +6,11 @@ use Botble\Base\Forms\FormAbstract;
 use Botble\Base\Models\BaseModel;
 use Botble\Theme\Http\Requests\CustomCssRequest;
 use File;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 class CustomCSSForm extends FormAbstract
 {
     /**
-     * @return mixed|void
-     * @throws FileNotFoundException
+     * {@inheritDoc}
      */
     public function buildForm()
     {

@@ -12,8 +12,10 @@ class CreatePaymentTables extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('payments');
+
         Schema::create('payments', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->double('amount')->unsigned();
             $table->string('currency', 120);
             $table->integer('user_id')->default(0)->unsigned();

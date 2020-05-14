@@ -2,12 +2,12 @@
 
 namespace Botble\Payment\Providers;
 
-use Assets;
 use Botble\Base\Supports\Helper;
 use Botble\Base\Traits\LoadAndPublishDataTrait;
+use Botble\Payment\Enums\PaymentMethodEnum;
 use Botble\Payment\Models\Payment;
-use Botble\Payment\Services\Gateways\PayPal\PayPalPaymentService;
-use Botble\Payment\Services\Gateways\Stripe\StripePaymentService;
+use Botble\Payment\Services\Gateways\PayPalPaymentService;
+use Botble\Payment\Services\Gateways\StripePaymentService;
 use Event;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
@@ -71,32 +71,56 @@ class PaymentServiceProvider extends ServiceProvider
 
         add_shortcode('payment-form', 'Payment form', 'Payment form', function ($shortCode) {
             $data = [
-                'name'      => $shortCode->name,
-                'currency'  => $shortCode->currency,
-                'amount'    => $shortCode->amount,
-                'returnUrl' => $shortCode->return_url,
+                'name'        => $shortCode->name,
+                'currency'    => $shortCode->currency,
+                'amount'      => $shortCode->amount,
+                'returnUrl'   => $shortCode->return_url,
+                'callbackUrl' => $shortCode->callback_url,
             ];
 
-            return view('plugins/payment::partials.form', $data);
+            $view = 'plugins/payment::partials.form';
+
+            if ($shortCode->view && view()->exists($shortCode->view)) {
+                $view = $shortCode->view;
+            }
+
+            return view($view, $data);
         });
+
+        shortcode()->setAdminConfig('payment-form', view('plugins/payment::partials.shortcode-admin-config')->render());
 
         add_shortcode('payment-info', 'Payment info', 'Payment info', function ($shortCode) {
             $payment = app(PaymentInterface::class)->getFirstBy(['charge_id' => $shortCode->charge_id]);
 
+            if (!$payment) {
+                return __('Payment not found!');
+            }
+
             $detail = null;
             switch ($payment->payment_channel) {
-                case 'paypal':
+                case PaymentMethodEnum::PAYPAL:
                     $paymentDetail = (new PayPalPaymentService)->getPaymentDetails($payment->charge_id);
                     $detail = view('plugins/payment::paypal.detail', ['payment' => $paymentDetail])->render();
                     break;
-                case 'stripe':
+                case PaymentMethodEnum::STRIPE:
                     $paymentDetail = (new StripePaymentService)->getPaymentDetails($payment->charge_id);
                     $detail = view('plugins/payment::stripe.detail', ['payment' => $paymentDetail])->render();
                     break;
-
+                case PaymentMethodEnum::COD:
+                case PaymentMethodEnum::BANK_TRANSFER:
+                    break;
+                default:
+                    $detail = apply_filters(PAYMENT_FILTER_PAYMENT_INFO_DETAIL, null, $payment);
+                    break;
             }
 
-            return view('plugins/payment::partials.info', compact('payment', 'detail'));
+            $view = 'plugins/payment::partials.info';
+
+            if ($shortCode->view && view()->exists($shortCode->view)) {
+                $view = $shortCode->view;
+            }
+
+            return view($view, compact('payment', 'detail'));
         });
 
     }

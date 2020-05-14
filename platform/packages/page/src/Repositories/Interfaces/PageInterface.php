@@ -13,12 +13,12 @@ interface PageInterface extends RepositoryInterface
     public function getDataSiteMap();
 
     /**
-     * @param $limit
+     * @param int $limit
      */
     public function getFeaturedPages($limit);
 
     /**
-     * @param $array
+     * @param array $array
      * @param array $select
      * @return mixed
      */

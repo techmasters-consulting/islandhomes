@@ -2,6 +2,7 @@
 
 namespace Botble\SeoHelper\Entities\Twitter;
 
+use Botble\SeoHelper\Contracts\Entities\MetaCollectionContract;
 use Botble\SeoHelper\Contracts\Entities\TwitterCardContract;
 use Botble\SeoHelper\Exceptions\InvalidTwitterCardException;
 use Illuminate\Support\Str;
@@ -19,7 +20,7 @@ class Card implements TwitterCardContract
     /**
      * Card meta collection.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\MetaCollectionContract
+     * @var MetaCollectionContract
      */
     protected $meta;
 
@@ -41,9 +42,9 @@ class Card implements TwitterCardContract
     /**
      * Set the card type.
      *
-     * @param  string $type
+     * @param string $type
      *
-     * @return \Botble\SeoHelper\Entities\Twitter\Card
+     * @return Card
      * @throws InvalidTwitterCardException
      */
     public function setType($type)
@@ -61,9 +62,9 @@ class Card implements TwitterCardContract
     /**
      * Set card site.
      *
-     * @param  string $site
+     * @param string $site
      *
-     * @return \Botble\SeoHelper\Entities\Twitter\Card
+     * @return Card
      */
     public function setSite($site)
     {
@@ -79,9 +80,9 @@ class Card implements TwitterCardContract
     /**
      * Set card title.
      *
-     * @param  string $title
+     * @param string $title
      *
-     * @return \Botble\SeoHelper\Entities\Twitter\Card
+     * @return Card
      */
     public function setTitle($title)
     {
@@ -91,9 +92,9 @@ class Card implements TwitterCardContract
     /**
      * Set card description.
      *
-     * @param  string $description
+     * @param string $description
      *
-     * @return \Botble\SeoHelper\Entities\Twitter\Card
+     * @return Card
      */
     public function setDescription($description)
     {
@@ -103,9 +104,9 @@ class Card implements TwitterCardContract
     /**
      * Add image to the card.
      *
-     * @param  string $url
+     * @param string $url
      *
-     * @return \Botble\SeoHelper\Entities\Twitter\Card
+     * @return Card
      */
     public function addImage($url)
     {
@@ -119,9 +120,9 @@ class Card implements TwitterCardContract
     /**
      * Add many meta to the card.
      *
-     * @param  array $meta
+     * @param array $meta
      *
-     * @return \Botble\SeoHelper\Entities\Twitter\Card
+     * @return Card
      */
     public function addMetas(array $meta)
     {
@@ -133,10 +134,10 @@ class Card implements TwitterCardContract
     /**
      * Add a meta to the card.
      *
-     * @param  string $name
-     * @param  string $content
+     * @param string $name
+     * @param string $content
      *
-     * @return \Botble\SeoHelper\Entities\Twitter\Card
+     * @return Card
      */
     public function addMeta($name, $content)
     {
@@ -219,9 +220,9 @@ class Card implements TwitterCardContract
     /**
      * Check the card type.
      *
-     * @param  string $type
+     * @param string $type
      *
-     * @throws \Botble\SeoHelper\Exceptions\InvalidTwitterCardException
+     * @throws InvalidTwitterCardException
      */
     protected function checkType(&$type)
     {
@@ -241,7 +242,7 @@ class Card implements TwitterCardContract
     /**
      * Check the card site.
      *
-     * @param  string $site
+     * @param string $site
      */
     protected function checkSite(&$site)
     {
@@ -251,7 +252,7 @@ class Card implements TwitterCardContract
     /**
      * Prepare username.
      *
-     * @param  string $username
+     * @param string $username
      *
      * @return string
      */

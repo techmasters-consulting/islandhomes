@@ -7,8 +7,6 @@ use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Location\Http\Requests\CityRequest;
 use Botble\Location\Models\City;
 use Botble\Location\Repositories\Interfaces\CountryInterface;
-use Botble\Location\Repositories\Interfaces\StateInterface;
-use Throwable;
 
 class CityForm extends FormAbstract
 {
@@ -19,31 +17,22 @@ class CityForm extends FormAbstract
     protected $countryRepository;
 
     /**
-     * @var StateInterface
-     */
-    protected $stateRepository;
-
-    /**
-     * StateForm constructor.
+     * CityForm constructor.
      * @param CountryInterface $countryRepository
-     * @param StateInterface $stateRepository
      */
-    public function __construct(CountryInterface $countryRepository, StateInterface $stateRepository)
+    public function __construct(CountryInterface $countryRepository)
     {
         parent::__construct();
 
         $this->countryRepository = $countryRepository;
-        $this->stateRepository = $stateRepository;
     }
 
     /**
-     * @return mixed|void
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function buildForm()
     {
         $countries = $this->countryRepository->pluck('countries.name', 'countries.id');
-        $states = $this->stateRepository->pluck('states.name', 'states.id');
 
         $this
             ->setupModel(new City)
@@ -57,21 +46,19 @@ class CityForm extends FormAbstract
                     'data-counter' => 120,
                 ],
             ])
-            ->add('slug', 'text', [
-                'label'      => trans('plugins/location::city.slug'),
-                'label_attr' => ['class' => 'control-label required'],
-                'attr'       => [
-                    'placeholder'  => trans('plugins/location::city.state'),
-                    'data-counter' => 120,
-                ],
-            ])
-            ->add('state_id', 'customSelect', [
+            ->add('state_id', 'autocomplete', [
                 'label'      => trans('plugins/location::city.state'),
                 'label_attr' => ['class' => 'control-label'],
                 'attr'       => [
-                    'class' => 'form-control select-search-full',
+                    'id'       => 'state_id',
+                    'data-url' => route('state.list'),
                 ],
-                'choices'    => [0 => trans('plugins/location::city.select_state')] + $states,
+                'choices'    => $this->getModel()->state_id ?
+                    [
+                        $this->model->state->id => $this->model->state->name,
+                    ]
+                    :
+                    [0 => trans('plugins/location::city.select_state')],
             ])
             ->add('country_id', 'customSelect', [
                 'label'      => trans('plugins/location::city.country'),
@@ -80,11 +67,6 @@ class CityForm extends FormAbstract
                     'class' => 'form-control select-search-full',
                 ],
                 'choices'    => [0 => trans('plugins/location::city.select_country')] + $countries,
-            ])
-            ->add('is_featured', 'onOff', [
-                'label'         => trans('core/base::forms.is_featured'),
-                'label_attr'    => ['class' => 'control-label'],
-                'default_value' => false,
             ])
             ->add('order', 'number', [
                 'label'         => trans('core/base::forms.order'),
@@ -106,10 +88,6 @@ class CityForm extends FormAbstract
                     'class' => 'form-control select-full',
                 ],
                 'choices'    => BaseStatusEnum::labels(),
-            ])
-            ->add('image', 'mediaImage', [
-                'label'      => trans('core/base::forms.image'),
-                'label_attr' => ['class' => 'control-label'],
             ])
             ->setBreakFieldPoint('status');
     }

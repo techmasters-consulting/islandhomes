@@ -8,7 +8,7 @@ use Botble\Blog\Repositories\Interfaces\TagInterface;
 class TagCacheDecorator extends CacheAbstractDecorator implements TagInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getDataSiteMap()
     {
@@ -16,7 +16,7 @@ class TagCacheDecorator extends CacheAbstractDecorator implements TagInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getPopularTags($limit)
     {
@@ -24,7 +24,7 @@ class TagCacheDecorator extends CacheAbstractDecorator implements TagInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAllTags($active = true)
     {

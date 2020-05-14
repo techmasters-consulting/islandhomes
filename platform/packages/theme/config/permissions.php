@@ -2,6 +2,10 @@
 
 return [
     [
+        'name' => 'Appearance',
+        'flag' => 'core.appearance',
+    ],
+    [
         'name'        => 'Theme',
         'flag'        => 'theme.index',
         'parent_flag' => 'core.appearance',

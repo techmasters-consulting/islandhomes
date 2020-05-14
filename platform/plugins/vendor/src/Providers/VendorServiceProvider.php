@@ -25,6 +25,7 @@ use Botble\Vendor\Repositories\Interfaces\VendorActivityLogInterface;
 use Botble\Vendor\Repositories\Interfaces\VendorInterface;
 use Event;
 use Illuminate\Support\ServiceProvider;
+use Throwable;
 
 class VendorServiceProvider extends ServiceProvider
 {
@@ -118,6 +119,8 @@ class VendorServiceProvider extends ServiceProvider
         $this->app->register(EventServiceProvider::class);
 
         add_filter(IS_IN_ADMIN_FILTER, [$this, 'setInAdmin'], 20, 0);
+
+        add_filter(BASE_FILTER_AFTER_SETTING_CONTENT, [$this, 'addSettings'], 49, 1);
     }
 
     /**
@@ -126,5 +129,15 @@ class VendorServiceProvider extends ServiceProvider
     public function setInAdmin(): bool
     {
         return in_array(request()->segment(1), ['account', config('core.base.general.admin_dir')]);
+    }
+
+    /**
+     * @param null $data
+     * @return string
+     * @throws Throwable
+     */
+    public function addSettings($data = null)
+    {
+        return $data . view('plugins/vendor::settings')->render();
     }
 }

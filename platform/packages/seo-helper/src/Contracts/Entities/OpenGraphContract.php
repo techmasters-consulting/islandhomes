@@ -9,7 +9,7 @@ interface OpenGraphContract extends RenderableContract
     /**
      * Set the open graph prefix.
      *
-     * @param  string $prefix
+     * @param string $prefix
      *
      * @return self
      */
@@ -18,7 +18,7 @@ interface OpenGraphContract extends RenderableContract
     /**
      * Set type property.
      *
-     * @param  string $type
+     * @param string $type
      *
      * @return self
      */
@@ -27,7 +27,7 @@ interface OpenGraphContract extends RenderableContract
     /**
      * Set title property.
      *
-     * @param  string $title
+     * @param string $title
      *
      * @return self
      */
@@ -36,7 +36,7 @@ interface OpenGraphContract extends RenderableContract
     /**
      * Set description property.
      *
-     * @param  string $description
+     * @param string $description
      *
      * @return self
      */
@@ -45,7 +45,7 @@ interface OpenGraphContract extends RenderableContract
     /**
      * Set url property.
      *
-     * @param  string $url
+     * @param string $url
      *
      * @return self
      */
@@ -54,7 +54,7 @@ interface OpenGraphContract extends RenderableContract
     /**
      * Set image property.
      *
-     * @param  string $image
+     * @param string $image
      *
      * @return self
      */
@@ -63,7 +63,7 @@ interface OpenGraphContract extends RenderableContract
     /**
      * Set site name property.
      *
-     * @param  string $siteName
+     * @param string $siteName
      *
      * @return self
      */
@@ -72,7 +72,7 @@ interface OpenGraphContract extends RenderableContract
     /**
      * Add many open graph properties.
      *
-     * @param  array $properties
+     * @param array $properties
      *
      * @return self
      */
@@ -81,8 +81,8 @@ interface OpenGraphContract extends RenderableContract
     /**
      * Add an open graph property.
      *
-     * @param  string $property
-     * @param  string $content
+     * @param string $property
+     * @param string $content
      *
      * @return self
      */

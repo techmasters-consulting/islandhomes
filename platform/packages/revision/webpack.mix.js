@@ -11,12 +11,12 @@ let mix = require('laravel-mix');
  |
  */
 
-const resourcePath = 'platform/packages/revision';
-const publicPath = 'public/vendor/core/packages/revision';
+const source = 'platform/packages/revision';
+const dist = 'public/vendor/core/packages/revision';
 
 mix
-    .sass(resourcePath + '/resources/assets/sass/revision.scss', publicPath + '/css')
-    .copy(publicPath + '/css/revision.css', resourcePath + '/public/css')
+    .sass(source + '/resources/assets/sass/revision.scss', dist + '/css')
+    .js(source + '/resources/assets/js/revision.js', dist + '/js')
 
-    .js(resourcePath + '/resources/assets/js/revision.js', publicPath + '/js')
-    .copy(publicPath + '/js/revision.js', resourcePath + '/public/js');
+    .copy(dist + '/css', source + '/public/css')
+    .copy(dist + '/js', source + '/public/js');

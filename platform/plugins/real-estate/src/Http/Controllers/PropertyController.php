@@ -92,13 +92,14 @@ class PropertyController extends BaseController
         }
 
         $request->merge([
-            'expire_date' => now()->addDays(45),
-            'images' => json_encode($request->input('images', [])),
+            'expire_date' => now()->addDays(config('plugins.real-estate.real-estate.property_expired_after_x_days')),
+            'images'      => json_encode($request->input('images', [])),
         ]);
 
         $property = $this->propertyRepository->getModel();
         $property = $property->fill($request->input());
         $property->moderation_status = $request->input('moderation_status');
+        $property->never_expired = $request->input('never_expired');
         $property->save();
 
         event(new CreatedContentEvent(PROPERTY_MODULE_SCREEN_NAME, $request, $property));
@@ -147,6 +148,7 @@ class PropertyController extends BaseController
 
         $property->images = json_encode($request->input('images', []));
         $property->moderation_status = $request->input('moderation_status');
+        $property->never_expired = $request->input('never_expired');
 
         $this->propertyRepository->createOrUpdate($property);
 

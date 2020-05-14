@@ -6,14 +6,12 @@ use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Base\Forms\FormAbstract;
 use Botble\Blog\Http\Requests\CategoryRequest;
 use Botble\Blog\Models\Category;
-use Throwable;
 
 class CategoryForm extends FormAbstract
 {
 
     /**
-     * @return mixed|void
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function buildForm()
     {
@@ -41,7 +39,7 @@ class CategoryForm extends FormAbstract
                     'data-counter' => 120,
                 ],
             ])
-            ->add('parent_id', 'select', [
+            ->add('parent_id', 'customSelect', [
                 'label'      => trans('core/base::forms.parent'),
                 'label_attr' => ['class' => 'control-label required'],
                 'attr'       => [

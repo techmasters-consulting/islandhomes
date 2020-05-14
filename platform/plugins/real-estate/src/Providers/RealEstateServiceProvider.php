@@ -6,12 +6,15 @@ use Botble\RealEstate\Commands\RenewPropertiesCommand;
 use Botble\RealEstate\Models\Consult;
 use Botble\RealEstate\Models\Currency;
 use Botble\RealEstate\Models\Category;
+use Botble\RealEstate\Models\Newsletters;
 use Botble\RealEstate\Repositories\Caches\ConsultCacheDecorator;
 use Botble\RealEstate\Repositories\Caches\CurrencyCacheDecorator;
 use Botble\RealEstate\Repositories\Caches\CategoryCacheDecorator;
+use Botble\RealEstate\Repositories\Caches\NewslettersCacheDecorator;
 use Botble\RealEstate\Repositories\Eloquent\ConsultRepository;
 use Botble\RealEstate\Repositories\Eloquent\CurrencyRepository;
 use Botble\RealEstate\Repositories\Eloquent\CategoryRepository;
+use Botble\RealEstate\Repositories\Eloquent\NewslettersRepository;
 use Botble\RealEstate\Repositories\Interfaces\ConsultInterface;
 use Botble\RealEstate\Repositories\Interfaces\CurrencyInterface;
 use Botble\RealEstate\Models\Investor;
@@ -27,6 +30,7 @@ use Botble\RealEstate\Repositories\Caches\FeatureCacheDecorator;
 use Botble\RealEstate\Repositories\Eloquent\ProjectRepository;
 use Botble\RealEstate\Repositories\Eloquent\FeatureRepository;
 use Botble\RealEstate\Repositories\Eloquent\PropertyRepository;
+use Botble\RealEstate\Repositories\Interfaces\NewslettersInterface;
 use Botble\RealEstate\Repositories\Interfaces\ProjectInterface;
 use Botble\RealEstate\Repositories\Interfaces\FeatureInterface;
 use Botble\RealEstate\Repositories\Interfaces\PropertyInterface;
@@ -94,6 +98,11 @@ class RealEstateServiceProvider extends ServiceProvider
             );
         });
 
+        $this->app->bind(NewslettersInterface::class, function () {
+            return new NewslettersCacheDecorator(
+                new NewslettersRepository(new Newsletters)
+            );
+        });
 
         Helper::autoload(__DIR__ . '/../../helpers');
     }
@@ -101,7 +110,7 @@ class RealEstateServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->setNamespace('plugins/real-estate')
-            ->loadAndPublishConfigurations(['permissions', 'email'])
+            ->loadAndPublishConfigurations(['permissions', 'email', 'real-estate'])
             ->loadMigrations()
             ->loadAndPublishViews()
             ->loadAndPublishTranslations()
@@ -173,12 +182,21 @@ class RealEstateServiceProvider extends ServiceProvider
                     'permissions' => ['consult.index'],
                 ])
                 ->registerItem([
+                    'id'          => 'cms-plugins-newsletters',
+                    'priority'    => 7,
+                    'parent_id'   => null,
+                    'name'        => 'plugins/real-estate::newsletters.name',
+                    'icon'        => 'far fa-envelope',
+                    'url'         => route('newsletters.index'),
+                    'permissions' => ['newsletters.index'],
+                ])
+                ->registerItem([
                     'id'          => 'cms-plugins-real-estate-category',
-                    'priority' => 4,
-                    'parent_id' => 'cms-plugins-real-estate',
-                    'name' => 'plugins/real-estate::category.name',
-                    'icon' => null,
-                    'url' => route('category.index'),
+                    'priority'    => 4,
+                    'parent_id'   => 'cms-plugins-real-estate',
+                    'name'        => 'plugins/real-estate::category.name',
+                    'icon'        => null,
+                    'url'         => route('category.index'),
                     'permissions' => ['category.index'],
                 ]);
 

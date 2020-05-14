@@ -18,10 +18,9 @@ class HookServiceProvider extends ServiceProvider
     /**
      * @param string $alert
      * @return string
-     *
      * @throws \Throwable
      */
-    public function registerAdminAlert($alert)
+    public function registerAdminAlert($alert): string
     {
         return $alert . view('plugins/backup::partials.admin-alert')->render();
     }
@@ -30,9 +29,8 @@ class HookServiceProvider extends ServiceProvider
      * @param null $data
      * @return string
      * @throws \Throwable
-     *
      */
-    public function addBackupSetting($data = null)
+    public function addBackupSetting($data = null): string
     {
         return $data . view('plugins/backup::setting')->render();
     }

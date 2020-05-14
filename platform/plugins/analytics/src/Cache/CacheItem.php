@@ -12,22 +12,22 @@ class CacheItem implements CacheItemInterface
     /**
      * @var string
      */
-    private $key;
+    protected $key;
 
     /**
      * @var mixed|null
      */
-    private $value;
+    protected $value;
 
     /**
      * @var bool
      */
-    private $hit;
+    protected $hit;
 
     /**
      * @var DateTimeInterface
      */
-    private $expires;
+    protected $expires;
 
     /**
      * @param string $key
@@ -42,7 +42,7 @@ class CacheItem implements CacheItemInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getKey()
     {
@@ -50,7 +50,7 @@ class CacheItem implements CacheItemInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function get()
     {
@@ -58,7 +58,7 @@ class CacheItem implements CacheItemInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function isHit()
     {
@@ -66,7 +66,7 @@ class CacheItem implements CacheItemInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function set($value)
     {
@@ -76,7 +76,7 @@ class CacheItem implements CacheItemInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function expiresAt($expires)
     {
@@ -92,9 +92,7 @@ class CacheItem implements CacheItemInterface
     }
 
     /**
-     * @param DateInterval|int|null $time
-     * @return $this|CacheItemInterface
-     * @throws \Exception
+     * {@inheritDoc}
      */
     public function expiresAfter($time)
     {
@@ -104,7 +102,7 @@ class CacheItem implements CacheItemInterface
             return $this;
         }
 
-        $this->expires = new DateTimeImmutable();
+        $this->expires = new DateTimeImmutable;
 
         if (!$time instanceof DateInterval) {
             $time = new DateInterval(sprintf('PT%sS', $time));

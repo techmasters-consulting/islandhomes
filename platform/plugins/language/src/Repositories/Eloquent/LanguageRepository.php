@@ -8,7 +8,7 @@ use Botble\Language\Repositories\Interfaces\LanguageInterface;
 class LanguageRepository extends RepositoriesAbstract implements LanguageInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getActiveLanguage($select = ['*'])
     {
@@ -19,7 +19,7 @@ class LanguageRepository extends RepositoriesAbstract implements LanguageInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getDefaultLanguage($select = ['*'])
     {

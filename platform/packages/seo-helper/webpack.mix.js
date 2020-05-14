@@ -11,9 +11,12 @@ let mix = require('laravel-mix');
  |
  */
 
-const resourcePath = 'platform/packages/seo-helper';
-const publicPath = 'public/vendor/core/packages/seo-helper';
+const source = 'platform/packages/seo-helper';
+const dist = 'public/vendor/core/packages/seo-helper';
 
 mix
-    .js(resourcePath + '/resources/assets/js/seo-helper.js', publicPath + '/js')
-    .copy(publicPath + '/js/seo-helper.js', resourcePath + '/public/js');
+    .js(source + '/resources/assets/js/seo-helper.js', dist + '/js')
+    .sass(source + '/resources/assets/sass/seo-helper.scss', dist + '/css')
+
+    .copy(dist + '/js', source + '/public/js')
+    .copy(dist + '/css', source + '/public/css');

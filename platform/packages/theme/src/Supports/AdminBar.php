@@ -83,8 +83,8 @@ class AdminBar
     }
 
     /**
-     * @param $slug
-     * @param $title
+     * @param string $slug
+     * @param string $title
      * @param string $link
      * @return $this
      */
@@ -98,16 +98,14 @@ class AdminBar
         $this->groups[$slug] = [
             'title' => $title,
             'link'  => $link,
-            'items' => [
-
-            ],
+            'items' => [],
         ];
 
         return $this;
     }
 
     /**
-     * @param $title
+     * @param string $title
      * @param string $url
      * @param null $group
      * @return $this

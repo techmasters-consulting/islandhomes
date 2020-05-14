@@ -38,7 +38,6 @@ class CityController extends BaseController
     }
 
     /**
-     * Display all cities
      * @param CityTable $dataTable
      * @return Factory|View
      * @throws Throwable
@@ -63,8 +62,6 @@ class CityController extends BaseController
     }
 
     /**
-     * Insert new City into database
-     *
      * @param CityRequest $request
      * @return BaseHttpResponse
      */
@@ -81,8 +78,6 @@ class CityController extends BaseController
     }
 
     /**
-     * Show edit form
-     *
      * @param $id
      * @param Request $request
      * @param FormBuilder $formBuilder
@@ -181,8 +176,8 @@ class CityController extends BaseController
             'condition' => [
                 ['cities.name', 'LIKE', '%' . $keyword . '%'],
             ],
-            'select' => ['cities.id', 'cities.name'],
-            'take' => 10,
+            'select'    => ['cities.id', 'cities.name'],
+            'take'      => 10,
 
         ]);
 
@@ -202,10 +197,10 @@ class CityController extends BaseController
 
         $cities = $this->cityRepository->advancedGet([
             'condition' => [
-                'status' => BaseStatusEnum::PUBLISHED,
+                'status'   => BaseStatusEnum::PUBLISHED,
                 'state_id' => $request->input('state_id'),
             ],
-            'order_by' => ['order' => 'DESC'],
+            'order_by'   => ['order' => 'DESC'],
             'select' => ['id', 'name'],
         ]);
 

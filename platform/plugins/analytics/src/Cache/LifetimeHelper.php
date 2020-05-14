@@ -29,7 +29,7 @@ class LifetimeHelper
      * @return bool
      * @throws ReflectionException
      */
-    private static function isLegacy()
+    protected static function isLegacy()
     {
         static $legacy;
 

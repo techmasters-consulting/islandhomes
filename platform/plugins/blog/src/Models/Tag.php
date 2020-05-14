@@ -52,7 +52,7 @@ class Tag extends BaseModel
     /**
      * @return BelongsToMany
      */
-    public function posts()
+    public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class, 'post_tags');
     }

@@ -3,8 +3,6 @@
 namespace Botble\Page\Tables;
 
 use Botble\Page\Models\Page;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Page\Repositories\Interfaces\PageInterface;
@@ -13,7 +11,6 @@ use Html;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
-use Throwable;
 use Yajra\DataTables\DataTables;
 
 class PageTable extends TableAbstract
@@ -47,11 +44,7 @@ class PageTable extends TableAbstract
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return JsonResponse
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function ajax()
     {
@@ -61,9 +54,8 @@ class PageTable extends TableAbstract
                 if (!Auth::user()->hasPermission('posts.edit')) {
                     $name = $item->name;
                 } else {
-                    $name = anchor_link(route('pages.edit', $item->id), $item->name);
+                    $name = Html::link(route('pages.edit', $item->id), $item->name);
                 }
-
 
                 if (setting('show_on_front') == $item->id) {
                     $name .= Html::tag('span', ' — ' . trans('packages/page::pages.front_page'), [
@@ -95,11 +87,7 @@ class PageTable extends TableAbstract
     }
 
     /**
-     * Get the query object to be processed by the table.
-     *
-     * @return \Illuminate\Database\Query\Builder|Builder
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function query()
     {
@@ -118,9 +106,7 @@ class PageTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function columns()
     {
@@ -153,9 +139,7 @@ class PageTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws Throwable
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function buttons()
     {
@@ -165,8 +149,7 @@ class PageTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function bulkActions(): array
     {
@@ -174,7 +157,7 @@ class PageTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getBulkChanges(): array
     {

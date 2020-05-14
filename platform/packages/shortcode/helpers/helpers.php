@@ -1,11 +1,8 @@
 <?php
 
-use Illuminate\Support\Str;
-
 if (!function_exists('shortcode')) {
     /**
-     * @return \Illuminate\Foundation\Application|mixed
-     *
+     * @return \Botble\Shortcode\Shortcode
      */
     function shortcode()
     {
@@ -15,23 +12,21 @@ if (!function_exists('shortcode')) {
 
 if (!function_exists('add_shortcode')) {
     /**
-     * @param $key
-     * @param $name
-     * @param null $description
-     * @param $callback
-     * @return \Illuminate\Support\ServiceProvider
-     *
+     * @param string $key
+     * @param string $name
+     * @param null|string $description
+     * @param Callable|string $callback
+     * @return \Botble\Shortcode\Shortcode
      */
-    function add_shortcode($key, $name, $description = null, $callback)
+    function add_shortcode($key, $name, $description = null, $callback = null)
     {
         return shortcode()->register($key, $name, $description, $callback);
     }
 }
 
-
 if (!function_exists('do_shortcode')) {
     /**
-     * @param $content
+     * @param string $content
      * @return string
      */
     function do_shortcode($content)
@@ -41,16 +36,12 @@ if (!function_exists('do_shortcode')) {
 }
 if (!function_exists('generate_shortcode')) {
     /**
-     * @param $name
+     * @param string $name
      * @param array $attributes
      * @return string
      */
-    function generate_shortcode($name, array $attributes)
+    function generate_shortcode($name, array $attributes = [])
     {
-        $parsedAttributes = '';
-        foreach ($attributes as $key => $attribute) {
-            $parsedAttributes .= ' ' . $key . '="' . Str::slug($attribute) . '"';
-        }
-        return '[' . $name . $parsedAttributes . ']';
+        return shortcode()->generateShortcode($name, $attributes);
     }
 }

@@ -3,7 +3,10 @@
 namespace Botble\SeoHelper\Providers;
 
 use Assets;
+use Botble\Base\Models\BaseModel;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\View;
 use SeoHelper;
 
 class HookServiceProvider extends ServiceProvider
@@ -15,19 +18,21 @@ class HookServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param $screen
+     * @param string $screen
+     * @param BaseModel $data
      */
     public function addMetaBox($priority, $data)
     {
         if (!empty($data) && in_array(get_class($data), config('packages.seo-helper.general.supported', []))) {
-            Assets::addScriptsDirectly('vendor/core/packages/seo-helper/js/seo-helper.js');
+            Assets::addScriptsDirectly('vendor/core/packages/seo-helper/js/seo-helper.js')
+                ->addStylesDirectly('vendor/core/packages/seo-helper/css/seo-helper.css');
             add_meta_box('seo_wrap', trans('packages/seo-helper::seo-helper.meta_box_header'), [$this, 'seoMetaBox'],
                 get_class($data), 'advanced', 'low');
         }
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function seoMetaBox()
     {
@@ -47,11 +52,12 @@ class HookServiceProvider extends ServiceProvider
 
         $object = $args[0];
 
-        return view('packages/seo-helper::meta_box', compact('meta', 'object'));
+        return view('packages/seo-helper::meta-box', compact('meta', 'object'));
     }
 
     /**
-     * @param $object
+     * @param string$screen
+     * @param BaseModel $object
      */
     public function setSeoMeta($screen, $object)
     {

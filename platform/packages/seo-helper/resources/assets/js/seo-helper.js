@@ -24,26 +24,26 @@ class SEOHelperManagement {
         }
     }
 
-    handleMetaBox () {
+    handleMetaBox() {
         $('.page-url-seo p').text(this.$document.find('#sample-permalink a').prop('href').replace('?preview=true', ''));
-        this.$document.on('click', '.btn-trigger-show-seo-detail', (event) => {
+        this.$document.on('click', '.btn-trigger-show-seo-detail', event => {
             event.preventDefault();
             $('.seo-edit-section').toggleClass('hidden');
         });
 
-        this.$document.on('keyup', 'input[name=name]', (event) => {
+        this.$document.on('keyup', 'input[name=name]', event => {
             SEOHelperManagement.updateSEOTitle($(event.currentTarget).val());
         });
 
-        this.$document.on('keyup', 'input[name=title]', (event) => {
+        this.$document.on('keyup', 'input[name=title]', event => {
             SEOHelperManagement.updateSEOTitle($(event.currentTarget).val());
         });
 
-        this.$document.on('keyup', 'textarea[name=description]', (event) => {
+        this.$document.on('keyup', 'textarea[name=description]', event => {
             SEOHelperManagement.updateSEODescription($(event.currentTarget).val());
         });
 
-        this.$document.on('keyup', '#seo_title', (event) => {
+        this.$document.on('keyup', '#seo_title', event => {
             if ($(event.currentTarget).val()) {
                 $('.page-title-seo').text($(event.currentTarget).val());
                 $('.default-seo-description').addClass('hidden');
@@ -58,10 +58,10 @@ class SEOHelperManagement {
             }
         });
 
-        this.$document.on('keyup', '#seo_description', (event) => {
+        this.$document.on('keyup', '#seo_description', event => {
             if ($(event.currentTarget).val()) {
                 $('.page-description-seo').text($(event.currentTarget).val());
-            }  else {
+            } else {
                 $('.page-description-seo').text($('textarea[name=description]').val());
             }
         });

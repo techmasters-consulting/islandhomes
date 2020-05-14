@@ -4,14 +4,11 @@ namespace Botble\Blog\Tables;
 
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Blog\Models\Category;
-use Exception;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Collection;
+use Html;
 use Illuminate\Support\Facades\Auth;
 use Botble\Blog\Repositories\Interfaces\CategoryInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
-use Throwable;
 use Yajra\DataTables\DataTables;
 
 class CategoryTable extends TableAbstract
@@ -51,12 +48,7 @@ class CategoryTable extends TableAbstract
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return JsonResponse
-     *
-     * @throws Exception
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function ajax()
     {
@@ -67,7 +59,7 @@ class CategoryTable extends TableAbstract
                     return $item->name;
                 }
 
-                return anchor_link(route('categories.edit', $item->id), $item->indent_text . ' ' . $item->name);
+                return Html::link(route('categories.edit', $item->id), $item->indent_text . ' ' . $item->name);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
@@ -95,11 +87,7 @@ class CategoryTable extends TableAbstract
     }
 
     /**
-     * Get the query object to be processed by table.
-     *
-     * @return Collection
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function query()
     {
@@ -107,9 +95,7 @@ class CategoryTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function columns()
     {
@@ -143,10 +129,7 @@ class CategoryTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @throws Throwable
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function buttons()
     {
@@ -156,8 +139,7 @@ class CategoryTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function bulkActions(): array
     {
@@ -165,7 +147,7 @@ class CategoryTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getBulkChanges(): array
     {
@@ -179,7 +161,7 @@ class CategoryTable extends TableAbstract
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
                 'choices'  => BaseStatusEnum::labels(),
-                'validate' => 'required|in:0,1',
+                'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
             ],
             'categories.created_at' => [
                 'title' => trans('core/base::tables.created_at'),

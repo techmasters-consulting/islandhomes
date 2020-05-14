@@ -1,6 +1,7 @@
 <?php
 
 use Botble\Payment\Enums\PaymentMethodEnum;
+use Botble\Payment\Enums\PaymentStatusEnum;
 
 return [
     'payments'                              => 'Payments',
@@ -60,8 +61,32 @@ return [
     'go_back'                               => 'Go back',
     'information'                           => 'Information',
     'methods'                               => [
-        PaymentMethodEnum::PAYPAL => 'PayPal',
-        PaymentMethodEnum::STRIPE => 'Stripe',
-        PaymentMethodEnum::DIRECT => 'Direct',
+        PaymentMethodEnum::PAYPAL        => 'PayPal',
+        PaymentMethodEnum::STRIPE        => 'Stripe',
+        PaymentMethodEnum::COD           => 'Cash on delivery (COD)',
+        PaymentMethodEnum::BANK_TRANSFER => 'Bank transfer',
     ],
+    'statuses'                              => [
+        PaymentStatusEnum::PENDING   => 'Pending',
+        PaymentStatusEnum::COMPLETED => 'Completed',
+        PaymentStatusEnum::REFUNDING => 'Refunding',
+        PaymentStatusEnum::REFUNDED  => 'Refunded',
+        PaymentStatusEnum::FRAUD     => 'Fraud',
+    ],
+    'payment_methods_instruction'           => 'Guide customers to pay directly. You can choose to pay by delivery or bank transfer',
+    'payment_method_description'            => 'Payment guide - (Displayed on the notice of successful purchase and payment page)',
+    'payment_via_cod'                       => 'Cash on delivery (COD)',
+    'payment_via_bank_transfer'             => 'Bank transfer',
+    'payment_pending'                       => 'Checkout successfully. Your payment is pending and will be checked by our staff.',
+    'created_at'                            => 'Created At',
+    'payment_channel'                       => 'Payment Channel',
+    'total'                                 => 'Total',
+    'status'                                => 'Status',
+    'default_payment_method'                => 'Default payment method',
+    'turn_off_success'                      => 'Turn off payment method successfully!',
+    'saved_payment_method_success'          => 'Saved payment method successfully!',
+    'saved_payment_settings_success'        => 'Saved payment settings successfully!',
+    'payment_name'                          => 'Name',
+    'callback_url'                          => 'Callback URL',
+    'return_url'                            => 'Return URL',
 ];

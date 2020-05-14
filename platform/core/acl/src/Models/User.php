@@ -4,8 +4,8 @@ namespace Botble\ACL\Models;
 
 use Botble\ACL\Notifications\ResetPasswordNotification;
 use Botble\ACL\Traits\PermissionTrait;
+use Botble\Base\Supports\Avatar;
 use Botble\Media\Models\MediaFile;
-use Botble\Base\Supports\Gravatar;
 use Exception;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -109,7 +109,7 @@ class User extends Authenticatable
      */
     public function getAvatarUrlAttribute()
     {
-        return $this->avatar->url ? Storage::url($this->avatar->url) : Gravatar::image($this->email);
+        return $this->avatar->url ? Storage::url($this->avatar->url) : (new Avatar)->create($this->getFullName())->toBase64();
     }
 
     /**

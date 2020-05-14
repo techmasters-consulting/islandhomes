@@ -14,7 +14,7 @@ trait JavascriptRulesTrait
     protected function ruleConfirmed($attribute, array $parameters)
     {
         $parameters[0] = $this->getAttributeName($attribute);
-        $attribute = "{$attribute}_confirmation";
+        $attribute = $attribute . '_confirmation';
 
         return [$attribute, $parameters];
     }

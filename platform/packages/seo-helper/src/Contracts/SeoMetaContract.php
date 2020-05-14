@@ -13,7 +13,7 @@ interface SeoMetaContract extends RenderableContract
     /**
      * Set the Title instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\TitleContract $title
+     * @param TitleContract $title
      *
      * @return self
      */
@@ -22,7 +22,7 @@ interface SeoMetaContract extends RenderableContract
     /**
      * Set the Description instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\DescriptionContract $description
+     * @param DescriptionContract $description
      *
      * @return self
      */
@@ -31,7 +31,7 @@ interface SeoMetaContract extends RenderableContract
     /**
      * Set the MiscTags instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\MiscTagsContract $misc
+     * @param MiscTagsContract $misc
      *
      * @return self
      */
@@ -40,7 +40,7 @@ interface SeoMetaContract extends RenderableContract
     /**
      * Set the Webmasters instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\WebmastersContract $webmasters
+     * @param WebmastersContract $webmasters
      *
      * @return self
      */
@@ -49,9 +49,9 @@ interface SeoMetaContract extends RenderableContract
     /**
      * Set the title.
      *
-     * @param  string $title
-     * @param  string $siteName
-     * @param  string $separator
+     * @param string $title
+     * @param string $siteName
+     * @param string $separator
      *
      * @return self
      */
@@ -60,7 +60,7 @@ interface SeoMetaContract extends RenderableContract
     /**
      * Set the description content.
      *
-     * @param  string $content
+     * @param string $content
      *
      * @return self
      */
@@ -69,8 +69,8 @@ interface SeoMetaContract extends RenderableContract
     /**
      * Add a webmaster tool site verifier.
      *
-     * @param  string $webmaster
-     * @param  string $content
+     * @param string $webmaster
+     * @param string $content
      *
      * @return self
      */
@@ -79,7 +79,7 @@ interface SeoMetaContract extends RenderableContract
     /**
      * Set the current URL.
      *
-     * @param  string $url
+     * @param string $url
      *
      * @return self
      */
@@ -88,7 +88,7 @@ interface SeoMetaContract extends RenderableContract
     /**
      * Set the Google Analytics code.
      *
-     * @param  string $code
+     * @param string $code
      *
      * @return self
      */
@@ -97,8 +97,8 @@ interface SeoMetaContract extends RenderableContract
     /**
      * Add a meta tag.
      *
-     * @param  string $name
-     * @param  string $content
+     * @param string $name
+     * @param string $content
      *
      * @return self
      */
@@ -107,7 +107,7 @@ interface SeoMetaContract extends RenderableContract
     /**
      * Add many meta tags.
      *
-     * @param  array $meta
+     * @param array $meta
      *
      * @return self
      */

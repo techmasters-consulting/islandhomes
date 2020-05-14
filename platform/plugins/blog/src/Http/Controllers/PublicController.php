@@ -64,9 +64,10 @@ class PublicController extends Controller
 
     /**
      * @param string $slug
-     * @throws FileNotFoundException
+     * @param Request $request
+     * @return Response
      */
-    public function getTag($slug)
+    public function getTag($slug, Request $request)
     {
         $slug = $this->slugRepository->getFirstBy(['key' => $slug, 'reference_type' => Tag::class]);
         if (!$slug) {
@@ -77,7 +78,7 @@ class PublicController extends Controller
             'status' => BaseStatusEnum::PUBLISHED,
         ];
 
-        if (Auth::check() && request('preview')) {
+        if (Auth::check() && $request->input('preview')) {
             Arr::forget($condition, 'status');
         }
 
@@ -91,7 +92,7 @@ class PublicController extends Controller
 
         $meta = new SeoOpenGraph;
         $meta->setDescription($tag->description);
-        $meta->setUrl(route('public.tag', $slug->key));
+        $meta->setUrl($tag->url);
         $meta->setTitle($tag->name);
         $meta->setType('article');
 
@@ -101,7 +102,7 @@ class PublicController extends Controller
 
         $posts = get_posts_by_tag($tag->id, theme_option('number_of_posts_in_a_tag'));
 
-        Theme::breadcrumb()->add(__('Home'), url('/'))->add($tag->name, route('public.tag', $slug->key));
+        Theme::breadcrumb()->add(__('Home'), url('/'))->add($tag->name, $tag->url);
 
         do_action(BASE_ACTION_PUBLIC_RENDER_SINGLE, TAG_MODULE_SCREEN_NAME, $tag);
 

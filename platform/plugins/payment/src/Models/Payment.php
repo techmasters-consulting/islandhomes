@@ -5,10 +5,8 @@ namespace Botble\Payment\Models;
 use Botble\Base\Models\BaseModel;
 use Botble\Base\Traits\EnumCastable;
 use Botble\Payment\Enums\PaymentMethodEnum;
-use Botble\Vendor\Models\Package;
-use Botble\Vendor\Models\Vendor;
+use Botble\Payment\Enums\PaymentStatusEnum;
 use Html;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Payment extends BaseModel
 {
@@ -31,6 +29,12 @@ class Payment extends BaseModel
         'charge_id',
         'payment_channel',
         'description',
+        'status',
+        'order_id',
+        'payment_type',
+        'customer_id',
+        'refunded_amount',
+        'refund_note',
     ];
 
     /**
@@ -38,6 +42,7 @@ class Payment extends BaseModel
      */
     protected $casts = [
         'payment_channel' => PaymentMethodEnum::class,
+        'status'          => PaymentStatusEnum::class,
     ];
 
     /**
@@ -50,6 +55,4 @@ class Payment extends BaseModel
         return 'You have created a payment #' . $this->charge_id . ' via ' . $this->payment_channel->label() . ' ' . $time .
             ': ' . number_format($this->amount, 2, '.', ',') . $this->currency;
     }
-
-
 }

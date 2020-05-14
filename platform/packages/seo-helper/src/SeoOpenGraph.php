@@ -11,7 +11,7 @@ class SeoOpenGraph implements SeoOpenGraphContract
     /**
      * The Open Graph instance.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\OpenGraphContract
+     * @var OpenGraphContract
      */
     protected $openGraph;
 
@@ -28,9 +28,9 @@ class SeoOpenGraph implements SeoOpenGraphContract
     /**
      * Set the Open Graph instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\OpenGraphContract $openGraph
+     * @param OpenGraphContract $openGraph
      *
-     * @return \Botble\SeoHelper\SeoOpenGraph
+     * @return SeoOpenGraph
      */
     public function setOpenGraph(OpenGraphContract $openGraph)
     {
@@ -42,9 +42,9 @@ class SeoOpenGraph implements SeoOpenGraphContract
     /**
      * Set the open graph prefix.
      *
-     * @param  string $prefix
+     * @param string $prefix
      *
-     * @return \Botble\SeoHelper\SeoOpenGraph
+     * @return SeoOpenGraph
      */
     public function setPrefix($prefix)
     {
@@ -56,9 +56,9 @@ class SeoOpenGraph implements SeoOpenGraphContract
     /**
      * Set type property.
      *
-     * @param  string $type
+     * @param string $type
      *
-     * @return \Botble\SeoHelper\SeoOpenGraph
+     * @return SeoOpenGraph
      */
     public function setType($type)
     {
@@ -70,9 +70,9 @@ class SeoOpenGraph implements SeoOpenGraphContract
     /**
      * Set title property.
      *
-     * @param  string $title
+     * @param string $title
      *
-     * @return \Botble\SeoHelper\SeoOpenGraph
+     * @return SeoOpenGraph
      */
     public function setTitle($title)
     {
@@ -84,9 +84,9 @@ class SeoOpenGraph implements SeoOpenGraphContract
     /**
      * Set description property.
      *
-     * @param  string $description
+     * @param string $description
      *
-     * @return \Botble\SeoHelper\SeoOpenGraph
+     * @return SeoOpenGraph
      */
     public function setDescription($description)
     {
@@ -98,9 +98,9 @@ class SeoOpenGraph implements SeoOpenGraphContract
     /**
      * Set url property.
      *
-     * @param  string $url
+     * @param string $url
      *
-     * @return \Botble\SeoHelper\SeoOpenGraph
+     * @return SeoOpenGraph
      */
     public function setUrl($url)
     {
@@ -112,9 +112,9 @@ class SeoOpenGraph implements SeoOpenGraphContract
     /**
      * Set image property.
      *
-     * @param  string $image
+     * @param string $image
      *
-     * @return \Botble\SeoHelper\SeoOpenGraph
+     * @return SeoOpenGraph
      */
     public function setImage($image)
     {
@@ -126,9 +126,9 @@ class SeoOpenGraph implements SeoOpenGraphContract
     /**
      * Set site name property.
      *
-     * @param  string $siteName
+     * @param string $siteName
      *
-     * @return \Botble\SeoHelper\SeoOpenGraph
+     * @return SeoOpenGraph
      */
     public function setSiteName($siteName)
     {
@@ -140,9 +140,9 @@ class SeoOpenGraph implements SeoOpenGraphContract
     /**
      * Add many open graph properties.
      *
-     * @param  array $properties
+     * @param array $properties
      *
-     * @return \Botble\SeoHelper\SeoOpenGraph
+     * @return SeoOpenGraph
      */
     public function addProperties(array $properties)
     {
@@ -154,10 +154,10 @@ class SeoOpenGraph implements SeoOpenGraphContract
     /**
      * Add an open graph property.
      *
-     * @param  string $property
-     * @param  string $content
+     * @param string $property
+     * @param string $content
      *
-     * @return \Botble\SeoHelper\SeoOpenGraph
+     * @return SeoOpenGraph
      */
     public function addProperty($property, $content)
     {

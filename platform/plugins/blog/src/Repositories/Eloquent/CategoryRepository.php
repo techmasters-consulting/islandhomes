@@ -11,7 +11,7 @@ class CategoryRepository extends RepositoriesAbstract implements CategoryInterfa
 {
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getDataSiteMap()
     {
@@ -25,7 +25,7 @@ class CategoryRepository extends RepositoriesAbstract implements CategoryInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFeaturedCategories($limit)
     {
@@ -48,22 +48,29 @@ class CategoryRepository extends RepositoriesAbstract implements CategoryInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function getAllCategories(array $condition = [])
+    public function getAllCategories(array $condition = [], array $with = [])
     {
         $data = $this->model->with('slugable')->select('categories.*');
         if (!empty($condition)) {
             $data = $data->where($condition);
         }
 
-        $data = $data->orderBy('categories.order', 'DESC');
+        $data = $data
+            ->where('status', BaseStatusEnum::PUBLISHED)
+            ->orderBy('categories.created_at', 'DESC')
+            ->orderBy('categories.order', 'DESC');
+
+        if ($with) {
+            $data = $data->with($with);
+        }
 
         return $this->applyBeforeExecuteQuery($data)->get();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getCategoryById($id)
     {
@@ -76,7 +83,7 @@ class CategoryRepository extends RepositoriesAbstract implements CategoryInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getCategories(array $select, array $orderBy)
     {
@@ -89,7 +96,7 @@ class CategoryRepository extends RepositoriesAbstract implements CategoryInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAllRelatedChildrenIds($id)
     {
@@ -116,7 +123,7 @@ class CategoryRepository extends RepositoriesAbstract implements CategoryInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAllCategoriesWithChildren(array $condition = [], array $with = [], array $select = ['*'])
     {
@@ -129,7 +136,7 @@ class CategoryRepository extends RepositoriesAbstract implements CategoryInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFilters($filters)
     {

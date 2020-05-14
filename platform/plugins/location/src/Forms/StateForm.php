@@ -7,7 +7,6 @@ use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Location\Repositories\Interfaces\CountryInterface;
 use Botble\Location\Http\Requests\StateRequest;
 use Botble\Location\Models\State;
-use Throwable;
 
 class StateForm extends FormAbstract
 {
@@ -29,8 +28,7 @@ class StateForm extends FormAbstract
     }
 
     /**
-     * @return mixed|void
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function buildForm()
     {
@@ -42,18 +40,18 @@ class StateForm extends FormAbstract
             ->setValidatorClass(StateRequest::class)
             ->withCustomFields()
             ->add('name', 'text', [
-                'label' => trans('core/base::forms.name'),
+                'label'      => trans('core/base::forms.name'),
                 'label_attr' => ['class' => 'control-label required'],
-                'attr' => [
-                    'placeholder' => trans('core/base::forms.name_placeholder'),
+                'attr'       => [
+                    'placeholder'  => trans('core/base::forms.name_placeholder'),
                     'data-counter' => 120,
                 ],
             ])
             ->add('abbreviation', 'text', [
-                'label' => __('Abbreviation'),
+                'label'      => __('Abbreviation'),
                 'label_attr' => ['class' => 'control-label'],
-                'attr' => [
-                    'placeholder' => __('E.g: CA'),
+                'attr'       => [
+                    'placeholder'  => __('E.g: CA'),
                     'data-counter' => 2,
                 ],
             ])

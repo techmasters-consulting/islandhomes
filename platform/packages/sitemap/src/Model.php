@@ -91,7 +91,7 @@ class Model
     private $useGzip = false;
 
     /**
-     * Populating model variables from configuation file.
+     * Populating model variables from configuration file.
      *
      * @param array $config
      */
@@ -153,7 +153,7 @@ class Model
      *
      * @return bool
      */
-    public function getUseStyles()
+    public function isUseStyles()
     {
         return $this->useStyles;
     }
@@ -173,7 +173,7 @@ class Model
      *
      * @return bool
      */
-    public function getUseCache()
+    public function isUseCache()
     {
         return $this->useCache;
     }
@@ -203,7 +203,7 @@ class Model
      *
      * @return bool
      */
-    public function getEscaping()
+    public function isEscaping()
     {
         return $this->escaping;
     }
@@ -213,7 +213,7 @@ class Model
      *
      * @return bool
      */
-    public function getUseLimitSize()
+    public function isUseLimitSize()
     {
         return $this->useLimitSize;
     }
@@ -243,9 +243,9 @@ class Model
      *
      * @param bool $escaping
      */
-    public function setEscaping($b)
+    public function setEscaping($escaping)
     {
-        $this->escaping = $b;
+        $this->escaping = $escaping;
     }
 
     /**

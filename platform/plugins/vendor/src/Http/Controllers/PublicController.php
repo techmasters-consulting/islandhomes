@@ -12,7 +12,7 @@ use Botble\Vendor\Http\Resources\ActivityLogResource;
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Payment\Http\Requests\AfterMakePaymentRequest;
 use Botble\Payment\Repositories\Interfaces\PaymentInterface;
-use Botble\Payment\Services\Gateways\PayPal\PayPalPaymentService;
+use Botble\Payment\Services\Gateways\PayPalPaymentService;
 use Botble\Vendor\Http\Resources\PackageResource;
 use Botble\Vendor\Http\Resources\VendorResource;
 use Botble\Vendor\Repositories\Interfaces\PackageInterface;
@@ -23,19 +23,15 @@ use Illuminate\Support\Facades\Auth;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Media\Http\Requests\MediaFileRequest;
 use Botble\Media\Repositories\Interfaces\MediaFileInterface;
-use Botble\Media\Services\ThumbnailService;
-use Botble\Media\Services\UploadsManager;
 use Botble\Vendor\Http\Requests\AvatarRequest;
 use Botble\Vendor\Http\Requests\SettingRequest;
 use Botble\Vendor\Http\Requests\UpdatePasswordRequest;
 use Botble\Vendor\Repositories\Interfaces\VendorActivityLogInterface;
 use Botble\Vendor\Repositories\Interfaces\VendorInterface;
 use Exception;
-use File;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Intervention\Image\ImageManager;
@@ -178,19 +174,21 @@ class PublicController extends Controller
      */
     public function ajaxGetPackages(PackageInterface $packageRepository, BaseHttpResponse $response)
     {
-        $account = $this->accountRepository->findOrFail(Auth::guard('vendor')->user()->getAuthIdentifier(), ['packages']);
+        $account = $this->accountRepository->findOrFail(Auth::guard('vendor')->user()->getAuthIdentifier(),
+            ['packages']);
 
         $packages = $packageRepository->getModel()
             ->where('status', BaseStatusEnum::PUBLISHED)
             ->get();
 
         $packages = $packages->filter(function ($package) use ($account) {
-            return $package->account_limit === null || $account->packages->where('id', $package->id)->count() < $package->account_limit;
+            return $package->account_limit === null || $account->packages->where('id',
+                    $package->id)->count() < $package->account_limit;
         });
 
         return $response->setData([
             'packages' => PackageResource::collection($packages),
-            'account' => new VendorResource($account),
+            'account'  => new VendorResource($account),
         ]);
     }
 
@@ -204,17 +202,17 @@ class PublicController extends Controller
         PackageInterface $packageRepository,
         BaseHttpResponse $response,
         TransactionInterface $transactionRepository
-    )
-    {
+    ) {
         $package = $packageRepository->findOrFail($request->input('id'));
 
-        if (auth('vendor')->user()->packages()->where('package_id', $package->id)->count() > $package->account_limit) {
+        if ($package->account_limit && auth('vendor')->user()->packages()->where('package_id',
+                $package->id)->count() > $package->account_limit) {
             abort(403);
         }
 
         if ($package->price) {
-            if (setting('payment_paypal_status') != 1 && setting('payment_stripe_status') != 1) {
-                return $response->setError()->setMessage(trans('plugins/vendor::package.setup_payment_gateway'));
+            if (setting('payment_paypal_status') != 1 && setting('payment_stripe_status') != 1 && setting('payment_cod_status') != 1 && setting('payment_bank_transfer_status') != 1) {
+                return $response->setError()->setMessage(trans('plugins/vendor::package.setup_payment_methods'));
             }
 
             return $response->setData(['next_page' => route('public.vendor.package.subscribe', $package->id)]);
@@ -230,14 +228,40 @@ class PublicController extends Controller
     }
 
     /**
+     * @param Vendor $account
+     * @param Package $package
+     * @param string $paymentId
+     * @param TransactionInterface $transactionRepository
+     */
+    protected function savePayment(Package $package, ?string $paymentId, TransactionInterface $transactionRepository)
+    {
+        $account = auth('vendor')->user();
+        $account->credits += $package->number_of_listings;
+        $account->save();
+
+        $account->packages()->attach($package);
+
+        $payment = app(PaymentInterface::class)->getFirstBy(['charge_id' => $paymentId]);
+
+        $transactionRepository->createOrUpdate([
+            'user_id'    => 0,
+            'account_id' => auth('vendor')->user()->id,
+            'credits'    => $package->number_of_listings,
+            'payment_id' => $payment ? $payment->id : null,
+        ]);
+
+        return true;
+    }
+
+    /**
      * @param $id
      * @param PackageInterface $packageRepository
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function getSubscribePackage($id, PackageInterface $packageRepository)
     {
-        $package = DB::table('packages')->find($id);
-        //   dump($package);
+        $package = $packageRepository->findOrFail($id);
+
         SeoHelper::setTitle(trans('plugins/vendor::package.subscribe_package', ['name' => $package->name]));
 
         return view('plugins/vendor::checkout', compact('package'));
@@ -282,32 +306,6 @@ class PublicController extends Controller
     }
 
     /**
-     * @param Vendor $account
-     * @param Package $package
-     * @param string $paymentId
-     * @param TransactionInterface $transactionRepository
-     */
-    protected function savePayment(Package $package, ?string $paymentId, TransactionInterface $transactionRepository)
-    {
-        $account = auth('vendor')->user();
-        $account->credits += $package->number_of_listings;
-        $account->save();
-
-        $account->packages()->attach($package);
-
-        $payment = app(PaymentInterface::class)->getFirstBy(['charge_id' => $paymentId]);
-
-        $transactionRepository->createOrUpdate([
-            'user_id' => 0,
-            'account_id' => auth('vendor')->user()->id,
-            'credits' => $package->number_of_listings,
-            'payment_id' => $payment ? $payment->id : null,
-        ]);
-
-        return true;
-    }
-
-    /**
      * @param UpdatePasswordRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
@@ -325,63 +323,29 @@ class PublicController extends Controller
 
     /**
      * @param AvatarRequest $request
-     * @param UploadsManager $uploadManager
      * @param ImageManager $imageManager
-     * @param ThumbnailService $thumbnailService
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function postAvatar(
-        AvatarRequest $request,
-        UploadsManager $uploadManager,
-        ImageManager $imageManager,
-        ThumbnailService $thumbnailService,
-        BaseHttpResponse $response
-    ) {
+    public function postAvatar(AvatarRequest $request, ImageManager $imageManager, BaseHttpResponse $response)
+    {
         try {
-            $fileUpload = $request->file('avatar_file');
+            $account = Auth::guard('vendor')->user();
 
-            $file_ext = $fileUpload->getClientOriginalExtension();
+            $result = RvMedia::handleUpload($request->file('avatar_file'), 0, 'vendors');
 
-            $folderPath = 'vendors';
+            if ($result['error'] != false) {
+                return $response->setError()->setMessage($result['message']);
+            }
 
-            $fileName = $this->fileRepository->createName(File::name($fileUpload->getClientOriginalName()), 0);
-
-            $fileName = $this->fileRepository->createSlug($fileName, $file_ext, Storage::path($folderPath));
-
-            $account = $this->accountRepository->findOrFail(Auth::guard('vendor')->user()->getKey());
-
-            $image = $imageManager->make($request->file('avatar_file')->getRealPath());
+            $image = $imageManager->make(Storage::path($result['data']->url));
             $avatarData = json_decode($request->input('avatar_data'));
             $image->crop((int)$avatarData->height, (int)$avatarData->width, (int)$avatarData->x, (int)$avatarData->y);
-            $path = $folderPath . '/' . $fileName;
-
-            $uploadManager->saveFile($path, $image->stream()->__toString());
-
-            $readable_size = explode('x', RvMedia::getSize('thumb'));
-
-            $thumbnailService
-                ->setImage($fileUpload->getRealPath())
-                ->setSize($readable_size[0], $readable_size[1])
-                ->setDestinationPath($folderPath)
-                ->setFileName(File::name($fileName) . '-' . RvMedia::getSize('thumb') . '.' . $file_ext)
-                ->save();
-
-            $data = $uploadManager->fileDetails($path);
-
-            $file = $this->fileRepository->getModel();
-            $file->name = $fileName;
-            $file->url = $data['url'];
-            $file->size = $data['size'];
-            $file->mime_type = $data['mime_type'];
-            $file->folder_id = 0;
-            $file->user_id = 0;
-            $file->options = [];
-            $file = $this->fileRepository->createOrUpdate($file);
+            $image->save();
 
             $this->fileRepository->forceDelete(['id' => $account->avatar_id]);
 
-            $account->avatar_id = $file->id;
+            $account->avatar_id = $result['data']->id;
 
             $this->accountRepository->createOrUpdate($account);
 
@@ -391,7 +355,7 @@ class PublicController extends Controller
 
             return $response
                 ->setMessage(trans('plugins/vendor::dashboard.update_avatar_success'))
-                ->setData(['url' => Storage::url($data['url'])]);
+                ->setData(['url' => Storage::url($result['data']->url)]);
         } catch (Exception $ex) {
             return $response
                 ->setError()

@@ -8,7 +8,7 @@ use Botble\Language\Repositories\Interfaces\LanguageInterface;
 class LanguageCacheDecorator extends CacheAbstractDecorator implements LanguageInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getActiveLanguage($select = ['*'])
     {
@@ -16,7 +16,7 @@ class LanguageCacheDecorator extends CacheAbstractDecorator implements LanguageI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getDefaultLanguage($select = ['*'])
     {

@@ -85,7 +85,7 @@ class Post extends BaseModel
     /**
      * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class)->withDefault();
     }
@@ -93,7 +93,7 @@ class Post extends BaseModel
     /**
      * @return BelongsToMany
      */
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'post_tags');
     }
@@ -101,7 +101,7 @@ class Post extends BaseModel
     /**
      * @return BelongsToMany
      */
-    public function categories()
+    public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'post_categories');
     }
@@ -109,7 +109,7 @@ class Post extends BaseModel
     /**
      * @return MorphTo
      */
-    public function author()
+    public function author(): MorphTo
     {
         return $this->morphTo();
     }

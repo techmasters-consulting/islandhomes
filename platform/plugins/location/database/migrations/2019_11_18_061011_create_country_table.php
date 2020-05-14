@@ -13,7 +13,7 @@ class CreateCountryTable extends Migration
     public function up()
     {
         Schema::create('countries', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 120);
             $table->string('nationality', 120);
             $table->tinyInteger('order')->default(0);
@@ -23,7 +23,7 @@ class CreateCountryTable extends Migration
         });
 
         Schema::create('states', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 120);
             $table->integer('country_id')->unsigned()->nullable();
             $table->tinyInteger('order')->default(0);
@@ -33,7 +33,7 @@ class CreateCountryTable extends Migration
         });
 
         Schema::create('cities', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 120);
             $table->integer('state_id')->unsigned();
             $table->integer('country_id')->unsigned()->nullable();

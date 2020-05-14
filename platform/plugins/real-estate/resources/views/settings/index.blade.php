@@ -65,11 +65,10 @@
                 </div>
                 <div class="flexbox-annotated-section-content">
                     <div class="wrapper-content pd-all-20">
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <label class="text-title-field" for="google_map_api_key">{{ trans('plugins/real-estate::real-estate.api_key') }}</label>
-                                <input type="text" class="form-control" name="google_map_api_key" value="{{ setting('google_map_api_key') }}" id="google_map_api_key" placeholder="AIzaSyAvS1cTtst2cOnxxxxxxxxxxxxx">
-                            </div>
+                        <div class="form-group">
+                            <label class="text-title-field" for="google_map_api_key">{{ trans('plugins/real-estate::real-estate.api_key') }}</label>
+                            <input type="text" class="form-control" name="google_map_api_key" value="{{ setting('google_map_api_key') }}" id="google_map_api_key" placeholder="AIzaSyAvS1cTtst2cOnxxxxxxxxxxxxx">
+                            <span class="help-ts">{{ trans('plugins/real-estate::real-estate.api_key_helper') }} (<a href="https://console.developers.google.com/apis/dashboard" target="_blank">https://console.developers.google.com/apis/dashboard</a>)</span>
                         </div>
                     </div>
                 </div>

@@ -247,7 +247,7 @@ class ProjectForm extends FormAbstract
                 'attr'       => [
                     'class' => 'form-control select-search-full',
                 ],
-                'choices'    => [0 => __('Select a investor...')] + $investors,
+                'choices'    => [0 => __('Select an investor...')] + $investors,
             ])
             ->add('date_finish', 'text', [
                 'label'      => trans('plugins/real-estate::project.form.date_finish'),

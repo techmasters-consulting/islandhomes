@@ -6,10 +6,8 @@ use Auth;
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Location\Repositories\Interfaces\CountryInterface;
 use Botble\Table\Abstracts\TableAbstract;
+use Html;
 use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\JsonResponse;
-use Throwable;
 use Yajra\DataTables\DataTables;
 use Botble\Location\Models\Country;
 
@@ -45,10 +43,7 @@ class CountryTable extends TableAbstract
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return JsonResponse
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function ajax()
     {
@@ -58,7 +53,7 @@ class CountryTable extends TableAbstract
                 if (!Auth::user()->hasPermission('country.edit')) {
                     return $item->name;
                 }
-                return anchor_link(route('country.edit', $item->id), $item->name);
+                return Html::link(route('country.edit', $item->id), $item->name);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
@@ -79,10 +74,7 @@ class CountryTable extends TableAbstract
     }
 
     /**
-     * Get the query object to be processed by table.
-     *
-     * @return \Illuminate\Database\Query\Builder|Builder
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function query()
     {
@@ -99,8 +91,7 @@ class CountryTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function columns()
     {
@@ -134,9 +125,7 @@ class CountryTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws Throwable
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function buttons()
     {
@@ -146,8 +135,7 @@ class CountryTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function bulkActions(): array
     {
@@ -155,7 +143,7 @@ class CountryTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getBulkChanges(): array
     {

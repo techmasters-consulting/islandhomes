@@ -236,18 +236,26 @@ class PropertyForm extends FormAbstract
                 'wrapper'    => [
                     'class' => 'form-group col-md-4' . ($this->getModel()->type != PropertyTypeEnum::RENT ? ' hidden' : null),
                 ],
-                'attr' => [
+                'attr'       => [
                     'class' => 'form-control select-search-full',
                 ],
-                'choices' => PropertyPeriodEnum::labels(),
+                'choices'    => PropertyPeriodEnum::labels(),
             ])
             ->add('rowClose2', 'html', [
                 'html' => '</div>',
             ])
+            ->add('never_expired', 'onOff', [
+                'label'         => __('Never expired?'),
+                'label_attr'    => ['class' => 'control-label'],
+                'default_value' => true,
+            ])
             ->add('auto_renew', 'onOff', [
-                'label' => __('Renew automatically (you will be charged again in 45 days)?'),
-                'label_attr' => ['class' => 'control-label'],
+                'label'         => __('Renew automatically (you will be charged again in :days days)?', ['days' => config('plugins.real-estate.real-estate.property_expired_after_x_days')]),
+                'label_attr'    => ['class' => 'control-label'],
                 'default_value' => false,
+                'wrapper'    => [
+                    'class' => 'form-group ' . (!$this->getModel()->id || $this->getModel()->never_expired == true ? ' hidden' : null),
+                ],
             ])
             ->addMetaBoxes([
                 'image'    => [
@@ -264,20 +272,20 @@ class PropertyForm extends FormAbstract
                 ],
             ])
             ->add('status', 'customSelect', [
-                'label' => trans('core/base::tables.status'),
+                'label'      => trans('core/base::tables.status'),
                 'label_attr' => ['class' => 'control-label required'],
-                'attr' => [
+                'attr'       => [
                     'class' => 'form-control select-search-full',
                 ],
-                'choices' => PropertyStatusEnum::labels(),
+                'choices'    => PropertyStatusEnum::labels(),
             ])
             ->add('moderation_status', 'customSelect', [
-                'label' => trans('plugins/real-estate::property.moderation_status'),
+                'label'      => trans('plugins/real-estate::property.moderation_status'),
                 'label_attr' => ['class' => 'control-label required'],
-                'attr' => [
+                'attr'       => [
                     'class' => 'form-control select-full',
                 ],
-                'choices' => ModerationStatusEnum::labels(),
+                'choices'    => ModerationStatusEnum::labels(),
             ])
             ->add('category_id', 'customSelect', [
                 'label'      => trans('plugins/real-estate::property.form.category'),

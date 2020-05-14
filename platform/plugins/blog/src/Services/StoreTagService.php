@@ -14,17 +14,17 @@ class StoreTagService extends StoreTagServiceAbstract
     /**
      * @param Request $request
      * @param Post $post
-     *
      * @return mixed|void
      */
     public function execute(Request $request, Post $post)
     {
         $tags = $post->tags->pluck('name')->all();
 
-        if (implode(',', $tags) !== $request->input('tag')) {
+        $tagsInput = collect(json_decode($request->input('tag'), true))->pluck('value')->all();
+
+        if (count($tags) != count($tagsInput) || count(array_diff($tags, $tagsInput)) > 0) {
             $post->tags()->detach();
-            $tagInputs = explode(',', $request->input('tag'));
-            foreach ($tagInputs as $tagName) {
+            foreach ($tagsInput as $tagName) {
 
                 if (!trim($tagName)) {
                     continue;

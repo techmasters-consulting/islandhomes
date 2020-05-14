@@ -1,7 +1,8 @@
 <?php
 
 namespace Botble\RealEstate\Models;
-use Botble\RealEstate\Repositories\Interfaces\PropertyInterface;
+
+use Botble\ACL\Models\User;
 use Botble\Base\Models\BaseModel;
 use Botble\Base\Traits\EnumCastable;
 use Botble\RealEstate\Enums\ModerationStatusEnum;
@@ -10,17 +11,13 @@ use Botble\RealEstate\Enums\PropertyPeriodEnum;
 use Botble\RealEstate\Enums\PropertyStatusEnum;
 use Botble\RealEstate\Enums\PropertyTypeEnum;
 use Botble\Slug\Traits\SlugTrait;
-use Botble\Vendor\Models\Vendor;
 use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Arr;
-use Spatie\Feed\Feedable;
-use Spatie\Feed\FeedItem;
 
-class Property extends BaseModel implements Feedable
+class Property extends BaseModel
 {
     use SlugTrait;
     use EnumCastable;
@@ -63,42 +60,22 @@ class Property extends BaseModel implements Feedable
     /**
      * @var array
      */
-
-
-
     protected $casts = [
-        'status' => PropertyStatusEnum::class,
+        'status'            => PropertyStatusEnum::class,
         'moderation_status' => ModerationStatusEnum::class,
-        'type' => PropertyTypeEnum::class,
-        'period' => PropertyPeriodEnum::class,
-
+        'type'              => PropertyTypeEnum::class,
+        'period'            => PropertyPeriodEnum::class,
     ];
 
-    public function getAuthorIdAttribute($value)
-    {
-        return ucfirst($value);
-    }
-    public function toFeedItem()
-    {
-        $name = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F]/u', '', $this->name);
-        $location = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F]/u', '', $this->location);
+    /**
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'expire_date',
+    ];
 
-        return FeedItem::create([
-            'price' => $this->price,
-            'name' => $name,
-            'location' => $location,
-            'period' => $this->created_at,
-            'image' => 'storage/'.$this->getImageAttribute(),
-            'author' => $this->author_id,
-        ]);
-    }
-    public static function getFeedItems()
-{
-
-    return Property::orderBy('created_at','desc')->get();
-}
-
-//
     /**
      * @return BelongsTo
      */
@@ -151,13 +128,6 @@ class Property extends BaseModel implements Feedable
     /**
      * @return BelongsTo
      */
-    public function vendors(): BelongsTo
-    {
-        return $this->BelongsTo(Vendor::class)->withDefault();
-    }
-    /**
-     * @return BelongsTo
-     */
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class)->withDefault();
@@ -168,6 +138,10 @@ class Property extends BaseModel implements Feedable
      */
     public function author(): MorphTo
     {
+        if (!is_plugin_active('vendor')) {
+            return $this->morphTo(null, User::class)->withDefault();
+        }
+
         return $this->morphTo()->withDefault();
     }
 
@@ -185,7 +159,10 @@ class Property extends BaseModel implements Feedable
      */
     public function scopeNotExpired($query)
     {
-        return $query->where('expire_date', '>=', now(config('app.timezone'))->toDateTimeString());
+        return $query->where(function ($query) {
+            $query->where('expire_date', '>=', now(config('app.timezone'))->toDateTimeString())
+                ->orWhere('never_expired', true);
+        });
     }
 
     /**
@@ -194,6 +171,9 @@ class Property extends BaseModel implements Feedable
      */
     public function scopeExpired($query)
     {
-        return $query->where('expire_date', '<', now(config('app.timezone'))->toDateTimeString());
+        return $query->where(function ($query) {
+            $query->where('expire_date', '<', now(config('app.timezone'))->toDateTimeString())
+                ->where('never_expired', false);
+        });
     }
 }

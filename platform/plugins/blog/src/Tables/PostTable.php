@@ -2,9 +2,6 @@
 
 namespace Botble\Blog\Tables;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Blog\Exports\PostExport;
@@ -15,7 +12,6 @@ use Botble\Table\Abstracts\TableAbstract;
 use Carbon\Carbon;
 use Html;
 use Illuminate\Contracts\Routing\UrlGenerator;
-use Throwable;
 use Yajra\DataTables\DataTables;
 
 class PostTable extends TableAbstract
@@ -70,11 +66,7 @@ class PostTable extends TableAbstract
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return JsonResponse
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function ajax()
     {
@@ -85,7 +77,7 @@ class PostTable extends TableAbstract
                     return $item->name;
                 }
 
-                return anchor_link(route('posts.edit', $item->id), $item->name);
+                return Html::link(route('posts.edit', $item->id), $item->name);
             })
             ->editColumn('image', function ($item) {
                 if ($this->request()->input('action') === 'excel') {
@@ -121,11 +113,7 @@ class PostTable extends TableAbstract
     }
 
     /**
-     * Get the query object to be processed by the table.
-     *
-     * @return Builder|\Illuminate\Database\Eloquent\Builder
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function query()
     {
@@ -147,9 +135,7 @@ class PostTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function columns()
     {
@@ -197,10 +183,7 @@ class PostTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @throws Throwable
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function buttons()
     {
@@ -210,8 +193,7 @@ class PostTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function bulkActions(): array
     {
@@ -219,7 +201,7 @@ class PostTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getBulkChanges(): array
     {
@@ -235,16 +217,16 @@ class PostTable extends TableAbstract
                 'choices'  => BaseStatusEnum::labels(),
                 'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
             ],
+            'category'         => [
+                'title'    => trans('plugins/blog::posts.category'),
+                'type'     => 'select-search',
+                'validate' => 'required',
+                'callback' => 'getCategories',
+            ],
             'posts.created_at' => [
                 'title'    => trans('core/base::tables.created_at'),
                 'type'     => 'date',
                 'validate' => 'required',
-            ],
-            'category'         => [
-                'title'    => __('Category'),
-                'type'     => 'select-search',
-                'validate' => 'required',
-                'callback' => 'getCategories',
             ],
         ];
     }
@@ -252,17 +234,13 @@ class PostTable extends TableAbstract
     /**
      * @return array
      */
-    public function getCategories()
+    public function getCategories(): array
     {
         return $this->categoryRepository->pluck('categories.name', 'categories.id');
     }
 
     /**
-     * @param Builder $query
-     * @param string $key
-     * @param string $operator
-     * @param string $value
-     * @return $this|Builder|string|static
+     * {@inheritDoc}
      */
     public function applyFilterCondition($query, string $key, string $operator, ?string $value)
     {
@@ -280,10 +258,7 @@ class PostTable extends TableAbstract
     }
 
     /**
-     * @param Post $item
-     * @param string $inputKey
-     * @param string $inputValue
-     * @return false|Model
+     * {@inheritDoc}
      */
     public function saveBulkChangeItem($item, string $inputKey, ?string $inputValue)
     {
@@ -296,7 +271,7 @@ class PostTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getDefaultButtons(): array
     {

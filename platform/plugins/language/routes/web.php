@@ -20,8 +20,9 @@ Route::group(['namespace' => 'Botble\Language\Http\Controllers', 'middleware' =>
             ]);
 
             Route::delete('delete/{id}', [
-                'as'   => 'languages.destroy',
-                'uses' => 'LanguageController@destroy',
+                'as'         => 'languages.destroy',
+                'uses'       => 'LanguageController@destroy',
+                'middleware' => 'preventDemo',
             ]);
 
             Route::get('set-default', [
@@ -42,6 +43,20 @@ Route::group(['namespace' => 'Botble\Language\Http\Controllers', 'middleware' =>
                 'permission' => 'languages.edit',
             ]);
         });
+
+        Route::group(['prefix' => 'theme/translations'], function () {
+            Route::get('', [
+                'as'   => 'languages.theme-translations',
+                'uses' => 'LanguageController@getThemeTranslations',
+            ]);
+
+            Route::post('', [
+                'as'         => 'languages.theme-translations',
+                'uses'       => 'LanguageController@postThemeTranslations',
+                'middleware' => 'preventDemo',
+            ]);
+        });
+
     });
 
     Route::group(['prefix' => 'languages'], function () {

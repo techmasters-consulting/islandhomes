@@ -17,14 +17,14 @@ class PropertyRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'description' => 'max:350',
-            'content' => 'required',
-            'number_bedroom' => 'numeric|min:0|max:10000|nullable',
+            'name'            => 'required',
+            'description'     => 'max:350',
+            'content'         => 'required',
+            'number_bedroom'  => 'numeric|min:0|max:10000|nullable',
             'number_bathroom' => 'numeric|min:0|max:10000|nullable',
-            'number_floor' => 'numeric|min:0|max:10000|nullable',
-            'price' => 'numeric|min:0|nullable',
-            'status' => Rule::in(PropertyStatusEnum::values()),
+            'number_floor'    => 'numeric|min:0|max:10000|nullable',
+            'price'           => 'numeric|min:0|nullable',
+            'status'          => Rule::in(PropertyStatusEnum::values()),
         ];
     }
 }

@@ -178,7 +178,7 @@ abstract class FormAbstract extends Form
     public function getActionButtons(): string
     {
         if ($this->actionButtons === '') {
-            return view('core/base::elements.form-actions')->render();
+            return view('core/base::forms.partials.form-actions')->render();
         }
 
         return $this->actionButtons;
@@ -264,14 +264,14 @@ abstract class FormAbstract extends Form
     {
         $customFields = [
             'customSelect' => CustomSelectField::class,
-            'editor' => EditorField::class,
-            'onOff' => OnOffField::class,
-            'customRadio' => CustomRadioField::class,
-            'mediaImage' => MediaImageField::class,
-            'customColor' => ColorField::class,
-            'time' => TimeField::class,
+            'editor'       => EditorField::class,
+            'onOff'        => OnOffField::class,
+            'customRadio'  => CustomRadioField::class,
+            'mediaImage'   => MediaImageField::class,
+            'customColor'  => ColorField::class,
+            'time'         => TimeField::class,
             'autocomplete' => AutocompleteField::class,
-            'html' => HtmlField::class,
+            'html'         => HtmlField::class,
         ];
 
         foreach ($customFields as $key => $field) {

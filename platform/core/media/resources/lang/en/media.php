@@ -12,11 +12,6 @@ return [
     'recent'                     => 'Recent',
     'favorites'                  => 'Favorites',
     'upload'                     => 'Upload',
-    'add_from'                   => 'Add from',
-    'youtube'                    => 'Youtube',
-    'vimeo'                      => 'Vimeo',
-    'vine'                       => 'Vine',
-    'daily_motion'               => 'Dailymotion',
     'create_folder'              => 'Create folder',
     'refresh'                    => 'Refresh',
     'empty_trash'                => 'Empty trash',
@@ -33,10 +28,6 @@ return [
     'actions'                    => 'Actions',
     'nothing_is_selected'        => 'Nothing is selected',
     'insert'                     => 'Insert',
-    'coming_soon'                => 'Coming soon',
-    'add_from_youtube'           => 'Add from youtube',
-    'playlist'                   => 'Playlist',
-    'add_url'                    => 'Add URL',
     'folder_name'                => 'Folder name',
     'create'                     => 'Create',
     'rename'                     => 'Rename',
@@ -48,7 +39,7 @@ return [
     'confirm_delete'             => 'Delete item(s)',
     'confirm_delete_description' => 'Your request cannot rollback. Are you sure you wanna delete these items?',
     'empty_trash_title'          => 'Empty trash',
-    'empty_trash_description'    => 'Your request cannot rollback.Are you sure you wanna remove all items in trash?',
+    'empty_trash_description'    => 'Your request cannot rollback. Are you sure you wanna remove all items in trash?',
     'up_level'                   => 'Up one level',
     'upload_progress'            => 'Upload progress',
 
@@ -90,15 +81,6 @@ return [
         'updated_at'       => 'Modified at',
         'nothing_selected' => 'Nothing is selected',
         'visit_link'       => 'Open link',
-
-        'add_from' => [
-            'youtube' => [
-                'original_msg'    => 'Please input Youtube URL',
-                'no_api_key_msg'  => 'Please specify the Youtube API key',
-                'invalid_url_msg' => 'Your link is not belongs to Youtube',
-                'error_msg'       => 'Some error occurred...',
-            ],
-        ],
 
         'no_item' => [
             'all_media' => [

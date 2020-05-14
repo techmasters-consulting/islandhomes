@@ -14,7 +14,6 @@ class DeletedContentListener
      *
      * @param DeletedContentEvent $event
      * @return void
-     *
      */
     public function handle(DeletedContentEvent $event)
     {

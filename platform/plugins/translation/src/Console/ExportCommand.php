@@ -43,6 +43,7 @@ class ExportCommand extends Command
      * Execute the console command.
      *
      * @return void
+     * @throws \Symfony\Component\VarExporter\Exception\ExceptionInterface
      */
     public function handle()
     {
@@ -64,7 +65,7 @@ class ExportCommand extends Command
         $this->manager->exportTranslations($group, $json);
 
         if (!empty($group)) {
-            $this->info('Done writing language files for ' . (($group == '*') ? 'ALL groups' : $group . ' group'));
+            $this->info('Done writing language files for ' . ($group == '*' ? 'ALL groups' : $group . ' group'));
         } elseif ($json) {
             $this->info('Done writing JSON language files for translation strings');
         }

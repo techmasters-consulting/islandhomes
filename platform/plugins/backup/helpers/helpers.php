@@ -2,9 +2,8 @@
 
 if (!function_exists('get_backup_size')) {
     /**
-     * @param $key
+     * @param string $key
      * @return int
-     * 
      */
     function get_backup_size($key)
     {

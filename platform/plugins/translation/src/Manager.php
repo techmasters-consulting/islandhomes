@@ -2,6 +2,7 @@
 
 namespace Botble\Translation;
 
+use Exception;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Events\Dispatcher;
 use Botble\Translation\Models\Translation;
@@ -51,11 +52,10 @@ class Manager
     }
 
     /**
-     * @param $namespace
-     * @param $group
-     * @param $key
+     * @param string $group
+     * @param string $key
      */
-    public function missingKey($namespace, $group, $key)
+    public function missingKey($group, $key)
     {
         if (!in_array($group, $this->config['exclude_groups'])) {
             Translation::firstOrCreate([
@@ -119,10 +119,10 @@ class Manager
     }
 
     /**
-     * @param $key
-     * @param $value
-     * @param $locale
-     * @param $group
+     * @param string $key
+     * @param string $value
+     * @param string $locale
+     * @param string $group
      * @param bool $replace
      * @return bool
      */
@@ -151,6 +151,7 @@ class Manager
         }
 
         $translation->save();
+
         return true;
     }
 
@@ -223,16 +224,19 @@ class Manager
         // Add the translations to the database, if not existing.
         foreach ($groupKeys as $key) {
             // Split the group and item
-            [$group, $item] = explode('.', $key, 2);
-            $this->missingKey('', $group, $item);
+            try {
+                [$group, $item] = explode('.', $key, 2);
+            } catch (Exception $exception) {
+                info($key);
+            }
+            $this->missingKey($group, $item);
         }
 
         foreach ($stringKeys as $key) {
             $group = self::JSON_GROUP;
             $item = $key;
-            $this->missingKey('', $group, $item);
+            $this->missingKey($group, $item);
         }
-
 
         // Return the number of found translations
         return count($groupKeys + $stringKeys);
@@ -259,13 +263,15 @@ class Manager
                         $file = $locale . '/' . $group;
                         $groups = explode('/', $group);
                         if (count($groups) > 1) {
-                            $module = rtrim(str_replace(Arr::last($groups), '', $group), '/');
-                            $dir = '/vendor/' . $module . '/' . $locale;
+                            $folderName = Arr::last($groups);
+                            Arr::forget($groups, count($groups) - 1);
+
+                            $dir = 'vendor/' . implode('/', $groups) . '/' . $locale;
                             if (!$this->files->isDirectory($this->app->langPath() . '/' . $dir)) {
                                 $this->files->makeDirectory($this->app->langPath() . '/' . $dir, 755, true);
                                 system('find ' . $this->app->langPath() . '/' . $dir . ' -type d -exec chmod 755 {} \;');
                             }
-                            $file = $dir . '/' . Arr::last($groups);
+                            $file = $dir . '/' . $folderName;
                         }
                         $path = $this->app['path.lang'] . '/' . $file . '.php';
                         $output = "<?php\n\nreturn " . VarExporter::export($translations) . ";\n";
@@ -292,6 +298,10 @@ class Manager
         }
     }
 
+    /**
+     * @return bool
+     * @throws \Symfony\Component\VarExporter\Exception\ExceptionInterface
+     */
     public function exportAllTranslations()
     {
         $groups = Translation::whereNotNull('value')->selectDistinctGroup()->get('group');
@@ -307,7 +317,7 @@ class Manager
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function cleanTranslations()
     {
@@ -320,11 +330,11 @@ class Manager
     }
 
     /**
-     * @param $translations
+     * @param array $translations
      * @param bool $json
      * @return array
      */
-    protected function makeTree($translations, $json = false)
+    protected function makeTree(array $translations, $json = false)
     {
         $array = [];
         foreach ($translations as $translation) {
@@ -338,22 +348,22 @@ class Manager
     }
 
     /**
-     * @param null $key
+     * @param null|string $key
      * @return mixed
      */
     public function getConfig($key = null)
     {
         if ($key == null) {
             return $this->config;
-        } else {
-            return $this->config[$key];
         }
+
+        return $this->config[$key];
     }
 
     /**
-     * @param $array
-     * @param $key
-     * @param $value
+     * @param array $array
+     * @param string $key
+     * @param string $value
      * @return mixed
      */
     public function jsonSet(&$array, $key, $value)

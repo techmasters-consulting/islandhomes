@@ -8,7 +8,7 @@ class CategoryMultiField extends FormField
 {
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     protected function getTemplate()
     {

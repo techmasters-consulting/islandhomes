@@ -40,7 +40,6 @@ class AnalyticsClient
      * Set the cache time.
      *
      * @param int $cacheLifeTimeInMinutes
-     *
      * @return self
      */
     public function setCacheLifeTimeInMinutes(int $cacheLifeTimeInMinutes)

@@ -23,7 +23,7 @@
 
     <div class="container-fluid w90 padtop20">
         <h1 class="titlehouse" id="house-40396">{{ $property->name }}</h1>
-        <p class="addresshouse"><i class="fas fa-map-marker-alt"></i> {{ $property->location }}</p>
+        <p class="addresshouse"><i class="fas fa-map-marker-alt"></i>  {{ $property->location }}</p>
         <p class="pricehouse"> {{ format_price($property->price, $property->currency) }} {!! $property->status->toHtml() !!}</p>
         <div class="row">
             <div class="col-md-8">
@@ -37,18 +37,24 @@
                                         <td>{{ __('Category') }}</td>
                                         <td><b>{{ $property->category->name }}</b></td>
                                     </tr>
+                                    @if ($property->square)
                                     <tr>
                                         <td>{{ __('Square') }}</td>
-                                        <td><b>{{ $property->square }}m2</b></td>
+                                        <td><b>{{ $property->square }} {{ __('m2') }}</b></td>
                                     </tr>
-                                    <tr>
-                                        <td>{{ __('Number of bedrooms') }}</td>
-                                        <td><b>{{ $property->number_bedroom }}</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ __('Number of bathrooms') }}</td>
-                                        <td><b>{{ $property->number_bathroom }}</b></td>
-                                    </tr>
+                                    @endif
+                                    @if ($property->number_bedroom)
+                                        <tr>
+                                            <td>{{ __('Number of bedrooms') }}</td>
+                                            <td><b>{{ $property->number_bedroom }}</b></td>
+                                        </tr>
+                                    @endif
+                                    @if ($property->number_bathroom)
+                                        <tr>
+                                            <td>{{ __('Number of bathrooms') }}</td>
+                                            <td><b>{{ $property->number_bathroom }}</b></td>
+                                        </tr>
+                                    @endif
                                     <tr>
                                         <td>{{ __('Price') }}</td>
                                         <td><b>{{ format_price($property->price, $property->currency) }}</b></td>
@@ -115,7 +121,7 @@
                 <br>
             </div>
             <div class="col-md-4">
-                @if ($property->author_id)
+                @if ($property->author->id)
                     <div class="boxright">
                         <div class="head">
                             {{ __('Contact agency') }}

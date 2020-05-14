@@ -11,7 +11,7 @@ class SeoTwitter implements SeoTwitterContract
     /**
      * The Twitter Card instance.
      *
-     * @var \Botble\SeoHelper\Contracts\Entities\TwitterCardContract
+     * @var TwitterCardContract
      */
     protected $card;
 
@@ -26,9 +26,9 @@ class SeoTwitter implements SeoTwitterContract
     /**
      * Set the Twitter Card instance.
      *
-     * @param  \Botble\SeoHelper\Contracts\Entities\TwitterCardContract $card
+     * @param TwitterCardContract $card
      *
-     * @return \Botble\SeoHelper\SeoTwitter
+     * @return SeoTwitter
      */
     public function setCard(TwitterCardContract $card)
     {
@@ -40,9 +40,9 @@ class SeoTwitter implements SeoTwitterContract
     /**
      * Set the card type.
      *
-     * @param  string $type
+     * @param string $type
      *
-     * @return \Botble\SeoHelper\SeoTwitter
+     * @return SeoTwitter
      */
     public function setType($type)
     {
@@ -54,9 +54,9 @@ class SeoTwitter implements SeoTwitterContract
     /**
      * Set the card site.
      *
-     * @param  string $site
+     * @param string $site
      *
-     * @return \Botble\SeoHelper\SeoTwitter
+     * @return SeoTwitter
      */
     public function setSite($site)
     {
@@ -68,9 +68,9 @@ class SeoTwitter implements SeoTwitterContract
     /**
      * Set the card title.
      *
-     * @param  string $title
+     * @param string $title
      *
-     * @return \Botble\SeoHelper\SeoTwitter
+     * @return SeoTwitter
      */
     public function setTitle($title)
     {
@@ -82,9 +82,9 @@ class SeoTwitter implements SeoTwitterContract
     /**
      * Set the card description.
      *
-     * @param  string $description
+     * @param string $description
      *
-     * @return \Botble\SeoHelper\SeoTwitter
+     * @return SeoTwitter
      */
     public function setDescription($description)
     {
@@ -96,9 +96,9 @@ class SeoTwitter implements SeoTwitterContract
     /**
      * Add image to the card.
      *
-     * @param  string $url
+     * @param string $url
      *
-     * @return \Botble\SeoHelper\SeoTwitter
+     * @return SeoTwitter
      */
     public function addImage($url)
     {
@@ -110,9 +110,9 @@ class SeoTwitter implements SeoTwitterContract
     /**
      * Add many meta to the card.
      *
-     * @param  array $meta
+     * @param array $meta
      *
-     * @return \Botble\SeoHelper\SeoTwitter
+     * @return SeoTwitter
      */
     public function addMetas(array $meta)
     {
@@ -124,10 +124,10 @@ class SeoTwitter implements SeoTwitterContract
     /**
      * Add a meta to the Twitter Card.
      *
-     * @param  string $name
-     * @param  string $content
+     * @param string $name
+     * @param string $content
      *
-     * @return \Botble\SeoHelper\SeoTwitter
+     * @return SeoTwitter
      */
     public function addMeta($name, $content)
     {

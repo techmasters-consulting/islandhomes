@@ -17,12 +17,12 @@
                 <label class="hrv-label">
                     <input type="radio" name="cookie_consent_enable" class="hrv-radio"
                            value="1"
-                           @if (setting('cookie_consent_enable')) checked @endif>{{ trans('core/setting::setting.general.yes') }}
+                           @if (setting('cookie_consent_enable', 1)) checked @endif>{{ trans('core/setting::setting.general.yes') }}
                 </label>
                 <label class="hrv-label">
                     <input type="radio" name="cookie_consent_enable" class="hrv-radio"
                            value="0"
-                           @if (!setting('cookie_consent_enable')) checked @endif>{{ trans('core/setting::setting.general.no') }}
+                           @if (!setting('cookie_consent_enable', 1)) checked @endif>{{ trans('core/setting::setting.general.no') }}
                 </label>
             </div>
         </div>

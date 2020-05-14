@@ -10,7 +10,7 @@ class PageRepository extends RepositoriesAbstract implements PageInterface
 {
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getDataSiteMap()
     {
@@ -23,7 +23,7 @@ class PageRepository extends RepositoriesAbstract implements PageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFeaturedPages($limit)
     {
@@ -38,7 +38,7 @@ class PageRepository extends RepositoriesAbstract implements PageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function whereIn($array, $select = [])
     {
@@ -57,7 +57,7 @@ class PageRepository extends RepositoriesAbstract implements PageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getSearch($query, $limit = 10)
     {
@@ -75,13 +75,13 @@ class PageRepository extends RepositoriesAbstract implements PageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAllPages($active = true)
     {
         $data = $this->model->select('pages.*');
         if ($active) {
-            $data = $data->where(['pages.status' => BaseStatusEnum::PUBLISHED]);
+            $data = $data->where('pages.status', BaseStatusEnum::PUBLISHED);
         }
 
         return $this->applyBeforeExecuteQuery($data)->get();

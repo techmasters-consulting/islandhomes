@@ -3,6 +3,8 @@
 namespace Botble\Payment\Services\Traits;
 
 use Auth;
+use Botble\Payment\Enums\PaymentMethodEnum;
+use Botble\Payment\Enums\PaymentStatusEnum;
 use Botble\Payment\Repositories\Interfaces\PaymentInterface;
 use Illuminate\Support\Arr;
 
@@ -21,7 +23,7 @@ trait PaymentTrait
             'user_id' => Auth::check() ? Auth::user()->id : 0,
         ], $args);
 
-        $paymentChannel = Arr::get($data, 'payment_channel', 'stripe');
+        $paymentChannel = Arr::get($data, 'payment_channel', PaymentMethodEnum::STRIPE);
 
         app(PaymentInterface::class)->create([
             'account_id'      => Arr::get($data, 'account_id'),
@@ -29,6 +31,7 @@ trait PaymentTrait
             'currency'        => $data['currency'],
             'charge_id'       => $data['charge_id'],
             'payment_channel' => $paymentChannel,
+            'status'          => Arr::get($data, 'status', PaymentStatusEnum::PENDING),
         ]);
     }
 }

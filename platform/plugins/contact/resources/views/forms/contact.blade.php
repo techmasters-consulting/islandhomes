@@ -68,14 +68,13 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label for="contact_robot" class="control-label required">{{ trans('plugins/contact::contact.confirm_not_robot') }}</label>
-                {!! Captcha::display('captcha') !!}
-                {!! Captcha::script() !!}
+                {!! Captcha::display([], ['lang' => app()->getLocale()]) !!}
             </div>
         </div>
     @endif
 </div>
 
-<div class="form-group"><p>{!! trans('plugins/contact::contact.required_field') !!}</p></div>
+<div class="form-group"><p>{!! clean(trans('plugins/contact::contact.required_field')) !!}</p></div>
 <div class="form-group">
     <button type="submit" class="btn btn-primary cyan text">{{ trans('plugins/contact::contact.send_btn') }}</button>
 </div>

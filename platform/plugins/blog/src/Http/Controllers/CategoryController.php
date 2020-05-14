@@ -37,7 +37,6 @@ class CategoryController extends BaseController
     }
 
     /**
-     * Display all categories
      * @param CategoryTable $dataTable
      * @return Factory|View
      *
@@ -51,7 +50,6 @@ class CategoryController extends BaseController
     }
 
     /**
-     * Show create form
      * @param FormBuilder $formBuilder
      * @return string
      */
@@ -63,8 +61,6 @@ class CategoryController extends BaseController
     }
 
     /**
-     * Insert new Category into database
-     *
      * @param CategoryRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
@@ -88,8 +84,6 @@ class CategoryController extends BaseController
     }
 
     /**
-     * Show edit form
-     *
      * @param Request $request
      * @param int $id
      * @param FormBuilder $formBuilder

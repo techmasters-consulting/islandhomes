@@ -79,9 +79,9 @@ return [
 
     'activity_logs' => 'Activity Logs',
 
-    'oops'               => 'Oops!',
-    'no_activity_logs'   => 'You have no activity logs yet',
-    'actions'            => [
+    'oops'                       => 'Oops!',
+    'no_activity_logs'           => 'You have no activity logs yet',
+    'actions'                    => [
         'create_property'                => 'You have created property ":name"',
         'update_property'                => 'You have updated property ":name"',
         'delete_property'                => 'You have deleted property ":name"',
@@ -90,11 +90,11 @@ return [
         'your_property_updated_by_admin' => 'Your property ":name" is updated by administrator',
         'changed_avatar'                 => 'You have changed your avatar',
     ],
-    'load_more'          => 'Load more',
-    'loading_more'       => 'Loading...',
-    'back-to-login'      => 'Back to login page',
-    'no_transactions'    => 'No transactions',
-    'selling_properties' => 'Selling properties',
-    'renting_properties' => 'Renting properties',
-    'sold_properties'    => 'Sold properties',
+    'load_more'                  => 'Load more',
+    'loading_more'               => 'Loading...',
+    'back-to-login'              => 'Back to login page',
+    'no_transactions'            => 'No transactions',
+    'approved_properties'        => 'Approved properties',
+    'pending_approve_properties' => 'Pending approve properties',
+    'rejected_properties'        => 'Rejected properties',
 ];

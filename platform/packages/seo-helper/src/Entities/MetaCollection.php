@@ -19,10 +19,10 @@ class MetaCollection extends BaseMetaCollection
     /**
      * Add a meta to collection.
      *
-     * @param  string $name
-     * @param  string $content
+     * @param string $name
+     * @param string $content
      *
-     * @return \Botble\SeoHelper\Entities\MetaCollection
+     * @return MetaCollection
      */
     public function add($item)
     {

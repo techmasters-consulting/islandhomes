@@ -64,13 +64,12 @@
             border-radius: 5px;
             border: 1px dashed rgb(0, 135, 247);
         }
-
         .dropzone .dz-preview:not(.dz-processing) .dz-progress {
             display: none;
         }
 
         .dropzone .dz-message {
-            margin: 50px 0;
+            margin : 50px 0;
         }
     </style>
     <script>
@@ -114,9 +113,9 @@
                     $('input[name={{ $name }}]').val(JSON.stringify(uploadedImages));
                 }
             },
-            removedfile: function (file) {
+            removedfile: function(file) {
                 var x = confirm('Do you want to delete this image?');
-                if (!x) {
+                if (!x)  {
                     return false;
                 }
                 var i = $(file.previewElement).index() - 1;
@@ -135,16 +134,11 @@
 
         var files = [];
         @foreach($options['value'] as $item)
-        uploadedImages.push('{{ $item }}');
-        files.push({
-            name: '{{ File::name($item) }}',
-            size: '{{ Storage::exists($item) ? Storage::size($item) : 0 }}',
-            url: '{{ $item }}',
-            full_url: '{{ get_image_url($item, 'thumb') }}'
-        });
+            uploadedImages.push('{{ $item }}');
+            files.push({name: '{{ File::name($item) }}', size: '{{ Storage::exists($item) ? Storage::size($item) : 0 }}', url: '{{ $item }}', full_url: '{{ get_image_url($item, 'thumb') }}'});
         @endforeach
 
-        $.each(files, function (key, file) {
+        $.each(files, function(key, file) {
             dropzone.options.addedfile.call(dropzone, file);
             dropzone.options.thumbnail.call(dropzone, file, file.full_url);
         });

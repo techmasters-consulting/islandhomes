@@ -8,4 +8,8 @@
             <i class="fa fa-trash"></i>
         </a>
     @endif
+
+    <a href="#" class="btn btn-icon btn-sm btn-info button-renew" data-section="{{ route('public.vendor.properties.renew', $item->id) }}" role="button" data-original-title="{{ __('Renew') }}" >
+        <i class="fas fa-sync-alt"></i>
+    </a>
 </div>

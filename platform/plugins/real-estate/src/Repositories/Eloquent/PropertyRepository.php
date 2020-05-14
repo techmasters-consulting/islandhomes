@@ -18,24 +18,23 @@ class PropertyRepository extends RepositoriesAbstract implements PropertyInterfa
     public function getRelatedProperties(int $propertyId, $limit = 4)
     {
         $this->model = $this->originalModel;
-        $this->model = $this->model
-            ->where('id', '<>', $propertyId);
+        $this->model = $this->model->where('id', '<>', $propertyId)
+            ->notExpired();
 
         $params = [
             'condition' => [
-                ['re_properties.expire_date', '>=', now(config('app.timezone'))->toDateTimeString()],
                 ['re_properties.status', 'NOT_IN', [PropertyStatusEnum::NOT_AVAILABLE]],
                 're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
             ],
-            'order_by' => [
+            'order_by'  => [
                 're_properties.created_at' => 'DESC',
             ],
-            'take' => $limit,
-            'paginate' => [
-                'per_page' => 12,
+            'take'      => $limit,
+            'paginate'  => [
+                'per_page'      => 12,
                 'current_paged' => 1,
             ],
-            'select' => [
+            'select'    => [
                 're_properties.*',
             ],
             'with'      => [],
@@ -66,8 +65,7 @@ class PropertyRepository extends RepositoriesAbstract implements PropertyInterfa
         $params = array_merge([
             'condition' => [],
             'order_by'  => [
-                're_properties.created_at' => 'DESC',
-                ['re_properties.expire_date', '>=', now(config('app.timezone'))->toDateTimeString()],
+                're_properties.created_at'        => 'DESC',
                 're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
             ],
             'take'      => null,
@@ -82,6 +80,8 @@ class PropertyRepository extends RepositoriesAbstract implements PropertyInterfa
         ], $params);
 
         $this->model = $this->originalModel;
+
+        $this->model = $this->model->notExpired();
 
         if ($filters['keyword'] !== null) {
             $this->model = $this->model
@@ -182,6 +182,46 @@ class PropertyRepository extends RepositoriesAbstract implements PropertyInterfa
         if ($filters['category_id'] !== null) {
             $this->model = $this->model->where('re_properties.category_id', $filters['category_id']);
         }
+
+        return $this->advancedGet($params);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getProperty(int $propertyId, array $with = [])
+    {
+        $params = [
+            'condition' => [
+                're_properties.id'                => $propertyId,
+                're_properties.moderation_status' => ModerationStatusEnum::APPROVED,
+            ],
+            'with'      => $with,
+            'take'      => 1,
+        ];
+
+        $this->model = $this->originalModel;
+
+        $this->model = $this->model->notExpired();
+
+        return $this->advancedGet($params);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPropertiesByConditions(array $condition, $limit, array $with = [])
+    {
+        $this->model = $this->originalModel;
+
+        $this->model = $this->model->notExpired();
+
+        $params = [
+            'condition' => $condition,
+            'with'      => $with,
+            'take'      => $limit,
+            'order_by'  => ['re_properties.created_at' => 'DESC'],
+        ];
 
         return $this->advancedGet($params);
     }

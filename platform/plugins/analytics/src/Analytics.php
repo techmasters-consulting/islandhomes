@@ -35,7 +35,6 @@ class Analytics
 
     /**
      * @param string $viewId
-     *
      * @return $this
      */
     public function setViewId(string $viewId)
@@ -212,7 +211,6 @@ class Analytics
      * @param Period $period
      * @param string $metrics
      * @param array $others
-     *
      * @return stdClass|null
      */
     public function performQuery(Period $period, string $metrics, array $others = [])
@@ -226,9 +224,10 @@ class Analytics
         );
     }
 
-    /*
+    /**
      * Get the underlying Google_Service_Analytics object. You can use this
      * to basically call anything on the Google Analytics API.
+     * @return Google_Service_Analytics
      */
     public function getAnalyticsService(): Google_Service_Analytics
     {

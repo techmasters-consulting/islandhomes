@@ -16,6 +16,9 @@ class UpdateMenuNodesTable extends Migration
     {
         Schema::table('menu_nodes', function (Blueprint $table) {
             $table->renameColumn('related_id', 'reference_id');
+        });
+
+        Schema::table('menu_nodes', function (Blueprint $table) {
             $table->renameColumn('type', 'reference_type');
         });
 
@@ -40,6 +43,9 @@ class UpdateMenuNodesTable extends Migration
 
         Schema::table('menu_nodes', function (Blueprint $table) {
             $table->renameColumn('reference_id', 'related_id');
+        });
+
+        Schema::table('menu_nodes', function (Blueprint $table) {
             $table->renameColumn('reference_type', 'type');
         });
 

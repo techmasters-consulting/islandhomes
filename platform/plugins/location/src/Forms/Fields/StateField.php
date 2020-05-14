@@ -9,7 +9,7 @@ class StateField extends SelectType
 {
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     protected function getTemplate()
     {

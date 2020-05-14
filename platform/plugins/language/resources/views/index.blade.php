@@ -8,7 +8,7 @@
             <li class="nav-item">
                 <a href="#tab_settings" class="nav-link" data-toggle="tab">{{ trans('plugins/language::language.settings') }}</a>
             </li>
-            {!! apply_filters(BASE_FILTER_REGISTER_CONTENT_TABS, null, LANGUAGE_MODULE_SCREEN_NAME) !!}
+            {!! apply_filters(BASE_FILTER_REGISTER_CONTENT_TABS, null, new \Botble\Language\Models\Language) !!}
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="tab_detail">
@@ -152,7 +152,7 @@
                                     @foreach (Language::getActiveLanguage() as $language)
                                         @if (!$language->lang_is_default)
                                             <li style="padding-left: 10px;">
-                                                <input type="checkbox" class="icheck" name="language_hide_languages[]" value="{{ $language->lang_id }}" id="language_hide_languages_item-{{ $language->lang_code }}" @if (in_array($language->lang_id, json_decode(setting('language_hide_languages', '[]'), true))) checked="checked" @endif>
+                                                <input type="checkbox" name="language_hide_languages[]" value="{{ $language->lang_id }}" id="language_hide_languages_item-{{ $language->lang_code }}" @if (in_array($language->lang_id, json_decode(setting('language_hide_languages', '[]'), true))) checked="checked" @endif>
                                                 <label for="language_hide_languages_item-{{ $language->lang_code }}">{{ $language->lang_name }}</label>
                                             </li>
                                         @endif
@@ -178,7 +178,7 @@
                             </div>
 
                             <div class="text-left">
-                                <button type="submit" name="submit" value="save" class="btn btn-info">
+                                <button type="submit" name="submit" value="save" class="btn btn-info button-save-language-settings">
                                     <i class="fa fa-save"></i> {{ trans('core/base::forms.save') }}
                                 </button>
                             </div>
@@ -188,5 +188,14 @@
             </div>
         </div>
     </div>
-    @include('core/table::modal')
+    @include('core/table::partials.modal-item', [
+        'type' => 'danger',
+        'name' => 'modal-confirm-delete',
+        'title' => trans('core/base::tables.confirm_delete'),
+        'content' => 'Do you really want to delete this language? It also deletes all items in this language and cannot rollback!',
+        'action_name' => trans('core/base::tables.delete'),
+        'action_button_attributes' => [
+            'class' => 'delete-crud-entry',
+        ],
+    ])
 @stop

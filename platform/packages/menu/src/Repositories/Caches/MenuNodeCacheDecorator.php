@@ -8,7 +8,7 @@ use Botble\Support\Repositories\Caches\CacheAbstractDecorator;
 class MenuNodeCacheDecorator extends CacheAbstractDecorator implements MenuNodeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getByMenuId($menuId, $parentId, $select = ['*'])
     {

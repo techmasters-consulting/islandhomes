@@ -1,13 +1,13 @@
 class WidgetManagement {
     init() {
-        let list_widgets = [{
+        let listWidgets = [{
             name: 'wrap-widgets',
             pull: 'clone',
             put: false
         }];
 
         $.each($('.sidebar-item'), () => {
-            list_widgets.push({name: 'wrap-widgets', pull: true, put: true});
+            listWidgets.push({name: 'wrap-widgets', pull: true, put: true});
         });
 
         let saveWidget = (parentElement) => {
@@ -27,7 +27,7 @@ class WidgetManagement {
                     beforeSend: () => {
                         Botble.showNotice('info', BotbleVariables.languages.notices_msg.processing_request);
                     },
-                    success: (data) => {
+                    success: data =>  {
                         if (data.error) {
                             Botble.showError(data.message);
                         } else {
@@ -38,7 +38,7 @@ class WidgetManagement {
 
                         parentElement.find('.widget_save i').remove();
                     },
-                    error: (data) => {
+                    error: data =>  {
                         Botble.handleError(data);
                         parentElement.find('.widget_save i').remove();
                     }
@@ -46,7 +46,7 @@ class WidgetManagement {
             }
         };
 
-        list_widgets.forEach((groupOpts, i) => {
+        listWidgets.forEach((groupOpts, i) => {
             Sortable.create(document.getElementById('wrap-widget-' + (i + 1)), {
                 sort: (i !== 0),
                 group: groupOpts,
@@ -68,7 +68,7 @@ class WidgetManagement {
                 scrollSpeed: 10, // px
 
                 // dragging ended
-                onEnd: (evt) => {
+                onEnd: evt => {
                     if (evt.from !== evt.to) {
                         saveWidget($(evt.from).closest('.sidebar-item'));
                     }
@@ -77,8 +77,8 @@ class WidgetManagement {
             });
         });
 
-        let widget_wrap = $('#wrap-widgets');
-        widget_wrap.on('click', '.widget-control-delete', (event) => {
+        let widgetWrap = $('#wrap-widgets');
+        widgetWrap.on('click', '.widget-control-delete', event =>  {
             event.preventDefault();
             let _self = $(event.currentTarget);
 
@@ -96,7 +96,7 @@ class WidgetManagement {
                 beforeSend: () => {
                     Botble.showNotice('info', BotbleVariables.languages.notices_msg.processing_request);
                 },
-                success: (data) => {
+                success: data =>  {
                     if (data.error) {
                         Botble.showError(data.message);
                     } else {
@@ -105,7 +105,7 @@ class WidgetManagement {
                     }
                     widget.find('.widget-control-delete').removeClass('button-loading');
                 },
-                error: (data) => {
+                error: data =>  {
                     Botble.handleError(data);
                     widget.find('.widget-control-delete').removeClass('button-loading');
                 }
@@ -113,14 +113,14 @@ class WidgetManagement {
 
         });
 
-        widget_wrap.on('click', '#added-widget .widget-handle', (event) => {
+        widgetWrap.on('click', '#added-widget .widget-handle', event =>  {
             let _self = $(event.currentTarget);
             _self.closest('li').find('.widget-content').slideToggle(300);
             _self.find('.fa').toggleClass('fa-caret-up');
             _self.find('.fa').toggleClass('fa-caret-down');
         });
 
-        widget_wrap.on('click', '.widget_save', (event) => {
+        widgetWrap.on('click', '.widget_save', event =>  {
             event.preventDefault();
             let _self = $(event.currentTarget);
             _self.addClass('button-loading');
