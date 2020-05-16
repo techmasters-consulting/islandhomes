@@ -1,96 +1,150 @@
 <?php
 
 return [
-    'accepted' => 'Trường :attribute phải được chấp nhận.',
-    'active_url' => 'Trường :attribute không phải là một URL hợp lệ.',
-    'after' => 'Trường :attribute phải là một ngày sau ngày :date.',
-    'alpha' => 'Trường :attribute chỉ có thể chứa các chữ cái.',
-    'alpha_dash' => 'Trường :attribute chỉ có thể chứa chữ cái, số và dấu gạch ngang.',
-    'alpha_num' => 'Trường :attribute chỉ có thể chứa chữ cái và số.',
-    'array' => 'Kiểu dữ liệu của trường :attribute phải là dạng mảng.',
-    'before' => 'Trường :attribute phải là một ngày trước ngày :date.',
-    'between' =>
-        [
-            'numeric' => 'Trường :attribute phải nằm trong khoảng :min - :max.',
-            'file' => 'Dung lượng tập tin trong trường :attribute phải từ :min - :max kB.',
-            'string' => 'Trường :attribute phải từ :min - :max ký tự.',
-            'array' => 'Trường :attribute phải có từ :min - :max phần tử.',
+    /*
+  |--------------------------------------------------------------------------
+  | Validation Language Lines
+  |--------------------------------------------------------------------------
+  |
+  | Le following language lines contain Le default error messages used by
+  | Le validator class. Some of Lese rules have multiple versions such
+  | as Le size rules. Feel free to tweak each of Lese messages here.
+  |
+  */
+
+    'accepted' => 'le :attribute doit être accepté.',
+    'active_url' => 'lee :attribute n\'est pas une URL valide.',
+    'after' => 'Le :attribute doit être une date après :date.',
+    'after_or_equal' => 'Le :attribute doit être une date postérieure ou égale à :date.',
+    'alpha' => 'Le :attribute ne peut contenir que des lettres.',
+    'alpha_dash' => 'Le :attribute ne peut contenir que des lettres, des chiffres, des tirets et des traits de soulignement.',
+    'alpha_num' => 'Le :attribute ne peut contenir que des lettres et des chiffres.',
+    'array' => 'Le :attribute doit être un tableau.',
+    'before' => 'Le :attribute doit être une date antérieure :date.',
+    'before_or_equal' => 'Le :attribute doit être une date antérieure ou égale à :date.',
+    'between' => [
+        'numeric' => 'Le :attribute  Doit être entre :min et :max.',
+        'file' => 'Le :attribute Doit être entre :min et :max kilo-octets.',
+        'string' => 'Le :attribute Doit être entre :min et :max personnages.',
+        'array' => 'Le :attribute doit avoir entre :min et :max articles.',
+    ],
+    'boolean' => 'Le :attribute champ doit être vrai ou faux.',
+    'confirmed' => 'Le :attribute la confirmation ne correspond pas.',
+    'date' => 'Le :attribute la date n\'est pas valide.',
+    'date_equals' => 'Le :attribute doit être une date égale à :date.',
+    'date_format' => 'Le :attribute ne correspond pas au format :format.',
+    'different' => 'Le :attribute et :oLer doit être différent.',
+    'digits' => 'Le :attribute doit être :digits chiffres.',
+    'digits_between' => 'Le :attribute Doit être entre :min et :max chiffres.',
+    'dimensions' => 'Le :attribute a des dimensions d\'image non valides.',
+    'distinct' => 'Le :attribute le champ a une valeur en double.',
+    'email' => 'Le :attribute Doit être une adresse e-mail valide.',
+    'ends_with' => 'Le :attribute doit se terminer par l\'un des following: :values.',
+    'exists' => 'Le choisie :attribute est invalide.',
+    'file' => 'Le :attribute doit être un fichier.',
+    'filled' => 'Le :attribute le champ doit avoir une valeur.',
+    'gt' => [
+        'numeric' => 'Le :attribute doit être supérieur à :value.',
+        'file' => 'Le :attribute doit être supérieur à :value kilo-octets.',
+        'string' => 'Le :attribute doit être supérieur à :value personnages.',
+        'array' => 'Le :attribute doit avoir plus de :value articles.',
+    ],
+    'gte' => [
+        'numeric' => 'Le :attribute doit être supérieur ou égal :value.',
+        'file' => 'Le :attribute doit être supérieur ou égal :value kilo-octets.',
+        'string' => 'Le :attribute doit être supérieur ou égal :value personnages.',
+        'array' => 'Le :attribute doit avoir :value articles ou plus.',
+    ],
+    'image' => 'Le :attribute doit être une image.',
+    'in' => 'Le selected :attribute is invalid.',
+    'in_array' => 'Le :attribute field does not exist in :oLer.',
+    'integer' => 'Le :attribute must be an integer.',
+    'ip' => 'Le :attribute must be a valid IP address.',
+    'ipv4' => 'Le :attribute must be a valid IPv4 address.',
+    'ipv6' => 'Le :attribute must be a valid IPv6 address.',
+    'json' => 'Le :attribute must be a valid JSON string.',
+    'lt' => [
+        'numeric' => 'Le :attribute must be less than :value.',
+        'file' => 'Le :attribute must be less than :value kilobytes.',
+        'string' => 'Le :attribute must be less than :value characters.',
+        'array' => 'Le :attribute must have less than :value items.',
+    ],
+    'lte' => [
+        'numeric' => 'Le :attribute must be less than or equal :value.',
+        'file' => 'Le :attribute must be less than or equal :value kilobytes.',
+        'string' => 'Le :attribute must be less than or equal :value characters.',
+        'array' => 'Le :attribute must not have more than :value items.',
+    ],
+    'max' => [
+        'numeric' => 'Le :attribute may not be greater than :max.',
+        'file' => 'Le :attribute may not be greater than :max kilobytes.',
+        'string' => 'Le :attribute may not be greater than :max characters.',
+        'array' => 'Le :attribute may not have more than :max items.',
+    ],
+    'mimes' => 'Le :attribute must be a file of type: :values.',
+    'mimetypes' => 'Le :attribute must be a file of type: :values.',
+    'min' => [
+        'numeric' => 'Le :attribute must be at least :min.',
+        'file' => 'Le :attribute must be at least :min kilobytes.',
+        'string' => 'Le :attribute must be at least :min characters.',
+        'array' => 'Le :attribute must have at least :min items.',
+    ],
+    'not_in' => 'Le selected :attribute is invalid.',
+    'not_regex' => 'Le :attribute format is invalid.',
+    'numeric' => 'Le :attribute doit être un nombrer.',
+    'password' => 'Le mot de passe est incorrect.',
+    'present' => 'Le :attribute field must be present.',
+    'regex' => 'Le :attribute format is invalid.',
+    'required' => 'Le :attribute field is required.',
+    'required_if' => 'Le :attribute field is required when :oLer is :value.',
+    'required_unless' => 'Le :attribute field is required unless :oLer is in :values.',
+    'required_with' => 'Le :attribute field is required when :values is present.',
+    'required_with_all' => 'Le :attribute field is required when :values are present.',
+    'required_without' => 'Le :attribute field is required when :values is not present.',
+    'required_without_all' => 'Le :attribute field is required when none of :values are present.',
+    'same' => 'Le :attribute and :oLer must match.',
+    'size' => [
+        'numeric' => 'Le :attribute must be :size.',
+        'file' => 'Le :attribute must be :size kilobytes.',
+        'string' => 'Le :attribute must be :size characters.',
+        'array' => 'Le :attribute must contain :size items.',
+    ],
+    'starts_with' => 'Le :attribute must start with one of Le following: :values.',
+    'string' => 'Le :attribute must be a string.',
+    'timezone' => 'Le :attribute must be a valid zone.',
+    'unique' => 'Le :attribute has already been taken.',
+    'uploaded' => 'Le :attribute failed to upload.',
+    'url' => 'Le :attribute format is invalid.',
+    'uuid' => 'Le :attribute must be a valid UUID.',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Validation Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify custom validation messages for attributes using Le
+    | convention "attribute.rule" to name Le lines. This makes it quick to
+    | specify a specific custom language line for a given attribute rule.
+    |
+    */
+
+    'custom' => [
+        'attribute-name' => [
+            'rule-name' => 'custom-message',
         ],
-    'boolean' => 'Trường :attribute phải là true hoặc false.',
-    'confirmed' => 'Giá trị xác nhận trong trường :attribute không khớp.',
-    'date' => 'Trường :attribute không phải là định dạng của ngày-tháng.',
-    'date_format' => 'Trường :attribute không giống với định dạng :format.',
-    'different' => 'Trường :attribute và :other phải khác nhau.',
-    'digits' => 'Độ dài của trường :attribute phải gồm :digits chữ số.',
-    'digits_between' => 'Độ dài của trường :attribute phải nằm trong khoảng :min and :max chữ số.',
-    'email' => 'Trường :attribute phải là một địa chỉ email hợp lệ.',
-    'exists' => 'Giá trị đã chọn trong trường :attribute không hợp lệ.',
-    'file' => 'Trường :attribute phải là một tập tin.',
-    'image' => 'Các tập tin trong trường :attribute phải là định dạng hình ảnh.',
-    'in' => 'Giá trị đã chọn trong trường :attribute không hợp lệ.',
-    'integer' => 'Trường :attribute phải là một số nguyên.',
-    'ip' => 'Trường :attribute phải là một địa chỉa IP.',
-    'max' =>
-        [
-            'numeric' => 'Trường :attribute không được lớn hơn :max.',
-            'file' => 'Dung lượng tập tin trong trường :attribute không được lớn hơn :max kB.',
-            'string' => 'Trường :attribute không được lớn hơn :max ký tự.',
-            'array' => 'Trường :attribute không được lớn hơn :max phần tử.',
-        ],
-    'mimes' => 'Trường :attribute phải là một tập tin có định dạng: :values.',
-    'min' =>
-        [
-            'numeric' => 'Trường :attribute phải tối thiểu là :min.',
-            'file' => 'Dung lượng tập tin trong trường :attribute phải tối thiểu :min kB.',
-            'string' => 'Trường :attribute phải có tối thiểu :min ký tự.',
-            'array' => 'Trường :attribute phải có tối thiểu :min phần tử.',
-        ],
-    'not_in' => 'Giá trị đã chọn trong trường :attribute không hợp lệ.',
-    'numeric' => 'Trường :attribute phải là một số.',
-    'regex' => 'Định dạng trường :attribute không hợp lệ.',
-    'required' => 'Trường :attribute không được bỏ trống.',
-    'required_if' => 'Trường :attribute không được bỏ trống khi trường :other là :value.',
-    'required_with' => 'Trường :attribute không được bỏ trống khi trường :values có giá trị.',
-    'required_with_all' => 'The :attribute field is required when :values is present.',
-    'required_without' => 'Trường :attribute không được bỏ trống khi trường :values không có giá trị.',
-    'required_without_all' => 'Trường :attribute không được bỏ trống khi tất cả :values không có giá trị.',
-    'same' => 'Trường :attribute và :other phải giống nhau.',
-    'size' =>
-        [
-            'numeric' => 'Trường :attribute phải bằng :size.',
-            'file' => 'Dung lượng tập tin trong trường :attribute phải bằng :size kB.',
-            'string' => 'Trường :attribute phải chứa :size ký tự.',
-            'array' => 'Trường :attribute phải chứa :size phần tử.',
-        ],
-    'timezone' => 'Trường :attribute phải là một múi giờ hợp lệ.',
-    'unique' => 'Trường :attribute đã có trong CSDL.',
-    'url' => 'Trường :attribute không giống với định dạng một URL.',
-    'uploaded' => 'Không thể tải lên, hãy thử lại.',
-    'custom' =>
-        [
-            'email' =>
-                [
-                    'email' => 'Địa chỉ email không hợp lệ',
-                    'required' => 'Email không được để trống!',
-                    'unique' => 'Email đã được sử dụng, vui lòng chọn email khác!',
-                ],
-            'password' =>
-                [
-                    'min' => 'Mật khẩu phải ít nhất :min kí tự.',
-                    'required' => 'Mật khẩu không được để trống!',
-                ],
-            'repassword' =>
-                [
-                    'same' => 'Mật khẩu và xác nhận mật khẩu không trùng khớp',
-                ],
-            'username' =>
-                [
-                    'min' => 'Tên phải ít nhất 6 kí tự',
-                    'required' => 'Tên đăng nhập không được để trống!',
-                    'unique' => 'Tên này đã được sử dụng, vui lòng chọn tên khác!',
-                ],
-        ],
-    'attributes' => 'Thuộc tính',
-    'after_or_equal' => 'Thuộc tính :attribute phải là ngày lớn hơn hoặc bằng :date',
-    'before_or_equal' => 'Trường :attribute phải là ngày trước hoặc bằng ngày :date',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Validation Attributes
+    |--------------------------------------------------------------------------
+    |
+    | Le following language lines are used to swap our attribute placeholder
+    | with something more reader friendly such as "E-Mail Address" instead
+    | of "email". This simply helps us make our message more expressive.
+    |
+    */
+
+    'attributes' => [],
+
 ];

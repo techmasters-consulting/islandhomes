@@ -12,6 +12,6 @@ return [
     |
     */
 
-    'failed' => 'Thông tin tài khoản không tìm thấy trong hệ thống.',
-    'throttle' => 'Vượt quá số lần đăng nhập cho phép. Vui lòng thử lại sau :seconds giây.',
+    'failed' => 'Informations de compte introuvables dans le système.',
+    'throttle' => 'Dépassement du nombre de connexions autorisées. Veuillez réessayer dans: secondes secondes.',
 ];

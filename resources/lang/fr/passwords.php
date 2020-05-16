@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'password' => 'Mật khẩu phải ít nhất 6 kí tự và trùng khớp với xác nhận mật khẩu.',
-    'reset' => 'Mật khẩu của bạn đã được khôi phục',
-    'sent' => 'Hệ thống đã gửi một email cho bạn chứa liên kết khôi phục mật khẩu!',
-    'token' => 'Mã khôi phục mật khẩu không hợp lệ.',
-    'user' => 'Không thể tìm thấy người dùng với địa chỉ email này.',
+    'password' => 'Le mot de passe doit contenir au moins 6 caractères et correspondre à la vérification du mot de passe.',
+    'reset' => 'Votre mot de passe a été restauré',
+    'sent' => 'Le système vous a envoyé un e-mail contenant un lien de réinitialisation de mot de passe!',
+    'token' => 'Code de récupération de mot de passe invalide.',
+    'user' => 'Impossible de trouver l\'utilisateur avec cette adresse e-mail.',
 ];
