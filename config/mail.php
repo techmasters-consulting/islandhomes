@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', 'sendinblue'),
 
     /*
     |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ return [
     |            "postmark", "log", "array"
     |
     */
-    'driver' => env('MAIL_MAILER', 'sendinblue'),
+    //'driver' => env('MAIL_MAILER', 'sendinblue'),
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
