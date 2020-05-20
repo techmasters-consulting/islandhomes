@@ -22,6 +22,90 @@
 
   <!-- Styles -->
   <link href="{{ asset('vendor/core/plugins/vendor/css/app.css') }}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.17.0/css/mdb.min.css" rel="stylesheet">
+    <style>
+        .btn-secondary {
+        color: #333;
+        background-color: #fff !important;;
+        border-color: #ccc;
+        }
+        .blue{
+            background: rgb(29, 95, 111) !important;
+        }
+        .btn-group-sm > .btn, .btn-sm {
+            padding: .25rem .5rem;
+            font-size: .765625rem;
+            line-height: 1.5;
+            border-radius: .2rem;
+        }
+        .widget-body {
+        /*padding: 0px;*/
+        border-radius: 0 0 3px 3px;
+        min-height: 200px;
+        }
+        .btn-group-sm > .btn, .btn-sm {
+
+        padding: .25rem .5rem !important;
+            font-size: 15px !important;
+        line-height: 1.5;
+        border-radius: .2rem;
+        }
+        .modal-header {
+
+            background: #fff !important;
+
+        }
+        .custom-file-input:focus ~ .custom-file-label {
+            color: #000;
+            box-shadow: none;
+            height: 50px;
+        }
+        .custome-checkbox .form-check-label {
+            position: relative;
+            cursor: pointer;
+            color: #687188;
+            padding: 0;
+            vertical-align: middle;
+        }
+        .custome-checkbox .form-check-input {
+            display: none;
+        }
+        .custome-checkbox .form-check-label span {
+            vertical-align: middle;
+        }
+        .custome-checkbox .form-check-label::before {
+            content: "";
+            border: 2px solid #ced4da;
+            height: 17px;
+            width: 17px;
+            margin: 0px 8px 0 0;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .custome-checkbox input[type="checkbox"]:checked + .form-check-label::after {
+            opacity: 1;
+        }
+        .custome-checkbox input[type="checkbox"] + .form-check-label::after {
+            content: "";
+            width: 11px;
+            position: absolute;
+            top: 50%;
+            left: 3px;
+            opacity: 0;
+            height: 6px;
+            border-left: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            -moz-transform: translateY(-65%) rotate(-45deg);
+            -webkit-transform: translateY(-65%) rotate(-45deg);
+            transform: translateY(-65%) rotate(-45deg);
+        }
+        .custome-checkbox input[type="checkbox"]:checked + .form-check-label::before {
+            background-color: rgb(29, 95, 111);
+            border-color: rgb(29, 95, 111);
+        }
+
+    </style>
 
   <!-- Put translation key to translate in VueJS -->
   <script type="text/javascript">
@@ -49,7 +133,59 @@
             </div>
             <br>
         @endif
+
+        @if(auth('vendor')->check() && auth('vendor')->user()->canPost())
+
+
+            <!-- Central Modal Medium Info -->
+                <div class="modal fade right modal-scrolling" id="sideModalTLInfo" aria-labelledby="exampleModalLabel" data-backdrop="false" role="dialog" style="padding-right: 12px; display: block;" aria-modal="true" >
+                    <div class="modal-dialog modal-side modal-notify modal-bottom-right" role="document">
+                        <!--Content-->
+                        <div class="modal-content">
+                            <!--Header-->
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" style="color: white !important;">&times;</span>
+                                </button>
+                            </div>
+
+                            <!--Body-->
+                            <div class="modal-body">
+                                <h2><span style=" font-weight: bold; color: #FFFFFF; background-color: #3EC084; padding: 3px 10px; margin-left: 5px; border-radius: 10px; vertical-align: bottom; text-transform: uppercase;">easily</span>&nbsp;&nbsp;Add a property</h2>
+
+                                <div class="text-center">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt vero illo error eveniet cum.</p>
+                                </div>
+                                <img src="https://mdbootstrap.com/wp-content/uploads/2016/11/admin-dashboard-bootstrap.jpg" alt=""
+                                     class="img-fluid">
+
+
+                            </div>
+
+                            <!--Footer-->
+                            <div class="modal-footer justify-content-center">
+                                <div class="chek-form">
+                                    <div class="custome-checkbox">
+                                        <input class="form-check-input" type="checkbox" name="checkbox" id="newslettercookie" value="">
+                                        <label class="form-check-label" for="newslettercookie"><span>Don't show this popup again!</span></label>
+                                    </div>
+                                </div>
+                                <br>
+                                <a href="#" class="btn btn-danger">Previous
+                                    <i class="far fa-gem ml-1 white-text"></i>
+                                </a>
+                                <a type="button" class="btn blue waves-effect" data-toggle="modal" data-target="#sideModalTLInfo2" data-dismiss="modal">NEXT</a>
+                            </div>
+                        </div>
+                        <!--/.Content-->
+                    </div>
+                </div>
+                <!-- Central Modal Medium Info-->
+
+            @endif
       @yield('content')
+
+
     </main>
       @if (count(Assets::getAdminLocales()) > 1)
           <footer>
@@ -93,9 +229,19 @@
   <script src="{{ asset('vendor/core/plugins/vendor/js/app.js') }}"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+
+
   {!! Assets::renderFooter() !!}
   @stack('scripts')
   @stack('footer')
   @include('core/media::partials.media')
+
+  <script>
+      $('#sideModalTLInfo').modal('show');
+  </script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/js/mdb.min.js"></script>
 </body>
 </html>

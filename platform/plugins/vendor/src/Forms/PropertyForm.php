@@ -22,6 +22,7 @@ class PropertyForm extends BaseForm
 
         Assets::addScriptsDirectly('vendor/core/libraries/tinymce/tinymce.min.js');
 
+
         if (!$this->formHelper->hasCustomField('customEditor')) {
             $this->formHelper->addCustomField('customEditor', CustomEditorField::class);
         }
